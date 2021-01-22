@@ -33,12 +33,14 @@ namespace ft
 		
 		private:
 			
-			pointer			_root;
-			pointer			_pastTheEnd;
+			node			_root;
+			node			_pastTheEnd;
 
-			allocator_type _alloc;
+			allocator_type	_alloc;
 
 			size_type		_length;
+
+
 
 			Node<value_type>	*newNode(value_type value, node _prev, node _next)
 			{
@@ -237,33 +239,87 @@ namespace ft
 
 				delete delete_me;
 			}
-
+			// insert val at position
 			iterator insert (iterator position, const value_type& val)
 			{
-
+				if (position = _root)
+				{
+					push_front(val);
+					return (begin());
+				}
+				else if (position = _pastTheEnd)
+				{
+					push_back(val);
+					return (end());
+				}
+				
+				node n2 = position.node();
+				node n1 = n2->prev;
+				
+				node newPos = newNode(val, n1, n2);
+				
+				n1->next = newPos;
+				n2->prev = newPos;
+				_length++;
+				
+				return (position);
 			}
 
 			void insert (iterator position, size_type n, const value_type& val)
 			{
-
+				while (n--)
+					insert(position, val);
 			}
 
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last)
 			{
-
+				while (fisrt != last)
+				{
+					insert(position, *first);
+					first++;
+				}
 			}
 
 			iterator erase (iterator position)
 			{
-
+				if (position = _root)
+				{
+					pop_front();
+					return (begin());
+				}
+				else if (position = _pastTheEnd)
+				{
+					pop_back();
+					return (end());
+				}
+				
+				node n2 = position.node();
+				
+				node n1 = n2->prev;
+				node n3 = n2->next;
+				
+				n1->next = n3;
+				n3->prev = n1;
+				delete n2;
+				_length--;
+				
+				return (position);
 			}
 
 			iterator erase (iterator first, iterator last)
 			{
-
+				while (first != last)
+				{
+					erase(first);
+					first++;
+				}
+				return (first);
 			}
-
+	//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 			void swap (list& x)
 			{
 
