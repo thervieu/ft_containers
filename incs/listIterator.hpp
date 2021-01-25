@@ -32,6 +32,7 @@ namespace ft
 			typedef Node<T>* pointer;
 		
 		protected:
+
 			pointer	_ptr;
 		
 		public:
@@ -44,6 +45,14 @@ namespace ft
 				*this = rhs;
 			};
 
+			listIterator(pointer _pt): _ptr(_pt)
+			{};
+
+			pointer		node(void)
+			{
+				return (_ptr);
+			};
+
 			~listIterator(void)
 			{};
 
@@ -53,12 +62,12 @@ namespace ft
 				return (*this);
 			};
 
-			value_type		&operator&(void)
+			value_type		*operator->(void)
 			{
 				return (_ptr->data);
 			};
 
-			value_type		*operator*(void)
+			value_type		&operator*(void)
 			{
 				return (_ptr->data);
 			};
@@ -109,6 +118,7 @@ namespace ft
 			typedef Node<T>* pointer;
 		
 		protected:
+
 			pointer	_ptr;
 		
 		public:
@@ -121,6 +131,14 @@ namespace ft
 				*this = rhs;
 			};
 
+			constListIterator(pointer _pt): _ptr(_pt)
+			{};
+
+			pointer		node(void)
+			{
+				return (_ptr);
+			};
+
 			~constListIterator(void)
 			{};
 
@@ -130,12 +148,12 @@ namespace ft
 				return (*this);
 			};
 
-			value_type		&operator&(void)
+			value_type		*operator->(void)
 			{
 				return (_ptr->data);
 			};
 
-			value_type		*operator*(void)
+			value_type		&operator*(void)
 			{
 				return (_ptr->data);
 			};
@@ -186,6 +204,7 @@ namespace ft
 			typedef Node<T>* pointer;
 		
 		protected:
+
 			pointer	_ptr;
 		
 		public:
@@ -198,6 +217,14 @@ namespace ft
 				*this = rhs;
 			};
 
+			reverseListIterator(pointer _pt): _ptr(_pt)
+			{};
+
+			pointer		node(void)
+			{
+				return (_ptr);
+			};
+
 			~reverseListIterator(void)
 			{};
 
@@ -207,12 +234,12 @@ namespace ft
 				return (*this);
 			};
 
-			value_type		&operator&(void)
+			value_type		*operator->(void)
 			{
 				return (_ptr->data);
 			};
 
-			value_type		*operator*(void)
+			value_type		&operator*(void)
 			{
 				return (_ptr->data);
 			};
@@ -263,6 +290,7 @@ namespace ft
 			typedef Node<T>* pointer;
 		
 		protected:
+
 			pointer	_ptr;
 		
 		public:
@@ -275,6 +303,14 @@ namespace ft
 				*this = rhs;
 			};
 
+			constReverseListIterator(pointer _pt): _ptr(_pt)
+			{};
+
+			pointer		node(void)
+			{
+				return (_ptr);
+			};
+
 			~constReverseListIterator(void)
 			{};
 
@@ -284,12 +320,12 @@ namespace ft
 				return (*this);
 			};
 
-			value_type		&operator&(void)
+			value_type		*operator->(void)
 			{
 				return (_ptr->data);
 			};
 
-			value_type		*operator*(void)
+			value_type		&operator*(void)
 			{
 				return (_ptr->data);
 			};

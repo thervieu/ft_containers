@@ -8,6 +8,7 @@ int		main(int ac, char **av)
 	if (ac == 2)
 	{
 		std::string name(av[1]);
+
 		if (name == "list")
 			list_tests();
 		else if (name == "vector")

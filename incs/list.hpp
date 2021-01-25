@@ -7,8 +7,8 @@
 
 namespace ft
 {
-	template < class T, class Alloc = allocator<T> >
-	class list;
+	template < class T, class Alloc = std::allocator<T> >
+	class list
 	{
 		public:
 		
@@ -16,7 +16,6 @@ namespace ft
 
 			typedef Alloc allocator_type;
 
-			typedef T value_type;
 			typedef T& reference;
 			typedef T& const_reference;
 			typedef T* pointer;
@@ -24,7 +23,7 @@ namespace ft
 
 			typedef listIterator<value_type> iterator;
 			typedef constListIterator<value_type> const_iterator;
-			typedef reversListIterator<value_type> reverse_iterator;
+			typedef reverseListIterator<value_type> reverse_iterator;
 			typedef constReverseListIterator<value_type> const_reverse_iterator;
 
 			typedef size_t size_type;
@@ -41,46 +40,48 @@ namespace ft
 			size_type		_length;
 
 
-
 			Node<value_type>	*newNode(value_type value, node _prev, node _next)
 			{
-				Node<value_type> _new = new Node<value_type>;
+				Node<value_type> *_new = new Node<value_type>;
 				_new->data = value;
 				_new->prev = _prev;
 				_new->next = _next;
+				return (_new);
 			}
+
 			void	initList(void)
 			{
-				_root = newNode(value_type(void), NULL, NULL);
-				_pastTheEnd = newNode(value_type(void), _root, NULL);
+				_root = newNode(value_type(), NULL, NULL);
+				_pastTheEnd = newNode(value_type(), _root, NULL);
 				_root->next = _pastTheEnd; 
 			}
+
 		public:
 
-			explicit list (const allocator_type& alloc = allocator_type(void)): _root(0), _pastTheEnd(0), _alloc(alloc), _length(0)
+			explicit list (const allocator_type& alloc = allocator_type()): _root(0), _pastTheEnd(0), _alloc(alloc), _length(0)
 			{
 				initList();
 			}
 
-			explicit list (size_type n, const value_type& val = value_type(void),
-            	const allocator_type& alloc = allocator_type(void)): _root(0), _pastTheEnd(0), _alloc(alloc), _length(0)
+			explicit list (size_type n, const value_type& val = value_type(),
+            	const allocator_type& alloc = allocator_type()): _root(0), _pastTheEnd(0), _alloc(alloc), _length(0)
 			{
 				initList();
-				assign(n, value);
+				assign(n, val);
 			}
 
 			template <class InputIterator>
 			list (InputIterator first, InputIterator last,
-        	const allocator_type& alloc = allocator_type(void)): _root(0), _pastTheEnd(0), _alloc(alloc), _length(0)
+        	const allocator_type& alloc = allocator_type()): _root(0), _pastTheEnd(0), _alloc(alloc), _length(0)
 			{
 				initList();
 				assign(first, last);
 			}
 
-			list (const list& x): _root(0), _pastTheEnd(0), _alloc(alloc), _length(0)
+			list (const list& x): _root(0), _pastTheEnd(0), _alloc(x._alloc), _length(0)
 			{
 				initList();
-				*this = other;
+				*this = x;
 			}
 
 			~list(void)
@@ -92,11 +93,11 @@ namespace ft
 
 			list&	operator= (const list& x)
 			{
-				clear();
-
+				assign(x.begin(), x.end());
+				return (*this);
 			}
 
-			iterator	begin(void)
+			iterator		begin(void)
 			{
 				return (iterator(_root->next));
 			}
@@ -106,7 +107,7 @@ namespace ft
 				return (const_iterator(_root->next));
 			}
 
-			iterator	end(void)
+			iterator		end(void)
 			{
 				return (iterator(_pastTheEnd));
 			}
@@ -116,7 +117,7 @@ namespace ft
 				return (const_iterator(_pastTheEnd));
 			}
 
-			reverse_iterator	rbegin(void)
+			reverse_iterator		rbegin(void)
 			{
 				return (reverse_iterator(_root->next));
 			}
@@ -126,7 +127,7 @@ namespace ft
 				return (const_reverse_iterator(_root->next));
 			}
 
-			reverse_iterator	rend(void)
+			reverse_iterator		rend(void)
 			{
 				return (reverse_iterator(_pastTheEnd->prev));
 			}
@@ -148,7 +149,7 @@ namespace ft
 
 			size_type max_size(void) const
 			{
-				return (std::numeric_limits<size_type>::max() / sizoef(Node<T>));
+				return (std::numeric_limits<size_type>::max() / sizeof(Node<T>));
 			}
 
 			reference front(void)
@@ -177,7 +178,7 @@ namespace ft
 				clear();
 				while (first != last)
 				{
-					push_bask(*first);
+					push_back(*first);
 					first++;
 				}
 			}
@@ -214,6 +215,7 @@ namespace ft
 				_root->next->prev = _root;
 
 				delete delete_me;
+				_length--;
 			}
 
 			// end	<-> _pte	&& end <-  newEnd  -> pte
@@ -233,7 +235,7 @@ namespace ft
 			// newEnd <-> end -> pte	&& newEnd <-  pte
 			// newEnd <- end -> pte		&& newEnd <-> pte
 
-			void pop_front(void)
+			void pop_back(void)
 			{
 				node delete_me = _pastTheEnd->prev;
 
@@ -241,17 +243,18 @@ namespace ft
 				_pastTheEnd->prev->next = _pastTheEnd;
 
 				delete delete_me;
+				_length--;
 			}
 
 			// insert val at position
 			iterator insert (iterator position, const value_type& val)
 			{
-				if (position = _root)
+				if (position == _root)
 				{
 					push_front(val);
 					return (begin());
 				}
-				else if (position = _pastTheEnd)
+				else if (position == _pastTheEnd)
 				{
 					push_back(val);
 					return (end());
@@ -278,21 +281,21 @@ namespace ft
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last)
 			{
-				while (fisrt != last)
+				while (first != last)
 				{
 					insert(position, *first);
 					first++;
 				}
 			}
 
-			iterator erase (iterator position)
+			iterator	erase (iterator position)
 			{
-				if (position = _root)
+				if (position == _root)
 				{
 					pop_front();
 					return (begin());
 				}
-				else if (position = _pastTheEnd)
+				else if (position == _pastTheEnd)
 				{
 					pop_back();
 					return (end());
@@ -311,7 +314,7 @@ namespace ft
 				return (position);
 			}
 
-			iterator erase (iterator first, iterator last)
+			iterator	erase (iterator first, iterator last)
 			{
 				while (first != last)
 				{
@@ -321,28 +324,19 @@ namespace ft
 				return (first);
 			}
 
-			//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-			//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-			//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-			void swap (list& x)
+			void	swap (list& x)
 			{
 				ft::swap(_root, x._root);
 				ft::swap(_pastTheEnd, x._pastTheEnd);
 				ft::swap(_length, x._length);
 			}
 
-			void resize (size_type n, value_type val = value_type(void))
+			void resize (size_type n, value_type val = value_type())
 			{
-				if (n < _length)
-				{
-					while (n++ <_length)
-						pop_back();
-				}
-				else if (n > _length)
-				{
-					while (n-- > _length)
-						insert(_pastTheEnd, val);
-				}
+				while (n < _length)
+					pop_back();
+				while (n > _length)
+					push_back(val);
 			}
 
 			void clear(void)
@@ -370,7 +364,7 @@ namespace ft
 
 			void splice (iterator position, list& x, iterator i)
 			{
-				insert(position, i);
+				insert(position, *i);
 				x.erase(i);
 			}
 
@@ -420,7 +414,7 @@ namespace ft
 			}
 
 			template <class BinaryPredicate>
-			void unique (Binary Predicate binary_pred)
+			void unique (BinaryPredicate binary_pred)
 			{
 				iterator it1 = begin();
 				iterator it2 = it1;
@@ -435,7 +429,7 @@ namespace ft
 						it1 = it2;
 				}
 			}
-
+/*
 			void merge (list& x)
 			{
 
@@ -462,50 +456,77 @@ namespace ft
 			{
 
 			}
-
+*/
 	};
 
 	template <class T, class Alloc>
-	bool operator== (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+	bool operator== (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs)
 	{
-
+		if (lhs.size() != rhs.size())
+			return (false);
+		typename ft::list<T>::const_iterator it1 = lhs.begin();
+		typename ft::list<T>::const_iterator it2 = rhs.begin();
+		while (it1 != lhs.end())
+		{
+			if (*it1 != *it2)
+				return (false);
+			it1++;
+			it2++;
+		}
+		return (true);
 	}
+	
+
 
 	template <class T, class Alloc>
 	bool operator!= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
 	{
-
+		return (!(lhs == rhs));
 	}
 
 	template <class T, class Alloc>
 	bool operator<  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
 	{
-
+		if (lhs.size() < rhs.size())
+			return (true);
+		else if (lhs.size() > rhs.size())
+			return (false);
+		typename ft::list<T>::const_iterator it1 = lhs.begin();
+		typename ft::list<T>::const_iterator it2 = rhs.begin();
+		while (it1 != lhs.end())
+		{
+			if (*it1 < *it2)
+				return (*it1 < *it2);
+			it1++;
+			it2++;
+		}
+		return (false);
 	}
 
 	template <class T, class Alloc>
 	bool operator<= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
 	{
-
+		return (!(rhs < lhs));
 	}
 
 	template <class T, class Alloc>
 	bool operator>  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
 	{
-
+		return (rhs < lhs);
 	}
 
 	template <class T, class Alloc>
 	bool operator>= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
 	{
-
+		return (!(lhs < rhs));
 	}
-
+/*
 	template <class T, class Alloc>
 	void swap (list<T,Alloc>& x, list<T,Alloc>& y)
 	{
 
 	}
+*/
 }
 
 
