@@ -7,6 +7,15 @@
 namespace ft
 {
 	template <class T>
+	void	swap(const T &a, const T &b)
+	{
+		T tmp;
+
+		tmp = a;
+		a = b;
+		b = tmp;
+	};
+	template <class T>
 	struct Node
 	{
 		T data;

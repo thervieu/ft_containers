@@ -85,12 +85,15 @@ namespace ft
 
 			~list(void)
 			{
-
+				clear();
+				delete _root;
+				delete _pastTheEnd;
 			}
 
 			list&	operator= (const list& x)
 			{
-				
+				clear();
+
 			}
 
 			iterator	begin(void)
@@ -239,6 +242,7 @@ namespace ft
 
 				delete delete_me;
 			}
+
 			// insert val at position
 			iterator insert (iterator position, const value_type& val)
 			{
@@ -316,18 +320,29 @@ namespace ft
 				}
 				return (first);
 			}
-	//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-	//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-	//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-	//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+			//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+			//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+			//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 			void swap (list& x)
 			{
-
+				ft::swap(_root, x._root);
+				ft::swap(_pastTheEnd, x._pastTheEnd);
+				ft::swap(_length, x._length);
 			}
 
 			void resize (size_type n, value_type val = value_type(void))
 			{
-
+				if (n < _length)
+				{
+					while (n++ <_length)
+						pop_back();
+				}
+				else if (n > _length)
+				{
+					while (n-- > _length)
+						insert(_pastTheEnd, val);
+				}
 			}
 
 			void clear(void)
@@ -340,7 +355,7 @@ namespace ft
 					delete delete_me;
 					delete_me = _next;
 				}
-				
+
 				_root->next = _pastTheEnd;
 				_pastTheEnd->prev = _root;
 				_length = 0;
@@ -350,17 +365,19 @@ namespace ft
 
 			void splice (iterator position, list& x)
 			{
-
+				splice(position, x, x.begin(), x.end());
 			}
 
 			void splice (iterator position, list& x, iterator i)
 			{
-
+				insert(position, i);
+				x.erase(i);
 			}
 
 			void splice (iterator position, list& x, iterator first, iterator last)
 			{
-
+				insert(position, first, last);
+				x.erase(first, last);
 			}
 
 			void remove (const value_type& val)
