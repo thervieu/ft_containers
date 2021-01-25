@@ -382,24 +382,58 @@ namespace ft
 
 			void remove (const value_type& val)
 			{
-
+				iterator it = begin();
+				while (it != end())
+				{
+					if (*it == val)
+						erase(it);
+					it++;
+				}
 			}
 
 			template <class Predicate>
 			void remove_if (Predicate pred)
 			{
-
+				iterator it = begin();
+				while (it != end())
+				{
+					if (pred(*it))
+						erase(it);
+					it++;
+				}
 			}
 
 			void unique(void)
 			{
-
+				iterator it1 = begin();
+				iterator it2 = it1;
+				while (++it2 != end())
+				{
+					if (*it1  == *it2)
+					{
+						erase(it2);
+						it2 = it1;
+					}
+					else
+						it1 = it2;
+				}
 			}
 
 			template <class BinaryPredicate>
-			void unique (BinaryPredicate binary_pred)
+			void unique (Binary Predicate binary_pred)
 			{
-
+				iterator it1 = begin();
+				iterator it2 = it1;
+				while (++it2 != end())
+				{
+					if (binary_pred(*it1, *it2))
+					{
+						erase(it2);
+						it2 = it1;
+					}
+					else
+						it1 = it2;
+				}
 			}
 
 			void merge (list& x)
