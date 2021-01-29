@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:06:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/25 19:52:16 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/29 15:59:18 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ static void	erase(void)
 
 	std::cout << "std1 == ft1 = " << (std1 == ft1) << std::endl << std::endl;
 }
-/*
+
 static void	swap(void)
 {
 	std::cout << "SWAP : std1 et std2 = std ; ft1 et ft2 = ft\n\n";
@@ -249,7 +249,7 @@ static void	swap(void)
 	std::cout << "std1 == ft1 = " << (std1 == ft1) << std::endl;
 	std::cout << "std2 == ft2 = " << (std2 == ft2) << std::endl << std::endl;
 }
-*/
+
 static void	resize(void)
 {
 	std::cout << "RESIZE : std1 = std ; ft1 = ft\n\n";
@@ -362,7 +362,7 @@ bool	greater_than(int a, int b)
 {
 	return (a >= b);
 }
-/*
+
 static void	merge()
 {
 	std::cout << "MERGE :\n\n";
@@ -399,7 +399,7 @@ static void	reverse()
 	
 	std::cout << "std1 == ft1 = " << (std1 == ft1) << std::endl << std::endl;
 }
-*/
+
 static void	operators()
 {
 	std::cout << "OPERATORS :\n\n";
@@ -491,7 +491,7 @@ void		list_tests(void)
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
 	erase();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
-	//swap();
+	swap();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
 	resize();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
@@ -501,9 +501,9 @@ void		list_tests(void)
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
 	unique();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
-	//merge();
+	merge();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
-	//reverse();
+	reverse();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
 	operators();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;

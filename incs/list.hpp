@@ -56,6 +56,15 @@ namespace ft
 				_root->next = _pastTheEnd; 
 			}
 
+			template <typename X>
+			struct boolIsSmaller : std::binary_function<X, X, bool>
+			{
+				bool operator()(const X& a, X& b) const
+				{
+					return (!(a < b));
+				}
+			};
+
 		public:
 
 			explicit list (const allocator_type& alloc = allocator_type()): _root(0), _pastTheEnd(0), _alloc(alloc), _length(0)
@@ -429,34 +438,51 @@ namespace ft
 						it1 = it2;
 				}
 			}
-/*
-			void merge (list& x)
+			
+			void	merge(list &x)
 			{
-
+				merge(x, boolIsSmaller<T>());
 			}
 
 			template <class Compare>
-			void merge (list& x, Compare comp)
+			void	merge(list &x, Compare comp)
 			{
-
+				insert(end(), x.begin(), x.end());
+				x.clear();
+				sort(comp);
 			}
 
-			void sort(void)
+			void	sort(void)
 			{
-
+				sort(boolIsSmaller<T>());
 			}
-
+			
 			template <class Compare>
-			void sort (Compare comp)
+			void	sort(Compare comp)
 			{
-
+				iterator it1 = begin();
+				iterator it2;
+				while (it1 + 1 != end())
+				{
+					it2 = it1 + 1;
+					while (it2 != end())
+					{
+						if (comp(*it1, *it2))
+							ft::swap(*it1, *it2);
+						it2++;
+					}
+					it1++;
+				}
 			}
-
-			void reverse(void)
+			
+			void	reverse(void)
 			{
-
+				list<value_type> tmp;
+				iterator it = begin();
+				while (it != end())
+					tmp.push_front(*(it++));
+				*this = tmp;
 			}
-*/
 	};
 
 	template <class T, class Alloc>
@@ -475,8 +501,6 @@ namespace ft
 		}
 		return (true);
 	}
-	
-
 
 	template <class T, class Alloc>
 	bool operator!= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
@@ -520,13 +544,13 @@ namespace ft
 	{
 		return (!(lhs < rhs));
 	}
-/*
-	template <class T, class Alloc>
-	void swap (list<T,Alloc>& x, list<T,Alloc>& y)
-	{
 
+	template <class T, class Alloc>
+	void	swap(list<T, Alloc> &x, list <T, Alloc> &y)
+	{
+		x.swap(y);
 	}
-*/
+
 }
 
 
