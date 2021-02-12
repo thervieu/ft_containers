@@ -13,15 +13,10 @@
 #ifndef VECTORITERATOR_HPP
 # define VECTORITERATOR_HPP
 
+# include "listIterator.hpp"
+
 namespace ft
 {
-	template <typename T>
-	void	swap(T &a, T &b)
-	{
-		T tmp = a;
-		a = b;
-		b = tmp;
-	};
 
 	template <class T>
 	class vectorIterator

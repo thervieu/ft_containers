@@ -3,10 +3,15 @@
 
 # include <iostream>
 # include <string>
+
 # include <list>
+# include <vector>
+
 # include <stdlib.h>
 # include <time.h>
+
 # include "list.hpp"
+# include "vector.hpp"
 
 void	list_tests(void);
 void	vector_tests(void);
