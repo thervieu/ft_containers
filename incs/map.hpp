@@ -334,8 +334,6 @@ namespace ft
 
 			void erase (iterator first, iterator last)
 			{
-				std::cout << "first :  " << first->first << " " << first->second << std::endl;
-				std::cout << "second : " << last->first << " " << last->second << std::endl;
 				while (first != last)
 				{
 					erase(first);
