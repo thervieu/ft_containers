@@ -24,16 +24,17 @@ namespace ft
 		BinaryNode *parent;
 		BinaryNode *left;
 		BinaryNode *right;
+		bool		_bool;		//boolean just for correct size
 	};
 
-	template <class Key, class T>
+	template <class K, class T>
 	class mapIterator
 	{
 		public:
 		
-			std::pair<Key, T> value_type;
-			std::pair<Key, T>& reference;
-			BinaryNode<Key, T>* pointer
+			typedef	std::pair<K, T> value_type;
+			typedef	std::pair<K, T>& reference;
+			typedef	BinaryNode<K, T>* pointer;
 		
 		protected:
 
@@ -54,7 +55,7 @@ namespace ft
 				else
 				{
 					_pred = _ptr;
-					while (_pred->parent && _pred->parent->left = _pred)
+					while (_pred->parent && _pred->parent->left == _pred)
 						_pred = _pred->parent;
 					if (_pred->parent)
 						_pred = _pred->parent;
@@ -62,30 +63,30 @@ namespace ft
 				return (_pred);
 			};
 
-			pointer	successor(pointer _ptr);
+			pointer	successor(pointer _ptr)
 			{
 				pointer _succesor;
 				
-				if (_succesor->right)
+				if (_ptr->right)
 				{
-					_succesor = _succesor->right;
+					_succesor = _ptr->right;
 					while (_succesor->left)
 						_succesor = _succesor->left;
 				}
 				else
 				{
 					_succesor = _ptr;
-					while (_succesor && _succesor->parent->right = _succesor)
+					while (_succesor->parent && _succesor->parent->right == _succesor)
 						_succesor = _succesor->parent;
 					if (_succesor->parent)
 						_succesor = _succesor->parent;
 				}
 				return (_succesor);
-			}
+			};
 
 		public:
 			
-			mapIterator(void)
+			mapIterator(void): _ptr(0)
 			{};
 			
 			mapIterator(const mapIterator &other)
@@ -99,7 +100,7 @@ namespace ft
 			~mapIterator(void)
 			{};
 
-			pointer	BinaryNode(void)
+			pointer	binaryNode(void)
 			{
 				return (_ptr);
 			};
@@ -225,16 +226,62 @@ namespace ft
                 return (*(this + n));
             };
     };
-	template <class T>
+	template <class K, class T>
 	class constMapIterator
 	{
 		public:
-			typedef T value_type;
-			typedef T& reference;
-			typedef T* pointer;
+		
+			typedef	std::pair<K, T> value_type;
+			typedef	std::pair<K, T>& reference;
+			typedef	BinaryNode<K, T>* pointer;
 		
 		protected:
+
 			pointer _ptr;
+
+		private:
+
+			pointer	predecessor(pointer _ptr)
+			{
+				pointer _pred;
+
+				if (_ptr->left)
+				{
+					_pred = _ptr->left;
+					while (_pred->right)
+						_pred = _pred->right;
+				}
+				else
+				{
+					_pred = _ptr;
+					while (_pred->parent && _pred->parent->left == _pred)
+						_pred = _pred->parent;
+					if (_pred->parent)
+						_pred = _pred->parent;
+				}
+				return (_pred);
+			};
+
+			pointer	successor(pointer _ptr)
+			{
+				pointer _succesor;
+				
+				if (_ptr->right)
+				{
+					_succesor = _ptr->right;
+					while (_succesor->left)
+						_succesor = _succesor->left;
+				}
+				else
+				{
+					_succesor = _ptr;
+					while (_succesor->parent && _succesor->parent->right == _succesor)
+						_succesor = _succesor->parent;
+					if (_succesor->parent)
+						_succesor = _succesor->parent;
+				}
+				return (_succesor);
+			};
 
 		public:
 			
@@ -251,6 +298,11 @@ namespace ft
 			
 			~constMapIterator(void)
 			{};
+
+			pointer	binaryNode(void)
+			{
+				return (_ptr);
+			};
 			
 			constMapIterator	&operator=(const constMapIterator &other)
 			{
@@ -260,7 +312,7 @@ namespace ft
 
 			constMapIterator	&operator++(void)
 			{
-                _ptr++;
+                _ptr = successor(_ptr);
 				return (*this);
 			};
 
@@ -273,7 +325,7 @@ namespace ft
 			
 			constMapIterator	&operator--(void)
 			{
-                _ptr--;
+                _ptr = predecessor(_ptr);
 				return (*this);
 			};
 
@@ -319,7 +371,7 @@ namespace ft
 				return (_ptr->pair);
 			};
 			
-			value_type	&operator->(void)
+			value_type	*operator->(void)
 			{
 				return (&_ptr->pair);
 			};
@@ -336,6 +388,7 @@ namespace ft
 					operator--();
 					n++;
 				}
+				return (*this);
 			};
 			
 			constMapIterator &operator-=(int n)
@@ -350,6 +403,7 @@ namespace ft
 					operator++();
 					n++;
 				}
+				return (*this);
 			};
 
 			constMapIterator operator+(int n) const
@@ -371,16 +425,62 @@ namespace ft
                 return (*(this + n));
             };
     };
-	template <class T>
+	template <class K, class T>
 	class reverseMapIterator
 	{
 		public:
-			typedef T value_type;
-			typedef T& reference;
-			typedef T* pointer;
+		
+			typedef	std::pair<K, T> value_type;
+			typedef	std::pair<K, T>& reference;
+			typedef	BinaryNode<K, T>* pointer;
 		
 		protected:
+
 			pointer _ptr;
+
+		private:
+
+			pointer	predecessor(pointer _ptr)
+			{
+				pointer _pred;
+
+				if (_ptr->left)
+				{
+					_pred = _ptr->left;
+					while (_pred->right)
+						_pred = _pred->right;
+				}
+				else
+				{
+					_pred = _ptr;
+					while (_pred->parent && _pred->parent->left == _pred)
+						_pred = _pred->parent;
+					if (_pred->parent)
+						_pred = _pred->parent;
+				}
+				return (_pred);
+			};
+
+			pointer	successor(pointer _ptr)
+			{
+				pointer _succesor;
+				
+				if (_ptr->right)
+				{
+					_succesor = _ptr->right;
+					while (_succesor->left)
+						_succesor = _succesor->left;
+				}
+				else
+				{
+					_succesor = _ptr;
+					while (_succesor->parent && _succesor->parent->right == _succesor)
+						_succesor = _succesor->parent;
+					if (_succesor->parent)
+						_succesor = _succesor->parent;
+				}
+				return (_succesor);
+			};
 
 		public:
 			
@@ -397,11 +497,42 @@ namespace ft
 			
 			~reverseMapIterator(void)
 			{};
+
+			pointer	binaryNode(void)
+			{
+				return (_ptr);
+			};
 			
 			reverseMapIterator	&operator=(const reverseMapIterator &other)
 			{
 				this->_ptr = other._ptr;
 				return (*this);
+			};
+
+			reverseMapIterator	&operator++(void)
+			{
+                _ptr = successor(_ptr);
+				return (*this);
+			};
+
+			reverseMapIterator	operator++(int)
+			{
+				reverseMapIterator rtn(*this);
+				this->operator++();
+				return (rtn);
+			};
+			
+			reverseMapIterator	&operator--(void)
+			{
+                _ptr = predecessor(_ptr);
+				return (*this);
+			};
+
+			reverseMapIterator	operator--(int)
+			{
+				reverseMapIterator rtn(*this);
+				this->operator--();
+				return (rtn);
 			};
 			
 			bool operator==(const reverseMapIterator &rhs) const
@@ -439,35 +570,9 @@ namespace ft
 				return (_ptr->pair);
 			};
 			
-			value_type	&operator->(void)
+			value_type	*operator->(void)
 			{
 				return (&_ptr->pair);
-			};
-			
-			reverseMapIterator	&operator++(void)
-			{
-                _ptr--;
-				return (*this);
-			};
-
-			reverseMapIterator	operator++(int)
-			{
-				reverseMapIterator rtn(*this);
-				this->operator++();
-				return (rtn);
-			};
-			
-			reverseMapIterator	&operator--(void)
-			{
-                _ptr++;
-				return (*this);
-			};
-
-			reverseMapIterator	operator--(int)
-			{
-				reverseMapIterator rtn(*this);
-				this->operator--();
-				return (rtn);
 			};
 			
 			reverseMapIterator &operator+=(int n)
@@ -482,6 +587,7 @@ namespace ft
 					operator--();
 					n++;
 				}
+				return (*this);
 			};
 			
 			reverseMapIterator &operator-=(int n)
@@ -496,6 +602,7 @@ namespace ft
 					operator++();
 					n++;
 				}
+				return (*this);
 			};
 
 			reverseMapIterator operator+(int n) const
@@ -517,16 +624,62 @@ namespace ft
                 return (*(this + n));
             };
     };
-	template <class T>
+	template <class K, class T>
 	class constReverseMapIterator
 	{
 		public:
-			typedef T value_type;
-			typedef T& reference;
-			typedef T* pointer;
+		
+			typedef	std::pair<K, T> value_type;
+			typedef	std::pair<K, T>& reference;
+			typedef	BinaryNode<K, T>* pointer;
 		
 		protected:
+
 			pointer _ptr;
+
+		private:
+
+			pointer	predecessor(pointer _ptr)
+			{
+				pointer _pred;
+
+				if (_ptr->left)
+				{
+					_pred = _ptr->left;
+					while (_pred->right)
+						_pred = _pred->right;
+				}
+				else
+				{
+					_pred = _ptr;
+					while (_pred->parent && _pred->parent->left == _pred)
+						_pred = _pred->parent;
+					if (_pred->parent)
+						_pred = _pred->parent;
+				}
+				return (_pred);
+			};
+
+			pointer	successor(pointer _ptr)
+			{
+				pointer _succesor;
+				
+				if (_ptr->right)
+				{
+					_succesor = _ptr->right;
+					while (_succesor->left)
+						_succesor = _succesor->left;
+				}
+				else
+				{
+					_succesor = _ptr;
+					while (_succesor->parent && _succesor->parent->right == _succesor)
+						_succesor = _succesor->parent;
+					if (_succesor->parent)
+						_succesor = _succesor->parent;
+				}
+				return (_succesor);
+			};
 
 		public:
 			
@@ -543,11 +696,42 @@ namespace ft
 			
 			~constReverseMapIterator(void)
 			{};
+
+			pointer	binaryNode(void)
+			{
+				return (_ptr);
+			};
 			
 			constReverseMapIterator	&operator=(const constReverseMapIterator &other)
 			{
 				this->_ptr = other._ptr;
 				return (*this);
+			};
+
+			constReverseMapIterator	&operator++(void)
+			{
+                _ptr = successor(_ptr);
+				return (*this);
+			};
+
+			constReverseMapIterator	operator++(int)
+			{
+				constReverseMapIterator rtn(*this);
+				this->operator++();
+				return (rtn);
+			};
+			
+			constReverseMapIterator	&operator--(void)
+			{
+                _ptr = predecessor(_ptr);
+				return (*this);
+			};
+
+			constReverseMapIterator	operator--(int)
+			{
+				constReverseMapIterator rtn(*this);
+				this->operator--();
+				return (rtn);
 			};
 			
 			bool operator==(const constReverseMapIterator &rhs) const
@@ -585,35 +769,9 @@ namespace ft
 				return (_ptr->pair);
 			};
 			
-			value_type	&operator->(void)
+			value_type	*operator->(void)
 			{
 				return (&_ptr->pair);
-			};
-			
-			constReverseMapIterator	&operator++(void)
-			{
-                _ptr--;
-				return (*this);
-			};
-
-			constReverseMapIterator	operator++(int)
-			{
-				constReverseMapIterator rtn(*this);
-				this->operator++();
-				return (rtn);
-			};
-			
-			constReverseMapIterator	&operator--(void)
-			{
-                _ptr++;
-				return (*this);
-			};
-
-			constReverseMapIterator	operator--(int)
-			{
-				constReverseMapIterator rtn(*this);
-				this->operator--();
-				return (rtn);
 			};
 			
 			constReverseMapIterator &operator+=(int n)
@@ -628,6 +786,7 @@ namespace ft
 					operator--();
 					n++;
 				}
+				return (*this);
 			};
 			
 			constReverseMapIterator &operator-=(int n)
@@ -642,6 +801,7 @@ namespace ft
 					operator++();
 					n++;
 				}
+				return (*this);
 			};
 
 			constReverseMapIterator operator+(int n) const
