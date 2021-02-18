@@ -34,13 +34,12 @@ bool	operator==(std::list<T> &l1, ft::list<T> &l2)
 
 static void	constructors_and_copy(void)
 {
-	std::cout << "LIST\n\n";
-	std::cout << "CONSTRUCTORS : l1 = std ; l2 = ft\n\n";
+	std::cout << "CONSTRUCTORS : l1 = std ; l2 = ft" << std::endl << std::endl;
 	
 	std::list<int> l1;
 	ft::list<int> l2;
 	
-	std::cout << "CONSTRUCTORS :\n\n";
+	std::cout << "CONSTRUCTORS :" << std::endl << std::endl;
 	
 	std::cout << "default : (l1 == l2) = "  << (l1 == l2) << std::endl;
 	
@@ -68,7 +67,7 @@ static void	constructors_and_copy(void)
 
 static void	max_size(void)
 {
-	std::cout << "MAX_SIZE : l1 = std ; l2 = ft\n\n";
+	std::cout << "MAX_SIZE : l1 = std ; l2 = ft" << std::endl << std::endl;
 	
 	std::list<int> l1;
 	ft::list<int> l2;
@@ -81,7 +80,7 @@ static void	max_size(void)
 
 static void	front_back(void)
 {
-	std::cout << "FRONT AND BACK : l1 = std ; l2 = std ; l3 = ft\n\n";
+	std::cout << "FRONT AND BACK : l1 = std ; l2 = std ; l3 = ft" << std::endl << std::endl;
 	
 	std::list<int> l1;
 	ft::list<int> l2;
@@ -122,7 +121,7 @@ static void	front_back(void)
 
 static void	assign(void)
 {
-	std::cout << "ASSIGN : l1 = std ; l2 = ft\n\n";
+	std::cout << "ASSIGN : l1 = std ; l2 = ft" << std::endl << std::endl;
 	
 	std::list<int> l1;
 	ft::list<int> l2;
@@ -144,7 +143,7 @@ static void	assign(void)
 
 static void	push_pop(void)
 {
-	std::cout << "PUSH POP FRONT AND BACK : l1 = std ; l2 = ft\n\n";
+	std::cout << "PUSH POP FRONT AND BACK : l1 = std ; l2 = ft" << std::endl << std::endl;
 	
 	std::list<int> l1;
 	ft::list<int> l2;
@@ -184,7 +183,7 @@ static void	push_pop(void)
 
 static void	erase(void)
 {
-	std::cout << "ERASE : std1 = std ; ft1 = ft\n\n";
+	std::cout << "ERASE : std1 = std ; ft1 = ft" << std::endl << std::endl;
 	
 	std::list<int> std1;
 	ft::list<int> ft1;
@@ -220,7 +219,7 @@ static void	erase(void)
 
 static void	swap(void)
 {
-	std::cout << "SWAP : std1 et std2 = std ; ft1 et ft2 = ft\n\n";
+	std::cout << "SWAP : std1 et std2 = std ; ft1 et ft2 = ft" << std::endl << std::endl;
 	
 	std::list<int> std1;
 	std::list<int> std2;
@@ -252,7 +251,7 @@ static void	swap(void)
 
 static void	resize(void)
 {
-	std::cout << "RESIZE : std1 = std ; ft1 = ft\n\n";
+	std::cout << "RESIZE : std1 = std ; ft1 = ft" << std::endl << std::endl;
 	
 	std::list<int> std1;
 	ft::list<int> ft1;
@@ -272,7 +271,7 @@ static void	resize(void)
 
 static void	splice(void)
 {
-	std::cout << "SPLICE :\n\n";
+	std::cout << "SPLICE :" << std::endl << std::endl;
 	
 	std::list<int> std1((size_t)15, 10);
 	ft::list<int> ft1((size_t)15, 10);
@@ -316,7 +315,7 @@ bool	pair(const int &value)
 
 static void	remove()
 {
-	std::cout << "REMOVE :\n\n";
+	std::cout << "REMOVE :" << std::endl << std::endl;
 	
 	int array[] = {0, 1, 2, 3, 5, 6, 4, 5, 6, 7, 8, 9};
 	ft::list<int> ft1(array, array + 12);
@@ -341,7 +340,7 @@ bool	strictly_greater(int a, int b)
 
 static void	unique()
 {
-	std::cout << "UNIQUE :\n\n";
+	std::cout << "UNIQUE :" << std::endl << std::endl;
 	
 	int array[] = {0, 3, 8, 10, 1, 1, 1, 5, 6, 7, 5, 1, 7, 8, 9};
 	ft::list<int> ft1(array, array + 16);
@@ -365,7 +364,7 @@ bool	greater_than(int a, int b)
 
 static void	merge()
 {
-	std::cout << "MERGE :\n\n";
+	std::cout << "MERGE :" << std::endl << std::endl;
 	
 	int array1[] = {0, 3, 7, 10};
 	ft::list<int> ft1(array1, array1 + 4);
@@ -388,7 +387,7 @@ static void	merge()
 
 static void	reverse()
 {
-	std::cout << "REVERSE :\n\n";
+	std::cout << "REVERSE :" << std::endl << std::endl;
 	
 	int array[] = {0, 3, 8, 10, 1, 1, 1, 5, 6, 7, 5, 1, 7, 8, 9};
 	ft::list<int> ft1(array, array + 16);
@@ -402,7 +401,7 @@ static void	reverse()
 
 static void	operators()
 {
-	std::cout << "OPERATORS :\n\n";
+	std::cout << "OPERATORS :" << std::endl << std::endl;
 	
 	int array1[] = {0, 8, -4, 2, 14, 10};
 
@@ -412,99 +411,83 @@ static void	operators()
 	ft::list<int> ft1(array1, array1 + 6);
 	ft::list<int> ft2(ft1);
 
-	std::cout << "std1 == std2 = " << (std1 == std2) << std::endl;
-	std::cout << "ft1  == ft2  = " << (ft1 == ft2) << std::endl;
-
-	std::cout << "std1 != std2 = " << (std1 != std2) << std::endl;
-	std::cout << "ft1  != ft2  = " << (ft1 != ft2) << std::endl;
-
-	std::cout << "std1 >= std2 = " << (std1 >= std2) << std::endl;
-	std::cout << "ft1  >= ft2  = " << (ft1 >= ft2) << std::endl;
-
-	std::cout << "std1 >  std2 = " << (std1 > std2) << std::endl;
-	std::cout << "ft1  >  ft2  = " << (ft1 > ft2) << std::endl;
-
-	std::cout << "std1 <= std2 = " << (std1 <= std2) << std::endl;
-	std::cout << "ft1  <= ft2  = " << (ft1 <= ft2) << std::endl;
-
-	std::cout << "std1 <  std2 = " << (std1 < std2) << std::endl;
-	std::cout << "ft1  <  ft2  = " << (ft1 < ft2) << std::endl << std::endl;
+	std::cout << "l1 == l2 : " << (std1 == std2) << " " << (ft1 == ft2) << std::endl;
+	std::cout << "l1 != l2 : " << (std1 != std2) << " " << (ft1 != ft2) << std::endl;
+	std::cout << "l1 >= l2 : " << (std1 >= std2) << " " << (ft1 >= ft2) << std::endl;
+	std::cout << "l1 > l2  : " << (std1 > std2) << " " << (ft1 > ft2) << std::endl;
+	std::cout << "l1 <= l2 : " << (std1 <= std2) << " " << (ft1 <= ft2) << std::endl;
+	std::cout << "l1 < l2  : " << (std1 < std2) << " " << (ft1 < ft2) << std::endl;
+	std::cout << std::endl;
 
 	std1.push_back(3);
 	ft1.push_back(3);
 
-	std::cout << "std1 == std2 = " << (std1 == std2) << std::endl;
-	std::cout << "ft1  == ft2  = " << (ft1 == ft2) << std::endl;
-
-	std::cout << "std1 != std2 = " << (std1 != std2) << std::endl;
-	std::cout << "ft1  != ft2  = " << (ft1 != ft2) << std::endl;
-
-	std::cout << "std1 >= std2 = " << (std1 >= std2) << std::endl;
-	std::cout << "ft1  >= ft2  = " << (ft1 >= ft2) << std::endl;
-
-	std::cout << "std1 >  std2 = " << (std1 > std2) << std::endl;
-	std::cout << "ft1  >  ft2  = " << (ft1 > ft2) << std::endl;
-
-	std::cout << "std1 <= std2 = " << (std1 <= std2) << std::endl;
-	std::cout << "ft1  <= ft2  = " << (ft1 <= ft2) << std::endl;
-
-	std::cout << "std1 <  std2 = " << (std1 < std2) << std::endl;
-	std::cout << "ft1  <  ft2  = " << (ft1 < ft2) << std::endl << std::endl;
+	std::cout << "l1 == l2 : " << (std1 == std2) << " " << (ft1 == ft2) << std::endl;
+	std::cout << "l1 != l2 : " << (std1 != std2) << " " << (ft1 != ft2) << std::endl;
+	std::cout << "l1 >= l2 : " << (std1 >= std2) << " " << (ft1 >= ft2) << std::endl;
+	std::cout << "l1 > l2  : " << (std1 > std2) << " " << (ft1 > ft2) << std::endl;
+	std::cout << "l1 <= l2 : " << (std1 <= std2) << " " << (ft1 <= ft2) << std::endl;
+	std::cout << "l1 < l2  : " << (std1 < std2) << " " << (ft1 < ft2) << std::endl;
+	std::cout << std::endl;
 
 	std2.push_back(8);
 	ft2.push_back(8);
 
-	std::cout << "std1 == std2 = " << (std1 == std2) << std::endl;
-	std::cout << "ft1  == ft2  = " << (ft1 == ft2) << std::endl;
+	std::cout << "l1 == l2 : " << (std1 == std2) << " " << (ft1 == ft2) << std::endl;
+	std::cout << "l1 != l2 : " << (std1 != std2) << " " << (ft1 != ft2) << std::endl;
+	std::cout << "l1 >= l2 : " << (std1 >= std2) << " " << (ft1 >= ft2) << std::endl;
+	std::cout << "l1 > l2  : " << (std1 > std2) << " " << (ft1 > ft2) << std::endl;
+	std::cout << "l1 <= l2 : " << (std1 <= std2) << " " << (ft1 <= ft2) << std::endl;
+	std::cout << "l1 < l2  : " << (std1 < std2) << " " << (ft1 < ft2) << std::endl;
+	std::cout << std::endl;
 
-	std::cout << "std1 != std2 = " << (std1 != std2) << std::endl;
-	std::cout << "ft1  != ft2  = " << (ft1 != ft2) << std::endl;
-
-	std::cout << "std1 >= std2 = " << (std1 >= std2) << std::endl;
-	std::cout << "ft1  >= ft2  = " << (ft1 >= ft2) << std::endl;
-
-	std::cout << "std1 >  std2 = " << (std1 > std2) << std::endl;
-	std::cout << "ft1  >  ft2  = " << (ft1 > ft2) << std::endl;
-
-	std::cout << "std1 <= std2 = " << (std1 <= std2) << std::endl;
-	std::cout << "ft1  <= ft2  = " << (ft1 <= ft2) << std::endl;
-
-	std::cout << "std1 <  std2 = " << (std1 < std2) << std::endl;
-	std::cout << "ft1  <  ft2  = " << (ft1 < ft2) << std::endl << std::endl;
 }
 
 void		list_tests(void)
 {
 	std::srand(time(0));
-	std::cout << "true = 1\n";
-	std::cout << "false =  0\n";
-	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
+	
+	std::cout << "LIST" << std::endl << std::endl;
+	
 	constructors_and_copy();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
+	
 	max_size();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
+	
 	front_back();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
+	
 	assign();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
+	
 	push_pop();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
+	
 	erase();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
+	
 	swap();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
+	
 	resize();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
+	
 	splice();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
+	
 	remove();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
+	
 	unique();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
+	
 	merge();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
+	
 	reverse();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
+	
 	operators();
 	std::cout << "~~~~~---------------------------------------------------~~~~~" << std::endl << std::endl;
 }

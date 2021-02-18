@@ -366,6 +366,7 @@ static void operators_comp(void)
 	std::cout << "m1 < m2 : " << (m1 < m3) << " " << (m2 < m4) << std::endl;
 	std::cout << "m1 >= m2 : " << (m1 >= m3) << " " << (m2 >= m4) << std::endl;
 	std::cout << "m1 <= m2 : " << (m1 <= m3) << " " << (m2 <= m4) << std::endl;
+	std::cout << std::endl;
 	
 	m1["e"] = 1;
 	m2["e"] = 1;
@@ -376,6 +377,7 @@ static void operators_comp(void)
 	std::cout << "m1 < m2 : " << (m1 < m3) << " " << (m2 < m4) << std::endl;
 	std::cout << "m1 >= m2 : " << (m1 >= m3) << " " << (m2 >= m4) << std::endl;
 	std::cout << "m1 <= m2 : " << (m1 <= m3) << " " << (m2 <= m4) << std::endl;
+	std::cout << std::endl;
 	
 	m3["e"] = 3;
 	m4["e"] = 3;
@@ -386,7 +388,6 @@ static void operators_comp(void)
 	std::cout << "m1 < m2 : " << (m1 < m3) << " " << (m2 < m4) << std::endl;
 	std::cout << "m1 >= m2 : " << (m1 >= m3) << " " << (m2 >= m4) << std::endl;
 	std::cout << "m1 <= m2 : " << (m1 <= m3) << " " << (m2 <= m4) << std::endl;
-	std::cout << std::endl;
 }
 
 void map_tests(void)
