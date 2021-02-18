@@ -51,7 +51,6 @@ static void constructors(void)
 	std::cout << "Constructors / Copy" << std::endl;
 	
 	std::pair<int, int> a[] = {std::make_pair(0, 1), std::make_pair(1, 0), std::make_pair(2, 1)};
-	
 	ft::map<int, int> m1;
 	std::map<int, int> m2;
 	
@@ -180,8 +179,8 @@ static void erase(void)
 	m2["d"] = 6;
 	m2["e"] = 8;
 
-	m1.erase(m1.begin());
-	m2.erase(m2.begin());
+	m1.erase(++m1.begin());
+	m2.erase(++m2.begin());
 
 	std::cout << "m1 == m2 : " << (m1 == m2) << std::endl;
 
@@ -190,8 +189,8 @@ static void erase(void)
 
 	std::cout << "m1 == m2 : " << (m1 == m2) << std::endl;
 
-	m1.erase(m1.begin(), m1.end());
-	m2.erase(m2.begin(), m2.end());
+	m1.erase((++m1.begin()), (--m1.end()));
+	m2.erase(++m2.begin(), --m2.end());
 
 	std::cout << "m1 == m2 : " << (m1 == m2) << std::endl;
 	std::cout << std::endl;

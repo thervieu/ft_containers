@@ -63,7 +63,7 @@ namespace ft
 
 			size_type		_size;
 
-			node		newNode(key_type _key, mapped_type _mapped, node parent)
+			node		newNode(key_type _key, mapped_type _mapped, node parent, bool _end = false)
 			{
 				node _node = new BinaryNode<key_type, mapped_type>;
 				
@@ -72,6 +72,7 @@ namespace ft
 				_node->parent = parent;
 				_node->left = 0;
 				_node->right = 0;
+				_node->_bool = _end;
 				
 				return (_node);
 			};
@@ -79,28 +80,38 @@ namespace ft
 			void	initTree(void)
 			{
 				_root = newNode(key_type(), mapped_type(), 0);
+				_root->right = newNode(key_type(), mapped_type(), _root, true);
 				_size = 0;
 			};
 
-			node	addNode(node node, key_type key, mapped_type mapped)
+			node	addNode(node _node, key_type key, mapped_type mapped, bool _end = false)
 			{
-				if (key < node->pair.first)
+				if (_node->_bool)
 				{
-					if (!node->left)
+					if (!_node->left)
 					{
-						node->left = newNode(key, mapped, node);
-						return (node->left);
+						_node->left = newNode(key, mapped, _node, _end);
+						return (_node->left);
 					}
-					return (addNode(node->left, key, mapped));
+					return (addNode(_node->left, key, mapped));
+				}
+				if (key < _node->pair.first && !_end)
+				{
+					if (!_node->left)
+					{
+						_node->left = newNode(key, mapped, _node, _end);
+						return (_node->left);
+					}
+					return (addNode(_node->left, key, mapped));
 				}
 				else
 				{
-					if (!node->right)
+					if (!_node->right)
 					{
-						node->right = newNode(key, mapped, node);
-						return (node->right);
+						_node->right = newNode(key, mapped, _node, _end);
+						return (_node->right);
 					}
-					return (addNode(node->right, key, mapped));
+					return (addNode(_node->right, key, mapped));
 				}
 			};
 
@@ -226,12 +237,12 @@ namespace ft
 
 			iterator end()
 			{
-				return (iterator(_root));
+				return (iterator(_root->right));
 			}
 
 			const_iterator end() const
 			{
-				return (const_iterator(_root));
+				return (const_iterator(_root->right));
 			}
 
 			reverse_iterator rbegin()
@@ -335,10 +346,7 @@ namespace ft
 			void erase (iterator first, iterator last)
 			{
 				while (first != last)
-				{
-					erase(first);
-					first++;
-				}
+					erase(first++);
 			}
 
 			void swap (map<key_type, mapped_type>& x)
