@@ -48,7 +48,7 @@ static void	printTrueMap(std::map<T, S> &lhs)
 
 static void constructors(void)
 {
-	std::cout << "Constructors / Copy" << std::endl;
+	printTitle("Constructors");
 	
 	std::pair<int, int> a[] = {std::make_pair(0, 1), std::make_pair(1, 0), std::make_pair(2, 1)};
 	ft::map<int, int> m1;
@@ -91,7 +91,7 @@ static void constructors(void)
 
 static void max_size(void)
 {
-	std::cout << "Max_Size" << std::endl;
+	printTitle("Max_Size");
 	
 	ft::map<int, int> m1;
 	std::map<int, int> m2;
@@ -107,7 +107,7 @@ static void max_size(void)
 
 static void access_operator(void)
 {
-	std::cout << "[] operator" << std::endl;
+	printTitle("[] operator");
 	
 	ft::map<std::string, int> m1;
 	std::map<std::string, int> m2;
@@ -137,7 +137,7 @@ static void access_operator(void)
 
 static void insert(void)
 {
-	std::cout << "Insert" << std::endl;
+	printTitle("Insert");
 
 	std::pair<int, int> a[] = {std::make_pair(0, 1), std::make_pair(1, 0), std::make_pair(2, 1)};
 
@@ -160,7 +160,7 @@ static void insert(void)
 
 static void erase(void)
 {
-	std::cout << "Erase" << std::endl;
+	printTitle("Erase");
 
 	ft::map<std::string, int> m1;
 	std::map<std::string, int> m2;
@@ -198,7 +198,7 @@ static void erase(void)
 
 static void swap(void)
 {
-	std::cout << "Swap" << std::endl;
+	printTitle("Swap");
 
 	ft::map<std::string, int> m1;
 	std::map<std::string, int> m2;
@@ -229,7 +229,7 @@ static void swap(void)
 
 static void clear(void)
 {
-	std::cout << "Clear" << std::endl;
+	printTitle("Clear");
 	
 	ft::map<std::string, int> m1;
 	std::map<std::string, int> m2;
@@ -249,25 +249,29 @@ static void clear(void)
 
 static void find(void)
 {
-	std::cout << "Find" << std::endl;
+	printTitle("Find");
 	
 	ft::map<std::string, int> m1;
 	std::map<std::string, int> m2;
 	
 	m1["a"] = 1;
 	m1["b"] = 42;
+	m1["c"] = 123;
 	
 	m2["a"] = 1;
 	m2["b"] = 42;
-	
+	m2["c"] = 123;
+
 	std::cout << "m1.find('a')->second == m2.find('a')->second : " << (m1.find("a")->second == m2.find("a")->second) << std::endl;
 	std::cout << "m1.find('z')->second == m2.find('z')->second : " << (m1.find("z")->second == m2.find("z")->second) << std::endl;
+	std::cout << "m1.find('z')->second = : " << m1.find("z")->second << std::endl;
+	std::cout << "m2.find('z')->second = : " << m2.find("z")->second << std::endl;
 	std::cout << std::endl;
 }
 
 static void count(void)
 {
-	std::cout << "Count" << std::endl;
+	printTitle("Count");
 	
 	ft::map<std::string, int> m1;
 	std::map<std::string, int> m2;
@@ -288,7 +292,7 @@ static void count(void)
 
 static void bounds()
 {
-	std::cout << "Bounds" << std::endl;
+	printTitle("Bounds");
 	
 	ft::map<std::string, int> m1;
 	std::map<std::string, int> m2;
@@ -312,8 +316,8 @@ static void bounds()
 
 static void range(void)
 {
-	std::cout << "Equal range" << std::endl;
-	
+	printTitle("Equal_range");
+
 	ft::map<std::string, int> m1;
 	std::map<std::string, int> m2;
 	
@@ -339,7 +343,7 @@ static void range(void)
 
 static void operators_comp(void)
 {
-	std::cout << "Operators" << std::endl;
+	printTitle("Operators");
 	
 	ft::map<std::string, int> m1;
 	std::map<std::string, int> m2;
@@ -392,7 +396,7 @@ static void operators_comp(void)
 
 void map_tests(void)
 {
-	std::cout << "MAP" << std::endl;
+	printTitle("MAP_TESTER");
 	constructors();
 	max_size();
 	access_operator();

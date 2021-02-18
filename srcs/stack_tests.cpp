@@ -2,7 +2,7 @@
 
 static void constructors(void)
 {
-	std::cout << "Constructor" << std::endl;
+	printTitle("Constructor");
 
 	ft::stack<int> ft1;
 	std::stack<int> std1;
@@ -12,9 +12,9 @@ static void constructors(void)
 	std::cout << std::endl;
 }
 
-static void top_comp(void)
+static void top(void)
 {
-	std::cout << "Front / Back / Push / Pop" << std::endl;
+	printTitle("Top");
 
 	ft::stack<int> ft1;
 	ft::stack<int> ft2;
@@ -50,8 +50,7 @@ static void top_comp(void)
 
 void	stack_tests(void)
 {
-	std::cout << "Stack" << std::endl;
-	std::cout << std::endl;
+	printTitle("STACK");
 	constructors();
-	top_comp();
+	top();
 }

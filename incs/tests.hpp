@@ -4,6 +4,8 @@
 # include <iostream>
 # include <string>
 
+# include <string>
+
 # include <list>
 # include <vector>
 # include <map>
@@ -18,6 +20,9 @@
 # include "map.hpp"
 # include "stack.hpp"
 # include "queue.hpp"
+
+void    printTitle(std::string title);
+void    printBoolColors(std::string str, int _bool);
 
 void	list_tests(void);
 void	vector_tests(void);

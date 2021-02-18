@@ -2,7 +2,7 @@
 
 static void constructors(void)
 {
-	std::cout << "Constructor" << std::endl;
+	printTitle("Constructor");
 	
 	ft::queue<int> ft1;
 	std::queue<int> std1;
@@ -14,7 +14,7 @@ static void constructors(void)
 
 static void front_back_comp(void)
 {
-	std::cout << "Front / Back / Push / Pop" << std::endl;
+	printTitle("Front Back Push Pop");
 	
 	ft::queue<int> ft1;
 	ft::queue<int> ft2;
@@ -51,8 +51,7 @@ static void front_back_comp(void)
 
 void	queue_tests(void)
 {
-	std::cout << "Queue" << std::endl;
-	std::cout << std::endl;
+	printTitle("QUEUE");
 	constructors();
 	front_back_comp();
 }

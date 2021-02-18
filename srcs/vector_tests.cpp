@@ -17,7 +17,7 @@ bool operator==(ft::vector<T> &a, std::vector<T> &b)
 
 static void default_constructor(void)
 {
-	std::cout << "Default constructor" << std::endl << std::endl;
+	printTitle("Default constructor");
 	
 	ft::vector<int> v1;
 	std::vector<int> v2;
@@ -44,7 +44,7 @@ static void default_constructor(void)
 
 static void copy_constructor(void)
 {
-	std::cout << "Copy" << std::endl << std::endl;
+	printTitle("Copy constructor");
 	
 	ft::vector<int> v1;
 	std::vector<int> v2;
@@ -71,7 +71,7 @@ static void copy_constructor(void)
 
 static void max_size(void)
 {
-	std::cout << "Max size" << std::endl << std::endl;
+	printTitle("Max_size");
 	
 	ft::vector<std::string> v1;
 	std::vector<std::string> v2;
@@ -94,7 +94,7 @@ static void max_size(void)
 
 static void resize(void)
 {
-	std::cout << "Resize" << std::endl << std::endl;
+	printTitle("Resize");
 	
 	ft::vector<std::string> v1;
 	std::vector<std::string> v2;
@@ -113,7 +113,7 @@ static void resize(void)
 
 static void access_operator(void)
 {
-	std::cout << "[] operator, at()" << std::endl << std::endl;
+	printTitle("operator[] and at");
 	
 	ft::vector<int> v1;
 	std::vector<int> v2;
@@ -169,7 +169,7 @@ static void access_operator(void)
 
 static void front_back(void)
 {
-	std::cout << "Front / Back" << std::endl << std::endl;
+	printTitle("Front and Back");
 	
 	ft::vector<int> v1;
 	std::vector<int> v2;
@@ -188,7 +188,7 @@ static void front_back(void)
 
 static void assign(void)
 {
-	std::cout << "Assign" << std::endl << std::endl;
+	printTitle("Assign");
 	
 	std::string test[] = {"Hey", "what's", "up", "?"};
 	
@@ -209,7 +209,7 @@ static void assign(void)
 
 static void insert(void)
 {
-	std::cout << "Insert" << std::endl << std::endl;
+	printTitle("Insert");
 	
 	int test[] = {1, 2, 3};
 	
@@ -235,7 +235,7 @@ static void insert(void)
 
 static void erase(void)
 {
-	std::cout << "Erase / Clear" << std::endl << std::endl;
+	printTitle("Erase and Clear");
 	
 	std::string test[] = {"Hey", "what's", "up", "?"};
 	
@@ -258,7 +258,7 @@ static void erase(void)
 
 static void swap(void)
 {
-	std::cout << "Swap" << std::endl << std::endl;
+	printTitle("Swap");
 	
 	ft::vector<int> v1;
 	std::vector<int> v2;
@@ -286,7 +286,7 @@ static void swap(void)
 
 static void operators(void)
 {
-	std::cout << "Operators" << std::endl << std::endl;
+	printTitle("Operators");
 	
 	ft::vector<int> v1;
 	std::vector<int> v2;
@@ -336,7 +336,7 @@ static void operators(void)
 
 void	vector_tests(void)
 {
-	std::cout << "VECTOR" << std::endl << std::endl;
+	printTitle("VECTOR_TESTER");
 	default_constructor();
 	copy_constructor();
 	max_size();
