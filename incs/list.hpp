@@ -5,6 +5,15 @@
 
 # include <limits>
 
+/*
+** https://www.codementor.io/@codementorteam/a-comprehensive-guide-to-implementation-of-singly-linked-list-using-c_plus_plus-ondlm5azr
+*/
+
+/*
+** all functions implemented are those of list (c++98)
+** See: https://www.cplusplus.com/reference/list/list/
+*/
+
 namespace ft
 {
 	template < class T, class Alloc = std::allocator<T> >
@@ -31,7 +40,7 @@ namespace ft
 			typedef Node<T>* node;
 		
 		private:
-			
+
 			node			_root;
 			node			_pastTheEnd;
 
@@ -39,6 +48,9 @@ namespace ft
 
 			size_type		_length;
 
+			/*
+			** Internal functions to create a node and initialize a list when its created
+			*/
 
 			Node<value_type>	*newNode(value_type value, node _prev, node _next)
 			{
@@ -47,14 +59,14 @@ namespace ft
 				_new->prev = _prev;
 				_new->next = _next;
 				return (_new);
-			}
+			};
 
 			void	initList(void)
 			{
 				_root = newNode(value_type(), NULL, NULL);
 				_pastTheEnd = newNode(value_type(), _root, NULL);
 				_root->next = _pastTheEnd; 
-			}
+			};
 
 			template <typename X>
 			struct boolIsSmaller : std::binary_function<X, X, bool>
@@ -66,6 +78,10 @@ namespace ft
 			};
 
 		public:
+
+			/*
+			** Constructors and destructors
+			*/
 
 			explicit list (const allocator_type& alloc = allocator_type()): _root(0), _pastTheEnd(0), _alloc(alloc), _length(0)
 			{
@@ -105,6 +121,10 @@ namespace ft
 				assign(x.begin(), x.end());
 				return (*this);
 			}
+
+			/*
+			** Iterators
+			*/
 
 			iterator		begin(void)
 			{
@@ -146,6 +166,10 @@ namespace ft
 				return (const_reverse_iterator(_pastTheEnd->prev));
 			}
 
+			/*
+			** Capacity
+			*/
+
 			bool empty(void) const
 			{
 				return (_length == 0);
@@ -160,6 +184,10 @@ namespace ft
 			{
 				return (std::numeric_limits<size_type>::max() / sizeof(Node<T>));
 			}
+
+			/*
+			** Element access
+			*/
 
 			reference front(void)
 			{
@@ -181,6 +209,10 @@ namespace ft
 				return (_pastTheEnd->prev->data);
 			}
 
+			/*
+			** Modifiers
+			*/
+
 			template <class InputIterator>
 			void assign (InputIterator first, InputIterator last)
 			{
@@ -199,10 +231,6 @@ namespace ft
 					push_back(val);
 			}
 
-			// root	<-> beg		&& root <-  newBeg  -> beg
-			// root	 -> beg		&& root <-  newBeg <-> beg
-			// root	 -  beg 	&& root <-> newBeg <-> beg
-
 			void push_front (const value_type& val)
 			{
 				node newBeg = newNode(val, _root, _root->next);
@@ -211,10 +239,6 @@ namespace ft
 				_root->next = newBeg;
 				_length++;
 			}
-
-			// root <-> beg <-> newBeg && root  -  newBeg
-			// root <-  beg <-> newBeg && root  -> newBeg
-			// root <-  beg  -> newBeg && root <-> newBeg
 
 			void pop_front(void)
 			{
@@ -227,10 +251,6 @@ namespace ft
 				_length--;
 			}
 
-			// end	<-> _pte	&& end <-  newEnd  -> pte
-			// end	<- 	_pte	&& end <-> newEnd  -> pte
-			// end	 - 	_pte 	&& end <-> newEnd <-> pte
-
 			void push_back (const value_type& val)
 			{
 				node newEnd = newNode(val, _pastTheEnd->prev, _pastTheEnd);
@@ -238,11 +258,6 @@ namespace ft
 				_pastTheEnd->prev->next = newEnd;
 				_pastTheEnd->prev = newEnd;
 				_length++;
-			}
-
-			// newEnd <-> end <-> pte	&& newEnd  -  pte
-			// newEnd <-> end -> pte	&& newEnd <-  pte
-			// newEnd <- end -> pte		&& newEnd <-> pte
 
 			void pop_back(void)
 			{
@@ -255,7 +270,6 @@ namespace ft
 				_length--;
 			}
 
-			// insert val at position
 			iterator insert (iterator position, const value_type& val)
 			{
 				if (position == _root)
@@ -365,6 +379,10 @@ namespace ft
 				
 				return ;
 			}
+
+			/*
+			** Operations
+			*/
 
 			void splice (iterator position, list& x)
 			{
@@ -485,6 +503,10 @@ namespace ft
 			}
 	};
 
+	/*
+	** Relation operators and swap
+	*/
+
 	template <class T, class Alloc>
 	bool operator== (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs)
 	{
@@ -503,13 +525,13 @@ namespace ft
 	}
 
 	template <class T, class Alloc>
-	bool operator!= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+	bool operator!= (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs)
 	{
 		return (!(lhs == rhs));
 	}
 
 	template <class T, class Alloc>
-	bool operator<  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+	bool operator<  (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs)
 	{
 		if (lhs.size() < rhs.size())
 			return (true);
@@ -528,19 +550,19 @@ namespace ft
 	}
 
 	template <class T, class Alloc>
-	bool operator<= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+	bool operator<= (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs)
 	{
 		return (!(rhs < lhs));
 	}
 
 	template <class T, class Alloc>
-	bool operator>  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+	bool operator>  (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs)
 	{
 		return (rhs < lhs);
 	}
 
 	template <class T, class Alloc>
-	bool operator>= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+	bool operator>= (const ft::list<T,Alloc>& lhs, const ft::list<T,Alloc>& rhs)
 	{
 		return (!(lhs < rhs));
 	}

@@ -2,12 +2,7 @@
 
 void	printTitle(std::string title)
 {
-	int		margin = (40 - title.length()) / 2;
-	int		width = (margin * 2) + title.length() + 2;
-
-	std::cout << "\e[34m" << std::string(width, '#') << std::endl;
-	std::cout << "#" << std::string(margin, ' ') << "\e[36m" << title << "\e[34m" << std::string(margin, ' ') << "#" << std::endl;
-	std::cout << std::string(width, '#') << "\e[39m" << std::endl << std::endl;
+	std::cout << "\e[34m#" << std::string((36 - title.length()) / 2, ' ') << "\e[36m" << title << "\e[34m" << std::string((36 - title.length()) / 2, ' ') << "#\e[39m" << std::endl;
 }
 
 int		main(int ac, char **av)

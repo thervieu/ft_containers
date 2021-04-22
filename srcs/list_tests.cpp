@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:06:20 by user42            #+#    #+#             */
-/*   Updated: 2021/01/29 15:59:18 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/22 21:26:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ static void	constructors_and_copy(void)
 	
 	std::list<int> l1;
 	ft::list<int> l2;
-	
-	std::cout << "CONSTRUCTORS ://///////" << std::endl << std::endl;
 	
 	std::cout << "default : (l1 ==aaasdas l2) = "  << (l1 == l2) << std::endl;
 	

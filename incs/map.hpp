@@ -9,6 +9,13 @@
 
 # include <iostream>
 
+/*
+** all functions implemented are those of map (c++98)
+** See: https://www.cplusplus.com/reference/map/map/
+** A more thorough implementation would require a balanced binary.
+** As it is not specifically asked in the school subject, I chose not to do it in order to finish the curriculum faster.
+*/
+
 namespace ft
 {
 	template < class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<std::pair<const Key,T> > >
@@ -174,6 +181,10 @@ namespace ft
 
 		public:
 
+			/*
+			** Constructors and destructors
+			*/
+
 			explicit map (const key_compare& comp = key_compare(),
             	const allocator_type& alloc = allocator_type())
 				: _allocator(alloc), _compare(comp)
@@ -208,6 +219,10 @@ namespace ft
 				insert(x.begin(), x.end());
 				return (*this);
 			}
+
+			/*
+			** Iterators
+			*/
 
 			iterator begin(void)
 			{
@@ -271,6 +286,10 @@ namespace ft
 				return (const_reverse_iterator(_root));
 			}
 
+			/*
+			** Capacity
+			*/
+
 			bool	empty(void)
 			{
 				return (_size == 0);
@@ -286,6 +305,10 @@ namespace ft
 				return (std::numeric_limits<size_type>::max() / sizeof(BinaryNode<key_type, mapped_type>));
 			}
 
+			/*
+			** Element access
+			*/
+
 			mapped_type& operator[] (const key_type& k)
 			{
 				iterator it = find(k);
@@ -293,6 +316,10 @@ namespace ft
 					return (it->second);
 				return (insert(std::make_pair(k, mapped_type())).first->second);
 			}
+
+			/*
+			** Modfiers
+			*/
 
 			//https://stackoverflow.com/questions/23421639/return-false-or-value-c
 			std::pair<iterator,bool> insert (const value_type& val)
@@ -360,6 +387,10 @@ namespace ft
 				erase(begin(), end());
 			}
 
+			/*
+			** Observers
+			*/
+
 			key_compare key_comp() const
 			{
 				return (_compare);
@@ -369,6 +400,10 @@ namespace ft
 			{
 				return (value_compare());
 			}
+
+			/*
+			** Operations
+			*/
 
 			iterator find (const key_type& k)
 			{
@@ -463,62 +498,72 @@ namespace ft
 
 	};
 
+	/*
+	** Relation operators and swap
+	*/
+
 	template <class Key, class T, class Compare, class Alloc>
 	void swap(ft::map<Key, T, Compare, Alloc> &x, ft::map<Key, T, Compare, Alloc> &y)
 	{
 		x.swap(y);
 	};
+
 	template <class Key, class T, class Compare, class Alloc>
 	bool operator==(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
 	{
 		if (lhs.size() != rhs.size())
 			return (false);
-		typename ft::map<Key, T, Compare, Alloc>::const_iterator it = rhs.begin();
-		typename ft::map<Key, T, Compare, Alloc>::const_iterator it2 = lhs.begin();
-		while (it != rhs.end())
+		typename ft::map<Key, T, Compare, Alloc>::const_iterator it1 = lhs.begin();
+		typename ft::map<Key, T, Compare, Alloc>::const_iterator it2 = rhs.begin();
+		while (it1 != lhs.end())
 		{
-			if (*it != *it2)
+			if (*it1 != *it2)
 				return (false);
 			++it2;
-			++it;
+			++it1;
 		}
 		return (true);
 	};
+
 	template <class Key, class T, class Compare, class Alloc>
 	bool operator!=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
 	{
 		return (!(lhs == rhs));
 	};
+
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator>(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	bool operator< (const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
 	{
-		if (lhs.size() > rhs.size())
+		if (lhs.size() < rhs.size())
 			return (true);
-		typename ft::map<Key, T, Compare, Alloc>::const_iterator it = lhs.begin();
+		typename ft::map<Key, T, Compare, Alloc>::const_iterator it1 = lhs.begin();
 		typename ft::map<Key, T, Compare, Alloc>::const_iterator it2 = rhs.begin();
-		while (it != lhs.end() && it2 != rhs.end())
+		while (it1 != lhs.end() && it2 != rhs.end())
 		{
-			if (*it > *it2)
+			if (*it1 < *it2)
 				return (true);
-			++it2;
-			++it;
+			it1++;
+			it2++;
 		}
 		return (false);
 	};
+
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator<(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	bool operator<= (const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
 	{
-		return (!(lhs > rhs) && !(lhs == rhs));
+		return (!(rhs < lhs));
 	};
+
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator>=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	bool operator> (const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	{
+		return (rhs < lhs);
+	};
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator>= (const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
 	{
 		return (!(lhs < rhs));
-	};
-	template <class Key, class T, class Compare, class Alloc>
-	bool operator<=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
-	{
-		return (!(lhs > rhs));
 	};
 }
 

@@ -8,6 +8,11 @@
 # include <iostream>
 # include <stdio.h>
 
+/*
+** all functions implemented are those of vector (c++98)
+** See: https://www.cplusplus.com/reference/vector/vector/
+*/
+
 namespace ft
 {
 	template <class T, class Alloc=std::allocator<T> >
@@ -41,6 +46,10 @@ namespace ft
 			size_type		_capacity;
 
 		public:
+
+			/*
+			** Constructors and destructors
+			*/
 
 			explicit vector (const allocator_type& alloc = allocator_type())
 			: _elts(0), _alloc(alloc), _size(0), _capacity(0)
@@ -90,13 +99,6 @@ namespace ft
 			{
 				if (this == &x)
 					return (*this);
-				if (x._size < _capacity)
-				{
-					for (size_type i = 0; i < x._size; i++)
-						_elts[i] = x._elts[i];
-					_size = x._size;
-					return (*this);
-				}
 
 				delete[] _elts;
 
@@ -111,6 +113,10 @@ namespace ft
 
 				return (*this);
 			}
+
+			/*
+			** Iterators
+			*/
 
 			iterator begin()
 			{
@@ -151,6 +157,10 @@ namespace ft
 			{
 				return (const_reverse_iterator(&_elts[_size]));
 			}
+
+			/*
+			** Capacity
+			*/
 
 			size_type size() const
 			{
@@ -195,6 +205,10 @@ namespace ft
 				_elts = tmp;
 			}
 
+			/*
+			** Element access
+			*/
+
 			reference operator[] (size_type n)
 			{
 				return (_elts[n]);
@@ -238,6 +252,10 @@ namespace ft
 			{
 				return (_elts[_size - 1]);
 			}
+
+			/*
+			** Modfiers
+			*/
 
 			template <class InputIterator>
 			void assign (InputIterator first, InputIterator last)
@@ -340,6 +358,10 @@ namespace ft
 			}
 	};
 
+	/*
+	** Relation operators and swap
+	*/
+
 	template <class T, class Alloc>
 	bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 	{
@@ -389,7 +411,6 @@ namespace ft
 	bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 	{
 		return (rhs < lhs);
-
 	}
 
 	template <class T, class Alloc>

@@ -6,12 +6,15 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 21:54:05 by user42            #+#    #+#             */
-/*   Updated: 2021/01/29 16:04:43 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/21 18:26:35 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LISTITERATOR_HPP
 # define LISTITERATOR_HPP
+
+// https://stackoverflow.com/questions/55402803/linked-list-iterator-implementation-c
+// http://www2.lawrence.edu/fast/GREGGJ/CMSC270/linked/iterators.html
 
 namespace ft
 {
