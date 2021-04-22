@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 21:54:05 by user42            #+#    #+#             */
-/*   Updated: 2021/04/21 18:26:35 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/22 21:56:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 
 namespace ft
 {
+	/*
+	** template swap used in each project container
+	*/
+
 	template <typename T>
 	void	swap(T &a, T &b)
 	{
@@ -26,6 +30,10 @@ namespace ft
 		b = tmp;
 	};
 
+	/*
+	** Linked list base node
+	*/
+	
 	template <typename T>
 	struct Node
 	{

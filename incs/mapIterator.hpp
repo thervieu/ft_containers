@@ -17,6 +17,13 @@
 
 namespace ft
 {
+
+	/*
+	** Linked list base node
+	** Boolean is used to identify the past-the-end element and
+	** is needed to get the right value for max_size
+	*/
+
 	template <class Key, class T>
 	struct BinaryNode
 	{
@@ -24,7 +31,7 @@ namespace ft
 		BinaryNode *parent;
 		BinaryNode *left;
 		BinaryNode *right;
-		bool		_bool;		//boolean just for correct size
+		bool		_bool;
 	};
 
 	template <class K, class T>
