@@ -35,6 +35,12 @@ static void constructors(void)
 	std::vector<int> v4(v2);
 	
 	std::cout << "copy : " << printBool((v3 == v4)) << std::endl;
+
+
+	ft::vector<int> v5 = v1;
+	std::vector<int> v6 = v2;
+
+	std::cout << "operator= : " << printBool((v5 == v6)) << std::endl;
 	std::cout << std::endl;
 }
 

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:06:20 by user42            #+#    #+#             */
-/*   Updated: 2021/05/04 00:01:05 by user42           ###   ########.fr       */
+/*   Updated: 2021/05/04 00:13:43 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	constructors_and_copy(void)
 
 static void	max_size(void)
 {
-	printTitle("Max_szie");
+	printTitle("Max_size");
 	
 	std::list<int> l1;
 	ft::list<int> l2;
