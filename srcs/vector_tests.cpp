@@ -30,17 +30,28 @@ static void constructors(void)
 	v2.push_back(1);
 	v2.push_back(2);
 	v2.push_back(3);
+
+	ft::vector<int> v5((size_t)3, 8);
+	std::vector<int> v6((size_t)3, 8);
+	
+	std::cout << "fill : " << printBool((v5 == v6)) << std::endl;
+
+	int a[] = {1, 2, 3, 4};
+
+	ft::vector<int> v11(a, a + 3);
+	std::vector<int> v12(a, a + 3);
+	
+	std::cout << "range : " << printBool((v11 == v12)) << std::endl;
 	
 	ft::vector<int> v3(v1);
 	std::vector<int> v4(v2);
 	
 	std::cout << "copy : " << printBool((v3 == v4)) << std::endl;
 
+	ft::vector<int> v9 = v1;
+	std::vector<int> v10 = v2;
 
-	ft::vector<int> v5 = v1;
-	std::vector<int> v6 = v2;
-
-	std::cout << "operator= : " << printBool((v5 == v6)) << std::endl;
+	std::cout << "operator= : " << printBool((v9 == v10)) << std::endl;
 	std::cout << std::endl;
 }
 

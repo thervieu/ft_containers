@@ -73,11 +73,7 @@ namespace ft
 			: _elts(0), _alloc(alloc), _size(0), _capacity(0)
 			{
 				_elts = new T[0];
-				while (first != last)
-				{
-					push_back(*first);
-					first++;
-				}
+				assign(first, last);
 			}
 
 			vector (const vector& x)
