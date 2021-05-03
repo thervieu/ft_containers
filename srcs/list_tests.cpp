@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:06:20 by user42            #+#    #+#             */
-/*   Updated: 2021/05/03 23:07:31 by user42           ###   ########.fr       */
+/*   Updated: 2021/05/04 00:01:05 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	constructors_and_copy(void)
 	
 	std::list<int> l3((size_t)6);
 	ft::list<int> l4((size_t)6);
-	std::cout << "fill with default : " << printBool((l3 == l4)) << std::endl;
+	std::cout << "fill with 0 : " << printBool((l3 == l4)) << std::endl;
 	
 	std::list<int> l5((size_t)5, 123);
 	ft::list<int> l6((size_t)5, 123);
@@ -56,11 +56,11 @@ static void	constructors_and_copy(void)
 
 	std::list<int> l9(l5);
 	ft::list<int> l10(l6);
-	std::cout << "fill with list1(list2): " << printBool((l9 == l10)) << std::endl;
+	std::cout << "copy: " << printBool((l9 == l10)) << std::endl;
 
 	std::list<int> l11 = l5;
 	ft::list<int> l12 = l6;
-	std::cout << "copy :" << printBool((l11 == l12)) << std::endl << std::endl;
+	std::cout << "operator= :" << printBool((l11 == l12)) << std::endl << std::endl;
 }
 
 static void	max_size(void)
@@ -209,7 +209,7 @@ static void	erase(void)
 	std1.erase(++++std1.begin(), --std1.end());
 	ft1.erase(++++ft1.begin(), --ft1.end());
 
-	std::cout << "erase : " << printBool((std1 == ft1)) << std::endl << std::endl;
+	std::cout << "position and range : " << printBool((std1 == ft1)) << std::endl << std::endl;
 }
 
 static void	swap(void)
@@ -313,7 +313,7 @@ bool	pair(const int &value)
 
 static void	remove()
 {
-	printTitle("Remove");
+	printTitle("Remove / Remove_if");
 	
 	int array[] = {0, 1, 2, 3, 5, 6, 4, 5, 6, 7, 8, 9};
 	ft::list<int> ft1(array, array + 12);
@@ -324,11 +324,11 @@ static void	remove()
 
 	ft1.remove(6);
 	std1.remove(6);
-	std::cout << "std1 == ft1 : " << printBool((std1 == ft1)) << std::endl;
+	std::cout << "remove : " << printBool((std1 == ft1)) << std::endl;
 
 	ft1.remove_if(pair);
 	std1.remove_if(pair);
-	std::cout << "std1 == ft1 : " << printBool((std1 == ft1)) << std::endl << std::endl;
+	std::cout << "remove_if : " << printBool((std1 == ft1)) << std::endl << std::endl;
 }
 
 bool	strictly_greater(int a, int b)
@@ -347,11 +347,11 @@ static void	unique()
 	ft1.unique();
 	std1.unique();
 	
-	std::cout << "std1 == ft1 : " << printBool((std1 == ft1)) << std::endl;
+	std::cout << "default : " << printBool((std1 == ft1)) << std::endl;
 
 	ft1.unique(strictly_greater);
 	std1.unique(strictly_greater);
-	std::cout << "std1 == ft1 : " << printBool((std1 == ft1)) << std::endl << std::endl;
+	std::cout << "with binary predicate : " << printBool((std1 == ft1)) << std::endl << std::endl;
 }
 
 
@@ -375,12 +375,12 @@ static void	merge()
 	ft1.merge(ft2);
 	std1.merge(std2);
 
-	std::cout << "std1 == ft1 : " << printBool((std1 == ft1)) << std::endl;
+	std::cout << "default : " << printBool((std1 == ft1)) << std::endl;
 
 	ft1.merge(ft2, greater_than);
 	std1.merge(std2, greater_than);
 	
-	std::cout << "std1 == ft1 : " << printBool((std1 == ft1)) << std::endl << std::endl;
+	std::cout << "compare : " << printBool((std1 == ft1)) << std::endl << std::endl;
 }
 
 static void	reverse()
@@ -394,7 +394,7 @@ static void	reverse()
 	ft1.reverse();
 	std1.reverse();
 	
-	std::cout << "std1 == ft1 : " << (std1 == ft1) << std::endl << std::endl;
+	std::cout << "std1 == ft1 : " << printBool((std1 == ft1)) << std::endl << std::endl;
 }
 
 static void	operators()
