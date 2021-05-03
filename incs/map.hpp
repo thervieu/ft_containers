@@ -161,7 +161,7 @@ namespace ft
 
 			node	findNode(node node, key_type key)
 			{
-				if (node->parent && node->pair.first == key) // CHECK
+				if (!node->_bool && node->pair.first == key && node->parent) // CHECK
 					return (node);
 				if (node->left)
 					return (findNode(node->left, key));
@@ -347,7 +347,7 @@ namespace ft
 				while (first != last)
 				{
 					insert(*first);
-					first++;
+					++first;
 				}
 			}
 

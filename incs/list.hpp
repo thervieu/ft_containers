@@ -16,7 +16,7 @@
 
 namespace ft
 {
-	template < class T, class Alloc = std::allocator<T> >
+	template <class T, class Alloc = std::allocator<T> >
 	class list
 	{
 		public:
@@ -258,6 +258,7 @@ namespace ft
 				_pastTheEnd->prev->next = newEnd;
 				_pastTheEnd->prev = newEnd;
 				_length++;
+			}
 
 			void pop_back(void)
 			{

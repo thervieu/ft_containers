@@ -2,8 +2,17 @@
 
 void	printTitle(std::string title)
 {
-	std::cout << "\e[34m#" << std::string((36 - title.length()) / 2, ' ') << "\e[36m" << title << "\e[34m" << std::string((36 - title.length()) / 2, ' ') << "#\e[39m" << std::endl;
+	std::cout << "\e[34m#" << std::string((36 - title.length()) / 2, ' ') << "\e[36m" << title << "\e[34m" << std::string((36 - title.length()) / 2, ' ') << "#\e[39m" << std::endl << std::endl;
 }
+
+std::string	printBool(bool val)
+{
+	if (val)
+		return (GREEN + std::string("✔") + RESET);
+	else
+		return (RED + std::string("✗") + RESET);
+}
+
 
 int		main(int ac, char **av)
 {

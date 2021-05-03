@@ -54,17 +54,17 @@ static void constructors(void)
 	ft::map<int, int> m1;
 	std::map<int, int> m2;
 	
-	std::cout << "(default) m1 == m2 : " << (m1 == m2) << std::endl;
+	std::cout << "default : " << printBool((m1 == m2)) << std::endl;
 	
 	ft::map<int, int> m3(a, a + 3);
 	std::map<int, int> m4(a, a + 3);
 	
-	std::cout << "(range) : m3 == m4 : " << (m3 == m4) << std::endl;
+	std::cout << "range : " << printBool((m3 == m4)) << std::endl;
 	
 	ft::map<int, int> m5(m3);
 	std::map<int, int> m6(m4);
 	
-	std::cout << "(copy) m5 == m6 : " << (m5 == m6) << std::endl;
+	std::cout << "copy : " << printBool((m5 == m6)) << std::endl;
 	
 	ft::map<int, int> m7;
 	std::map<int, int> m8;
@@ -77,15 +77,13 @@ static void constructors(void)
 	m8[1] = 2;
 	m8[2] = 3;
 	
-	std::cout << "(copy) m7 == m8 : " << (m7 == m8) << std::endl;
-	
 	ft::map<int, int> m9;
 	std::map<int, int> m10;
 	
 	m9 = m7;
 	m10 = m8;
 	
-	std::cout << "(copy) m9 == m10 : " << (m9 == m10) << std::endl;
+	std::cout << "operator= : " << printBool((m9 == m10)) << std::endl;
 	std::cout << std::endl;
 }
 
@@ -96,12 +94,12 @@ static void max_size(void)
 	ft::map<int, int> m1;
 	std::map<int, int> m2;
 	
-	std::cout << "m1.max_size() == m2.max_size() : " << (m1.max_size() == m2.max_size()) << std::endl;
+	std::cout << "int : " << printBool((m1.max_size() == m2.max_size())) << std::endl;
 	
 	ft::map<std::string, int> m3;
 	std::map<std::string, int> m4;
 	
-	std::cout << "m3.max_size() == m4.max_size() : " << (m3.max_size() == m4.max_size()) << std::endl;
+	std::cout << "string : " << printBool((m3.max_size() == m4.max_size())) << std::endl;
 	std::cout << std::endl;
 }
 
@@ -126,12 +124,12 @@ static void access_operator(void)
 	m2["d"] = 11;
 	m2["test"] = 100;
 	
-	std::cout << "m1 == m2 : " << (m1 == m2) << std::endl;
+	std::cout << "m1 == m2 : " << printBool((m1 == m2)) << std::endl;
 	
-	std::cout << "m1['a'] == m2['a'] : " << (m1["a"] == m2["a"]) << std::endl;
-	std::cout << "m1['d'] == m2['d'] : " << (m1["d"] == m2["d"]) << std::endl;
-	std::cout << "m1['test] == m2['test'] : " << (m1["test"] == m2["test"]) << std::endl;
-	std::cout << "m1['z'] == m2['z'] : " << (m1["z"] == m2["z"]) << std::endl;
+	std::cout << "m1['a'] == m2['a'] : " << printBool((m1["a"] == m2["a"])) << std::endl;
+	std::cout << "m1['d'] == m2['d'] : " << printBool((m1["d"] == m2["d"])) << std::endl;
+	std::cout << "m1['test] == m2['test'] : " << printBool((m1["test"] == m2["test"])) << std::endl;
+	std::cout << "m1['z'] == m2['z'] : " << printBool((m1["z"] == m2["z"])) << std::endl;
 	std::cout << std::endl;
 }
 
@@ -144,17 +142,24 @@ static void insert(void)
 	ft::map<int, int> m1(a, a + 3);
 	std::map<int, int> m2(a, a + 3);
 
-	m1.insert(++m1.begin(), std::make_pair(5, 5));
-	m2.insert(++m2.begin(), std::make_pair(5, 5));
-
-	std::cout << "m1 == m2 : " << (m1 == m2) << std::endl;
 
 	m1.insert(std::make_pair(5, 0));
 	m2.insert(std::make_pair(5, 0));
 	m1.insert(std::make_pair(10, 54));
 	m2.insert(std::make_pair(10, 54));
 
-	std::cout << "m1 == m2 : " << (m1 == m2) << std::endl;
+	std::cout << "single element : " << printBool((m1 == m2)) << std::endl;
+
+	m1.insert(++m1.begin(), std::make_pair(5, 5));
+	m2.insert(++m2.begin(), std::make_pair(5, 5));
+
+	std::cout << "hint : " << printBool((m1 == m2)) << std::endl;
+
+	m1.insert(a, a + 2);
+	m2.insert(a, a + 2);
+	
+	std::cout << "range : " << printBool((m1 == m2)) << std::endl;
+
 	std::cout << std::endl;
 }
 
@@ -182,17 +187,17 @@ static void erase(void)
 	m1.erase(++m1.begin());
 	m2.erase(++m2.begin());
 
-	std::cout << "m1 == m2 : " << (m1 == m2) << std::endl;
+	std::cout << "position : " << printBool((m1 == m2)) << std::endl;
 
 	m1.erase("d");
 	m2.erase("d");
 
-	std::cout << "m1 == m2 : " << (m1 == m2) << std::endl;
+	std::cout << "key_type : " << printBool((m1 == m2)) << std::endl;
 
 	m1.erase((++m1.begin()), (--m1.end()));
 	m2.erase(++m2.begin(), --m2.end());
 
-	std::cout << "m1 == m2 : " << (m1 == m2) << std::endl;
+	std::cout << "range : " << printBool((m1 == m2)) << std::endl;
 	std::cout << std::endl;
 }
 
@@ -222,8 +227,8 @@ static void swap(void)
 	m1.swap(m3);
 	m2.swap(m4);
 
-	std::cout << "m1 == m2 : " << (m1 == m2) << std::endl;
-	std::cout << "m3 == m4 : " << (m3 == m4) << std::endl;
+	std::cout << "m1 == m2 : " << printBool((m1 == m2)) << std::endl;
+	std::cout << "m3 == m4 : " << printBool((m3 == m4)) << std::endl;
 	std::cout << std::endl;
 }
 
@@ -243,7 +248,7 @@ static void clear(void)
 	m1.clear();
 	m2.clear();
 	
-	std::cout << "m1 == m2 : " << (m1 == m2) << std::endl;
+	std::cout << "m1 == m2 : " << printBool((m1 == m2)) << std::endl;
 	std::cout << std::endl;
 }
 
@@ -254,6 +259,10 @@ static void find(void)
 	ft::map<std::string, int> m1;
 	std::map<std::string, int> m2;
 	
+	std::cout << "m1.find('z')->second == m2.find('z')->second : " << printBool((m1.find("z")->second == m2.find("z")->second)) << std::endl;
+	std::cout << "m1.find('z')->second = : " << m1.find("z")->second << std::endl;
+	std::cout << "m2.find('z')->second = : " << m2.find("z")->second << std::endl;
+	
 	m1["a"] = 1;
 	m1["b"] = 42;
 	m1["c"] = 123;
@@ -262,8 +271,8 @@ static void find(void)
 	m2["b"] = 42;
 	m2["c"] = 123;
 
-	std::cout << "m1.find('a')->second == m2.find('a')->second : " << (m1.find("a")->second == m2.find("a")->second) << std::endl;
-	std::cout << "m1.find('z')->second == m2.find('z')->second : " << (m1.find("z")->second == m2.find("z")->second) << std::endl;
+	std::cout << "m1.find('a')->second == m2.find('a')->second : " << printBool((m1.find("a")->second == m2.find("a")->second)) << std::endl;
+	std::cout << "m1.find('z')->second == m2.find('z')->second : " << printBool((m1.find("z")->second == m2.find("z")->second)) << std::endl;
 	std::cout << "m1.find('z')->second = : " << m1.find("z")->second << std::endl;
 	std::cout << "m2.find('z')->second = : " << m2.find("z")->second << std::endl;
 	std::cout << std::endl;
@@ -284,9 +293,9 @@ static void count(void)
 	m2["b"] = 42;
 	m2["b"] = 21;
 	
-	std::cout << "m1.count('a') == m2.count('a') : " << (m1.count("a") == m2.count("a")) << std::endl;
-	std::cout << "m1.count('b') == m2.count('b') : " << (m1.count("b") == m2.count("b")) << std::endl;
-	std::cout << "m1.count('z') == m2.count('z') : " << (m1.count("z") == m2.count("z")) << std::endl;
+	std::cout << "m1.count('a') == m2.count('a') : " << printBool((m1.count("a") == m2.count("a"))) << std::endl;
+	std::cout << "m1.count('b') == m2.count('b') : " << printBool((m1.count("b") == m2.count("b"))) << std::endl;
+	std::cout << "m1.count('z') == m2.count('z') : " << printBool((m1.count("z") == m2.count("z"))) << std::endl;
 	std::cout << std::endl;
 }
 
@@ -307,10 +316,10 @@ static void bounds()
 	m2["c"] = 42;
 	m2["d"] = 42;
 	
-	std::cout << "m1.lower_bound('a') == m2.lower_bound('a') : " << (m1.lower_bound("a")->first == m2.lower_bound("a")->first) << std::endl;
-	std::cout << "m1.lower_bound('c') == m2.lower_bound('c') : " << (m1.lower_bound("c")->first == m2.lower_bound("c")->first) << std::endl;
-	std::cout << "m1.upper_bound('a') == m2.upper_bound('a') : " << (m1.upper_bound("a")->first == m2.upper_bound("a")->first) << std::endl;
-	std::cout << "m1.upper_bound('c') == m2.upper_bound('c') : " << (m1.upper_bound("c")->first == m2.upper_bound("c")->first) << std::endl;
+	std::cout << "m1.lower_bound('a') == m2.lower_bound('a') : " << printBool((m1.lower_bound("a")->first == m2.lower_bound("a")->first)) << std::endl;
+	std::cout << "m1.lower_bound('c') == m2.lower_bound('c') : " << printBool((m1.lower_bound("c")->first == m2.lower_bound("c")->first)) << std::endl;
+	std::cout << "m1.upper_bound('a') == m2.upper_bound('a') : " << printBool((m1.upper_bound("a")->first == m2.upper_bound("a")->first)) << std::endl;
+	std::cout << "m1.upper_bound('c') == m2.upper_bound('c') : " << printBool((m1.upper_bound("c")->first == m2.upper_bound("c")->first)) << std::endl;
 	std::cout << std::endl;
 }
 
@@ -334,10 +343,10 @@ static void range(void)
 	std::pair<ft::map<std::string, int>::iterator, ft::map<std::string, int>::iterator> a = m1.equal_range("a");
 	std::pair<std::map<std::string, int>::iterator, std::map<std::string, int>::iterator> b = m2.equal_range("a");
 	
-	std::cout << "a.first->first == b.first->first : " << (a.first->first == b.first->first) << std::endl;
-	std::cout << "a.first->second == b.first->second : " << (a.first->second == b.first->second) << std::endl;
-	std::cout << "a.second->first == b.second->first : " << (a.second->first == b.second->first) << std::endl;
-	std::cout << "a.second->second == b.second->second : " << (a.second->second == b.second->second) << std::endl;
+	std::cout << "a.first->first == b.first->first : " << printBool((a.first->first == b.first->first)) << std::endl;
+	std::cout << "a.first->second == b.first->second : " << printBool((a.first->second == b.first->second)) << std::endl;
+	std::cout << "a.second->first == b.second->first : " << printBool((a.second->first == b.second->first)) << std::endl;
+	std::cout << "a.second->second == b.second->second : " << printBool((a.second->second == b.second->second)) << std::endl;
 	std::cout << std::endl;
 }
 
@@ -364,34 +373,34 @@ static void operators_comp(void)
 	m3 = m1;
 	m4 = m2;
 	
-	std::cout << "m1 == m2 : " << (m1 == m3) << " " << (m2 == m4) << std::endl;
-	std::cout << "m1 != m2 : " << (m1 != m3) << " " << (m2 != m4) << std::endl;
-	std::cout << "m1 > m2 : " << (m1 > m3) << " " << (m2 > m4) << std::endl;
-	std::cout << "m1 < m2 : " << (m1 < m3) << " " << (m2 < m4) << std::endl;
-	std::cout << "m1 >= m2 : " << (m1 >= m3) << " " << (m2 >= m4) << std::endl;
-	std::cout << "m1 <= m2 : " << (m1 <= m3) << " " << (m2 <= m4) << std::endl;
+	std::cout << "m1 == m2 : " << printBool(((m1 == m3) == (m2 == m4))) << std::endl;
+	std::cout << "m1 != m2 : " << printBool(((m1 != m3) == (m2 != m4))) << std::endl;
+	std::cout << "m1 >= m2 : " << printBool(((m1 >= m3) == (m2 >= m4))) << std::endl;
+	std::cout << "m1 > m2  : " << printBool(((m1 > m3) == (m2 > m4))) << std::endl;
+	std::cout << "m1 <= m2 : " << printBool(((m1 <= m3) == (m2 <= m4))) << std::endl;
+	std::cout << "m1 < m2  : " << printBool(((m1 < m3) == (m2 < m4))) << std::endl;
 	std::cout << std::endl;
 	
 	m1["e"] = 1;
 	m2["e"] = 1;
 	
-	std::cout << "m1 == m2 : " << (m1 == m3) << " " << (m2 == m4) << std::endl;
-	std::cout << "m1 != m2 : " << (m1 != m3) << " " << (m2 != m4) << std::endl;
-	std::cout << "m1 > m2 : " << (m1 > m3) << " " << (m2 > m4) << std::endl;
-	std::cout << "m1 < m2 : " << (m1 < m3) << " " << (m2 < m4) << std::endl;
-	std::cout << "m1 >= m2 : " << (m1 >= m3) << " " << (m2 >= m4) << std::endl;
-	std::cout << "m1 <= m2 : " << (m1 <= m3) << " " << (m2 <= m4) << std::endl;
+	std::cout << "m1 == m2 : " << printBool(((m1 == m3) == (m2 == m4))) << std::endl;
+	std::cout << "m1 != m2 : " << printBool(((m1 != m3) == (m2 != m4))) << std::endl;
+	std::cout << "m1 >= m2 : " << printBool(((m1 >= m3) == (m2 >= m4))) << std::endl;
+	std::cout << "m1 > m2  : " << printBool(((m1 > m3) == (m2 > m4))) << std::endl;
+	std::cout << "m1 <= m2 : " << printBool(((m1 <= m3) == (m2 <= m4))) << std::endl;
+	std::cout << "m1 < m2  : " << printBool(((m1 < m3) == (m2 < m4))) << std::endl;
 	std::cout << std::endl;
 	
 	m3["e"] = 3;
 	m4["e"] = 3;
-	
-	std::cout << "m1 == m2 : " << (m1 == m3) << " " << (m2 == m4) << std::endl;
-	std::cout << "m1 != m2 : " << (m1 != m3) << " " << (m2 != m4) << std::endl;
-	std::cout << "m1 > m2 : " << (m1 > m3) << " " << (m2 > m4) << std::endl;
-	std::cout << "m1 < m2 : " << (m1 < m3) << " " << (m2 < m4) << std::endl;
-	std::cout << "m1 >= m2 : " << (m1 >= m3) << " " << (m2 >= m4) << std::endl;
-	std::cout << "m1 <= m2 : " << (m1 <= m3) << " " << (m2 <= m4) << std::endl;
+
+	std::cout << "m1 == m2 : " << printBool(((m1 == m3) == (m2 == m4))) << std::endl;
+	std::cout << "m1 != m2 : " << printBool(((m1 != m3) == (m2 != m4))) << std::endl;
+	std::cout << "m1 >= m2 : " << printBool(((m1 >= m3) == (m2 >= m4))) << std::endl;
+	std::cout << "m1 > m2  : " << printBool(((m1 > m3) == (m2 > m4))) << std::endl;
+	std::cout << "m1 <= m2 : " << printBool(((m1 <= m3) == (m2 <= m4))) << std::endl;
+	std::cout << "m1 < m2  : " << printBool(((m1 < m3) == (m2 < m4))) << std::endl;
 }
 
 void map_tests(void)
