@@ -105,7 +105,7 @@ static void max_size(void)
 
 static void access_operator(void)
 {
-	printTitle("[] operator");
+	printTitle("operator[]");
 	
 	ft::map<std::string, int> m1;
 	std::map<std::string, int> m2;
