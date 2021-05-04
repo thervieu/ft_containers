@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:06:20 by user42            #+#    #+#             */
-/*   Updated: 2021/05/04 00:13:43 by user42           ###   ########.fr       */
+/*   Updated: 2021/05/04 22:28:19 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,11 +200,11 @@ static void	erase(void)
 	std1.erase(std1.begin());
 	ft1.erase(ft1.begin());
 
-	std1.erase(----std1.end());
-	ft1.erase(----ft1.end());
+	std1.erase(--std1.end());
+	ft1.erase(--ft1.end());
 
-	std1.erase(++++std1.begin());
-	ft1.erase(++++ft1.begin());
+	std1.erase(++std1.begin());
+	ft1.erase(++ft1.begin());
 	
 	std1.erase(++++std1.begin(), --std1.end());
 	ft1.erase(++++ft1.begin(), --ft1.end());

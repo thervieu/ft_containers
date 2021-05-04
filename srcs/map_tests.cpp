@@ -258,11 +258,7 @@ static void find(void)
 	
 	ft::map<std::string, int> m1;
 	std::map<std::string, int> m2;
-	
-	std::cout << "m1.find('z')->second == m2.find('z')->second : " << printBool((m1.find("z")->second == m2.find("z")->second)) << std::endl;
-	std::cout << "m1.find('z')->second = : " << m1.find("z")->second << std::endl;
-	std::cout << "m2.find('z')->second = : " << m2.find("z")->second << std::endl;
-	
+
 	m1["a"] = 1;
 	m1["b"] = 42;
 	m1["c"] = 123;
@@ -272,9 +268,7 @@ static void find(void)
 	m2["c"] = 123;
 
 	std::cout << "m1.find('a')->second == m2.find('a')->second : " << printBool((m1.find("a")->second == m2.find("a")->second)) << std::endl;
-	std::cout << "m1.find('z')->second == m2.find('z')->second : " << printBool((m1.find("z")->second == m2.find("z")->second)) << std::endl;
-	std::cout << "m1.find('z')->second = : " << m1.find("z")->second << std::endl;
-	std::cout << "m2.find('z')->second = : " << m2.find("z")->second << std::endl;
+	std::cout << "m1.find('b')->second == m2.find('b')->second : " << printBool((m1.find("b")->second == m2.find("b")->second)) << std::endl;
 	std::cout << std::endl;
 }
 
