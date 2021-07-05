@@ -180,13 +180,15 @@ static void assign(void)
 	
 	ft::vector<std::string> v1;
 	std::vector<std::string> v2;
-	
+	std::cout << "HERE\n";
 	v1.assign(test, test + 4);
+	std::cout << "HERE1 ft assign ok\n";
 	v2.assign(test, test + 4);
 	
 	std::cout << "range : " << printBool((v1 == v2)) << std::endl;
-	
+	std::cout << "v1.assign(10, ?);\n";
 	v1.assign(10, "?");
+	std::cout << "v2.assign(10, ?);\n";
 	v2.assign(10, "?");
 	
 	std::cout << "fill : " << printBool((v1 == v2)) << std::endl;
@@ -230,7 +232,9 @@ static void erase(void)
 	
 	v1.assign(test, test + 4);
 	v2.assign(test, test + 4);
+	std::cout << "v1.erase(v1.begin() + 2);\n";
 	v1.erase(v1.begin() + 2);
+	std::cout << "v2.erase(v2.begin() + 2);\n";
 	v2.erase(v2.begin() + 2);
 	
 	std::cout << "erase : " << printBool((v1 == v2)) << std::endl;

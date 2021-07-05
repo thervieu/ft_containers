@@ -13,8 +13,6 @@
 #ifndef VECTORITERATOR_HPP
 # define VECTORITERATOR_HPP
 
-# include "listIterator.hpp"
-
 namespace ft
 {
 

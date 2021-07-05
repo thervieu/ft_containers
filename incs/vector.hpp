@@ -54,7 +54,7 @@ namespace ft
 			explicit vector (const allocator_type& alloc = allocator_type())
 			: _elts(0), _alloc(alloc), _size(0), _capacity(0)
 			{
-				_elts = new T[0];
+				_elts = _alloc.allocate(_capacity);
 			}
 
 			explicit vector (size_type n, const value_type& val = value_type(),
@@ -62,7 +62,7 @@ namespace ft
 			: _alloc(alloc), _size(n)
 			{
 				_capacity = n;
-				_elts = new T[n];
+				_elts = _alloc.allocate(_capacity);
 				for (size_type i = 0; i < _size; i++)
 					_elts[i] = T(val);
 			}
@@ -72,7 +72,7 @@ namespace ft
             const allocator_type& alloc = allocator_type())
 			: _elts(0), _alloc(alloc), _size(0), _capacity(0)
 			{
-				_elts = new T[0];
+				_elts = _alloc.allocate(_capacity);
 				assign(first, last);
 			}
 
@@ -80,7 +80,7 @@ namespace ft
 			{
 				_size = x._size;
 				_capacity = x._capacity;
-				_elts = new T[x._capacity];
+				_elts = _alloc.allocate(_capacity);
 				
 				for (size_type i = 0; i < x._size; i++)
 					_elts[i] = x._elts[i];
@@ -88,7 +88,9 @@ namespace ft
 
 			~vector()
 			{
-				delete[] _elts;
+				for (iterator it = begin(); it != end(); ++it)
+                    _alloc.destroy(&(*it));
+                _alloc.deallocate(_elts, _capacity);
 			}
 
 			vector& operator= (const vector& x)
@@ -96,9 +98,9 @@ namespace ft
 				if (this == &x)
 					return (*this);
 
-				delete[] _elts;
+                _alloc.deallocate(_elts, _capacity);
 
-				pointer tmp = new T[x._capacity];
+				pointer tmp = _alloc.allocate(x._capacity);
 
 				for (size_type i = 0; i < x._size; i++)
 					tmp[i] = x._elts[i];
@@ -190,15 +192,26 @@ namespace ft
 			{
 				if (n <= _capacity)
 					return ;
+				// std::cout << "call reserve after if ok\n";
 
-				pointer tmp = new T[n];
+				pointer tmp = _alloc.allocate(n);
+				// std::cout << "allocate tmp ok size = |" << _size << "|\n";
 				
 				for (size_type i = 0; i < _size; i++)
-					tmp[i] = _elts[i];
-				delete[] _elts;
+				{
+					// std::cout << "i = |" << i << "|\n";
+					// std::cout << "elts[i] = |" << _elts[i] << "|\n";
+
+					_alloc.construct(&tmp[i], _elts[i]);
+					// std::cout << "tmp[i] = |" << tmp[i] << "|\n";
+				}
+				// std::cout << "tmp = elts values ok\n";
+                _alloc.deallocate(_elts, _size);
+				// std::cout << "deallocate elts ok\n";
 				
 				_capacity = n;
 				_elts = tmp;
+				// std::cout << "end reserve ok\n";
 			}
 
 			/*
@@ -258,13 +271,19 @@ namespace ft
 			{
 				if (empty() == 0)
 					clear();
+				// std::cout << "hey\n";
 				insert(begin(), first, last);
 			}
 
 			void assign (size_type n, const value_type& val)
 			{
+				// std::cout << "hey2\n";
 				if (empty() == 0)
+				{
+					// std::cout << "clear\n";
 					clear();
+				}
+				// std::cout << "hey3\n";
 				insert(begin(), n, val);
 			}
 
@@ -283,30 +302,43 @@ namespace ft
 
 			iterator insert (iterator position, const value_type& val)
 			{
+				// std::cout << "begin insret val\n";
 				size_type i = 0;
 				iterator it = begin();
 
+				// std::cout << "beginok\n";
 				while (it + i != position && i < _size)
+				{
+					// std::cout << "i = " << i << "\n";
 					i++;
+				}
+				// std::cout << "while i ok\n";
 				
 				if (_size + 1 > _capacity)
+				{
 					reserve(_size + 1);
+				}
 				_size++;
-
+				// std::cout << "reserve ok\n";
 				size_type r_i = _size - 1;
 				while (r_i > i)
 				{
 					_elts[r_i] = _elts[r_i - 1];
 					r_i--;
 				}
-				_elts[i] = val;
+				// std::cout << "while  ok\n";
+				_alloc.construct(&_elts[i], val);
+				// std::cout << "op=  ok val = " << _elts[i] << "\n";
 				return (iterator(&_elts[i]));
 			}
 
     		void insert (iterator position, size_type n, const value_type& val)
 			{
 				while (n--)
+				{
+					// std::cout << "n = " << n << "\n";
 					position = insert(position, val);
+				}
 			}
 
 			template <class InputIterator>
@@ -314,6 +346,7 @@ namespace ft
 			{
 				while (first != last)
 				{
+					// std::cout << "while insert input\n";
 					position = insert(position, *first) + 1;
 					first++;
 				}
@@ -322,7 +355,7 @@ namespace ft
 			iterator erase (iterator position)
 			{
 				iterator pos = position;
-				while (pos != end())
+				while (pos + 1 != end())
 				{
 					*pos = *(pos + 1);
 					pos++;
@@ -346,11 +379,13 @@ namespace ft
 				ft::swap(_size, x._size);
 				ft::swap(_capacity, x._capacity);
 				ft::swap(_elts, x._elts);
+				ft::swap(_alloc, x._alloc);
 			}
 
 			void clear()
 			{
-				erase(begin(), end());
+				while (_size)
+					pop_back();
 			}
 	};
 
