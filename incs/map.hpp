@@ -5,6 +5,7 @@
 # include <memory>
 
 # include "listIterator.hpp"
+# include "ft_stl.hpp"
 # include "mapIterator.hpp"
 
 # include <iostream>
@@ -69,6 +70,12 @@ namespace ft
 			node			_root;
 
 			size_type		_size;
+
+			template <class T1,class T2>
+            pair<T1,T2> make_pair(T1 x, T2 y) const
+            {
+                return (pair<T1,T2>(x,y));
+            }
 
 			node		newNode(key_type _key, mapped_type _mapped, node parent, bool _end = false)
 			{

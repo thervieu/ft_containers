@@ -89,7 +89,7 @@ static void resize(void)
 	v2.resize(10, "test");
 
 	std::cout << "test1 : " << printBool((v1 == v2)) << std::endl;
-	
+
 	v1.resize(2, "42");
 	v2.resize(2, "42");
 	
@@ -180,9 +180,7 @@ static void assign(void)
 	
 	ft::vector<std::string> v1;
 	std::vector<std::string> v2;
-	std::cout << "HERE\n";
 	v1.assign(test, test + 4);
-	std::cout << "HERE1 ft assign ok\n";
 	v2.assign(test, test + 4);
 	
 	std::cout << "range : " << printBool((v1 == v2)) << std::endl;

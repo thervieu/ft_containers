@@ -206,10 +206,12 @@ namespace ft
 					// std::cout << "tmp[i] = |" << tmp[i] << "|\n";
 				}
 				// std::cout << "tmp = elts values ok\n";
-                _alloc.deallocate(_elts, _size);
+                _alloc.deallocate(_elts, _capacity);
 				// std::cout << "deallocate elts ok\n";
-				
+
+				// std::cout << "capacity bef = " << _capacity << "\n";
 				_capacity = n;
+				// std::cout << "capacity aft = " << _capacity << "\n";
 				_elts = tmp;
 				// std::cout << "end reserve ok\n";
 			}
@@ -291,7 +293,7 @@ namespace ft
 			{
 				if (_size + 1 > _capacity)
 					reserve(_size + 1);
-				_elts[_size] = val;
+				_alloc.construct(&_elts[_size], val);
 				_size++;
 			}
 
@@ -315,15 +317,13 @@ namespace ft
 				// std::cout << "while i ok\n";
 				
 				if (_size + 1 > _capacity)
-				{
 					reserve(_size + 1);
-				}
 				_size++;
 				// std::cout << "reserve ok\n";
 				size_type r_i = _size - 1;
 				while (r_i > i)
 				{
-					_elts[r_i] = _elts[r_i - 1];
+					_alloc.construct(&_elts[r_i], _elts[r_i - 1]);
 					r_i--;
 				}
 				// std::cout << "while  ok\n";
