@@ -1,4 +1,5 @@
 #include "../incs/tests.hpp"
+#include "../incs/ft_stl.hpp"
 
 
 template <typename T, typename S>
@@ -51,12 +52,13 @@ static void constructors(void)
 	printTitle("Constructors");
 	
 	std::pair<int, int> a[] = {std::make_pair(0, 1), std::make_pair(1, 0), std::make_pair(2, 1)};
+	ft::pair<int, int> b[] = {ft::make_pair(0, 1), ft::make_pair(1, 0), ft::make_pair(2, 1)};
 	ft::map<int, int> m1;
 	std::map<int, int> m2;
 	
 	std::cout << "default : " << printBool((m1 == m2)) << std::endl;
 	
-	ft::map<int, int> m3(a, a + 3);
+	ft::map<int, int> m3(b, b + 3);
 	std::map<int, int> m4(a, a + 3);
 	
 	std::cout << "range : " << printBool((m3 == m4)) << std::endl;
@@ -138,24 +140,25 @@ static void insert(void)
 	printTitle("Insert");
 
 	std::pair<int, int> a[] = {std::make_pair(0, 1), std::make_pair(1, 0), std::make_pair(2, 1)};
+	ft::pair<int, int> b[] = {ft::make_pair(0, 1), ft::make_pair(1, 0), ft::make_pair(2, 1)};
 
-	ft::map<int, int> m1(a, a + 3);
+	ft::map<int, int> m1(b, b + 3);
 	std::map<int, int> m2(a, a + 3);
 
 
-	m1.insert(std::make_pair(5, 0));
+	m1.insert(ft::make_pair(5, 0));
 	m2.insert(std::make_pair(5, 0));
-	m1.insert(std::make_pair(10, 54));
+	m1.insert(ft::make_pair(10, 54));
 	m2.insert(std::make_pair(10, 54));
 
 	std::cout << "single element : " << printBool((m1 == m2)) << std::endl;
 
-	m1.insert(++m1.begin(), std::make_pair(5, 5));
+	m1.insert(++m1.begin(), ft::make_pair(5, 5));
 	m2.insert(++m2.begin(), std::make_pair(5, 5));
 
 	std::cout << "hint : " << printBool((m1 == m2)) << std::endl;
 
-	m1.insert(a, a + 2);
+	m1.insert(b, b + 2);
 	m2.insert(a, a + 2);
 	
 	std::cout << "range : " << printBool((m1 == m2)) << std::endl;
@@ -334,7 +337,7 @@ static void range(void)
 	m2["c"] = 42;
 	m2["d"] = 42;
 	
-	std::pair<ft::map<std::string, int>::iterator, ft::map<std::string, int>::iterator> a = m1.equal_range("a");
+	ft::pair<ft::map<std::string, int>::iterator, ft::map<std::string, int>::iterator> a = m1.equal_range("a");
 	std::pair<std::map<std::string, int>::iterator, std::map<std::string, int>::iterator> b = m2.equal_range("a");
 	
 	std::cout << "a.first->first == b.first->first : " << printBool((a.first->first == b.first->first)) << std::endl;

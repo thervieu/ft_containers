@@ -83,7 +83,7 @@ namespace ft
 				_elts = _alloc.allocate(_capacity);
 				
 				for (size_type i = 0; i < x._size; i++)
-					_elts[i] = x._elts[i];
+					_alloc.construct(&_elts[_size], x._elts[i]);
 			}
 
 			~vector()

@@ -19,14 +19,14 @@
 
 namespace ft
 {
-	template < class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<std::pair<const Key,T> > >
+	template < class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<ft::pair<const Key,T> > >
 	class map
 	{
 		public:
 
 			typedef Key key_type;
 			typedef T mapped_type;
-			typedef std::pair<const key_type, mapped_type> value_type;
+			typedef ft::pair<const key_type, mapped_type> value_type;
 			typedef Compare key_compare;
 
 			class value_compare
@@ -71,17 +71,11 @@ namespace ft
 
 			size_type		_size;
 
-			template <class T1,class T2>
-            pair<T1,T2> make_pair(T1 x, T2 y) const
-            {
-                return (pair<T1,T2>(x,y));
-            }
-
 			node		newNode(key_type _key, mapped_type _mapped, node parent, bool _end = false)
 			{
 				node _node = new BinaryNode<key_type, mapped_type>;
 				
-				_node->pair = std::make_pair(_key, _mapped);
+				_node->pair = ft::make_pair(_key, _mapped);
 				
 				_node->parent = parent;
 				_node->left = 0;
@@ -321,7 +315,7 @@ namespace ft
 				iterator it = find(k);
 				if (it != end())
 					return (it->second);
-				return (insert(std::make_pair(k, mapped_type())).first->second);
+				return (insert(ft::make_pair(k, mapped_type())).first->second);
 			}
 
 			/*
@@ -329,14 +323,14 @@ namespace ft
 			*/
 
 			//https://stackoverflow.com/questions/23421639/return-false-or-value-c
-			std::pair<iterator,bool> insert (const value_type& val)
+			ft::pair<iterator,bool> insert (const value_type& val)
 			{
 				iterator	it;
 
 				if ((it = find(val.first)) != end())
-					return (std::make_pair(it, false));
+					return (ft::make_pair(it, false));
 				_size++;
-				return (std::make_pair(iterator(addNode(_root, val.first, val.second)), true));
+				return (ft::make_pair(iterator(addNode(_root, val.first, val.second)), true));
 			}
 
 			iterator insert (iterator position, const value_type& val)
@@ -493,14 +487,14 @@ namespace ft
 				return (end());
 			}
 
-			std::pair<const_iterator, const_iterator> equal_range(const key_type &k) const
+			ft::pair<const_iterator, const_iterator> equal_range(const key_type &k) const
 			{
-				return (std::pair<const_iterator, const_iterator>(this->lower_bound(k), this->upper_bound(k)));
+				return (ft::pair<const_iterator, const_iterator>(this->lower_bound(k), this->upper_bound(k)));
 			}
 
-			std::pair<iterator, iterator> equal_range(const key_type &k)
+			ft::pair<iterator, iterator> equal_range(const key_type &k)
 			{
-				return (std::pair<iterator, iterator>(this->lower_bound(k), this->upper_bound(k)));
+				return (ft::pair<iterator, iterator>(this->lower_bound(k), this->upper_bound(k)));
 			}
 
 	};
@@ -516,7 +510,7 @@ namespace ft
 	};
 
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator==(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	bool operator==(const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs)
 	{
 		if (lhs.size() != rhs.size())
 			return (false);
@@ -533,13 +527,13 @@ namespace ft
 	};
 
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator!=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	bool operator!=(const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs)
 	{
 		return (!(lhs == rhs));
 	};
 
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator< (const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	bool operator< (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs)
 	{
 		if (lhs.size() < rhs.size())
 			return (true);
@@ -556,19 +550,19 @@ namespace ft
 	};
 
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator<= (const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	bool operator<= (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs)
 	{
 		return (!(rhs < lhs));
 	};
 
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator> (const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	bool operator> (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs)
 	{
 		return (rhs < lhs);
 	};
 
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator>= (const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	bool operator>= (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs)
 	{
 		return (!(lhs < rhs));
 	};

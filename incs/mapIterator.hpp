@@ -14,6 +14,7 @@
 # define MAPITERATOR_HPP
 
 # include "listIterator.hpp"
+# include "ft_stl.hpp"
 
 namespace ft
 {
@@ -27,7 +28,7 @@ namespace ft
 	template <class Key, class T>
 	struct BinaryNode
 	{
-		std::pair<Key, T> pair;
+		ft::pair<Key, T> pair;
 		BinaryNode *parent;
 		BinaryNode *left;
 		BinaryNode *right;
@@ -39,8 +40,8 @@ namespace ft
 	{
 		public:
 		
-			typedef	std::pair<K, T> value_type;
-			typedef	std::pair<K, T>& reference;
+			typedef	ft::pair<K, T> value_type;
+			typedef	ft::pair<K, T>& reference;
 			typedef	BinaryNode<K, T>* pointer;
 		
 		protected:
@@ -238,8 +239,8 @@ namespace ft
 	{
 		public:
 		
-			typedef	std::pair<K, T> value_type;
-			typedef	std::pair<K, T>& reference;
+			typedef	ft::pair<K, T> value_type;
+			typedef	ft::pair<K, T>& reference;
 			typedef	BinaryNode<K, T>* pointer;
 		
 		protected:
@@ -437,8 +438,8 @@ namespace ft
 	{
 		public:
 		
-			typedef	std::pair<K, T> value_type;
-			typedef	std::pair<K, T>& reference;
+			typedef	ft::pair<K, T> value_type;
+			typedef	ft::pair<K, T>& reference;
 			typedef	BinaryNode<K, T>* pointer;
 		
 		protected:
@@ -636,8 +637,8 @@ namespace ft
 	{
 		public:
 		
-			typedef	std::pair<K, T> value_type;
-			typedef	std::pair<K, T>& reference;
+			typedef	ft::pair<K, T> value_type;
+			typedef	ft::pair<K, T>& reference;
 			typedef	BinaryNode<K, T>* pointer;
 		
 		protected:
