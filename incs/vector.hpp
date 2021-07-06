@@ -192,28 +192,14 @@ namespace ft
 			{
 				if (n <= _capacity)
 					return ;
-				// std::cout << "call reserve after if ok\n";
 
 				pointer tmp = _alloc.allocate(n);
-				// std::cout << "allocate tmp ok size = |" << _size << "|\n";
-				
 				for (size_type i = 0; i < _size; i++)
-				{
-					// std::cout << "i = |" << i << "|\n";
-					// std::cout << "elts[i] = |" << _elts[i] << "|\n";
-
 					_alloc.construct(&tmp[i], _elts[i]);
-					// std::cout << "tmp[i] = |" << tmp[i] << "|\n";
-				}
-				// std::cout << "tmp = elts values ok\n";
-                _alloc.deallocate(_elts, _capacity);
-				// std::cout << "deallocate elts ok\n";
 
-				// std::cout << "capacity bef = " << _capacity << "\n";
+                _alloc.deallocate(_elts, _capacity);
 				_capacity = n;
-				// std::cout << "capacity aft = " << _capacity << "\n";
 				_elts = tmp;
-				// std::cout << "end reserve ok\n";
 			}
 
 			/*
@@ -273,19 +259,13 @@ namespace ft
 			{
 				if (empty() == 0)
 					clear();
-				// std::cout << "hey\n";
 				insert(begin(), first, last);
 			}
 
 			void assign (size_type n, const value_type& val)
 			{
-				// std::cout << "hey2\n";
 				if (empty() == 0)
-				{
-					// std::cout << "clear\n";
 					clear();
-				}
-				// std::cout << "hey3\n";
 				insert(begin(), n, val);
 			}
 
@@ -304,41 +284,30 @@ namespace ft
 
 			iterator insert (iterator position, const value_type& val)
 			{
-				// std::cout << "begin insret val\n";
 				size_type i = 0;
 				iterator it = begin();
 
-				// std::cout << "beginok\n";
 				while (it + i != position && i < _size)
-				{
-					// std::cout << "i = " << i << "\n";
 					i++;
-				}
-				// std::cout << "while i ok\n";
 				
 				if (_size + 1 > _capacity)
 					reserve(_size + 1);
 				_size++;
-				// std::cout << "reserve ok\n";
+
 				size_type r_i = _size - 1;
 				while (r_i > i)
 				{
 					_alloc.construct(&_elts[r_i], _elts[r_i - 1]);
 					r_i--;
 				}
-				// std::cout << "while  ok\n";
 				_alloc.construct(&_elts[i], val);
-				// std::cout << "op=  ok val = " << _elts[i] << "\n";
 				return (iterator(&_elts[i]));
 			}
 
     		void insert (iterator position, size_type n, const value_type& val)
 			{
 				while (n--)
-				{
-					// std::cout << "n = " << n << "\n";
 					position = insert(position, val);
-				}
 			}
 
 			template <class InputIterator>
@@ -346,7 +315,6 @@ namespace ft
 			{
 				while (first != last)
 				{
-					// std::cout << "while insert input\n";
 					position = insert(position, *first) + 1;
 					first++;
 				}
