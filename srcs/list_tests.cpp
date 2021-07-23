@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 15:06:20 by user42            #+#    #+#             */
-/*   Updated: 2021/05/04 22:28:19 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/12 23:08:45 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -442,9 +442,7 @@ static void	operators()
 }
 
 void		list_tests(void)
-{
-	std::srand(time(0));
-	
+{	
 	printTitle("LIST_TESTER");
 	
 	constructors_and_copy();	

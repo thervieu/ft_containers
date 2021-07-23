@@ -5,61 +5,72 @@
 template <typename T, typename S>
 bool operator==(ft::map<T, S> &a, std::map<T, S> &b)
 {
+	// std::cout << "op== ft std\n";
 	if (a.size() != b.size())
 		return (false);
 	if (a.empty() != b.empty())
 		return (false);
+	// std::cout << "size and empty ok\n";
 	typename ft::map<T, S>::iterator it = a.begin();
 	typename std::map<T, S>::iterator it2 = b.begin();
+	// std::cout << "iterator ok\n";
+	int i = 0;
 	while (it != a.end())
 	{
+		// std::cout << "i = " << i << "\n";
+		// std::cout << "it->first = " << it->first << "\n";
+		// std::cout << "it2->first = " << it2->first << "\n";
+		// std::cout << "it->second = " << it->second << "\n";
+		// std::cout << "it2->second = " << it2->second << "\n";
 		if (it->first != it2->first || it->second != it2->second)
 			return (false);
 		++it;
 		++it2;
+		i++;
 	}
 	return (true);
 };
 
-template <typename T, typename S>
-static void	printMap(ft::map<T, S> &lhs)
-{
-	typename ft::map<T, S>::iterator it = lhs.begin();
-	std::cout << "ft :  ";
-	while (it != lhs.end())
-	{
-		std::cout << "lhs(" << it->first << ") = " << it->second << " - ";
-		++it;
-	}
-	std::cout << std::endl;
-}
+// template <typename T, typename S>
+// static void	printMap(ft::map<T, S> &lhs)
+// {
+// 	typename ft::map<T, S>::iterator it = lhs.begin();
+// 	std::cout << "ft :  ";
+// 	while (it != lhs.end())
+// 	{
+// 		std::cout << "lhs(" << it->first << ") = " << it->second << " - ";
+// 		++it;
+// 	}
+// 	std::cout << std::endl;
+// }
 
-template <typename T, typename S>
-static void	printTrueMap(std::map<T, S> &lhs)
-{
-	typename std::map<T, S>::iterator it = lhs.begin();
-	std::cout << "std : ";
-	while (it != lhs.end())
-	{
-		std::cout << "lhs(" << it->first << ") = " << it->second << " - ";
-		++it;
-	}
-	std::cout << std::endl;
-}
+// template <typename T, typename S>
+// static void	printTrueMap(std::map<T, S> &lhs)
+// {
+// 	typename std::map<T, S>::iterator it = lhs.begin();
+// 	std::cout << "std : ";
+// 	while (it != lhs.end())
+// 	{
+// 		std::cout << "lhs(" << it->first << ") = " << it->second << " - ";
+// 		++it;
+// 	}
+// 	std::cout << std::endl;
+// }
 
 static void constructors(void)
 {
 	printTitle("Constructors");
 	
-	std::pair<int, int> a[] = {std::make_pair(0, 1), std::make_pair(1, 0), std::make_pair(2, 1)};
-	ft::pair<int, int> b[] = {ft::make_pair(0, 1), ft::make_pair(1, 0), ft::make_pair(2, 1)};
+	std::pair<int, int> a[] = {std::make_pair(0, 3), std::make_pair(2, 0), std::make_pair(2, 1)};
+	ft::pair<int, int> b[] = {ft::make_pair(0, 3), ft::make_pair(2, 0), ft::make_pair(2, 1)};
+
 	ft::map<int, int> m1;
 	std::map<int, int> m2;
 	
 	std::cout << "default : " << printBool((m1 == m2)) << std::endl;
 	
-	ft::map<int, int> m3(b, b + 3);
-	std::map<int, int> m4(a, a + 3);
+	ft::map<int, int> m3(b, b + 2);
+	std::map<int, int> m4(a, a + 2);
 	
 	std::cout << "range : " << printBool((m3 == m4)) << std::endl;
 	
@@ -400,6 +411,9 @@ static void operators_comp(void)
 	std::cout << "m1 < m2  : " << printBool(((m1 < m3) == (m2 < m4))) << std::endl;
 }
 
+#include <ctime>
+#include <stdio.h>
+
 void map_tests(void)
 {
 	printTitle("MAP_TESTER");
@@ -415,4 +429,40 @@ void map_tests(void)
 	bounds();
 	range();
 	operators_comp();
+
+	ft::map<int, bool> ft1;
+	std::map<int, bool> std1;
+
+	clock_t t;
+
+	t = clock();
+	for (size_t i = 0; i < 100; i++)
+	{
+		std1[i * 10] = true;
+	}
+	t = clock() - t;
+	printf("\nstd: this took |%10ld| ticks\n", t);
+	
+	for (size_t i = 0; i < 100; i++)
+	{
+		ft1[i * 10] = true;
+	}
+	t = clock() - t;
+	printf("ft:  this took |%10ld| ticks\n", t);
+
+	t = clock();
+	for (size_t i = 0; i < 100; i++)
+	{
+		std1.find(i * 10);
+	}
+	t = clock() - t;
+	printf("\nstd: this took |%10ld| ticks\n", t);
+	
+	t = clock();
+	for (size_t i = 0; i < 100; i++)
+	{
+		ft1.find(i * 10);
+	}
+	t = clock() - t;
+	printf("ft:  this took |%10ld| ticks\n", t);
 }

@@ -16,6 +16,7 @@ std::string	printBool(bool val)
 
 int		main(int ac, char **av)
 {
+	std::srand(time(0));
 	if (ac == 2)
 	{
 		std::string name(av[1]);
