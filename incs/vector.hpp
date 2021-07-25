@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 16:03:32 by nforay            #+#    #+#             */
-/*   Updated: 2021/07/21 13:12:03 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/25 14:53:36 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -315,7 +315,7 @@ namespace ft
 			void resize(size_type n, value_type val = value_type())
 			{
 				if (n > _capacity)
-					reallocate(n);
+					reallocate((n > _size * 2) ? n : _size * 2);
 				while (n > _size)
 					push_back(val);
 				while (n < _size)
@@ -632,8 +632,10 @@ namespace ft
 					++tmp;
 					++n;
 				}
-				if ((_size + n) > _capacity)
+				if (_size == 0)
 					reallocate(_size + n);
+				if ((_size + n) > _capacity)
+					reallocate((_size + n > _size * 2) ? _size + n : _size * 2);
 				_size += n;
 				iterator it(&_head[_size - n]);
 				iterator insert_pos(&_head[shift]);
@@ -737,11 +739,9 @@ namespace ft
 			*/
 			size_type grow(size_type new_size)
 			{
-				size_type		growth_factor = 2;
-
 				size_type	new_capacity = (_capacity > 0 ? _capacity : 1);
 				while (new_capacity < new_size)
-					new_capacity *= growth_factor;
+					new_capacity *= 2;
 				return (new_capacity);
 			}
 
