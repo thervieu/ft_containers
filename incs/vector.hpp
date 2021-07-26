@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 16:03:32 by user42            #+#    #+#             */
-/*   Updated: 2021/07/26 14:55:51 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/26 17:48:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,7 +231,7 @@ namespace ft
 			{
 				// std::cout << "rbegin\n";
 				// for (int i = 0; i < (int)_size; ++i)
-					// std::cout << "it[" << i << "] = |" << *(_head + i) << "|\n";
+				// 	std::cout << "it[" << i << "] = |" << *(_head + i) << "|\n";
 				// std::cout << "\n\n";
 				return (reverse_iterator(end()));
 			}
@@ -739,7 +739,10 @@ namespace ft
 			 * vector.
 			 * @return The allocator.
 			*/
-			allocator_type get_allocator() const { return (_alloc); }
+			allocator_type get_allocator() const
+			{
+				return (_alloc);
+			}
 
 /*
 ** ---------------------------- PRIVATE FUNCTIONS ------------------------------

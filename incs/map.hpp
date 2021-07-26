@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:21:43 by nforay            #+#    #+#             */
-/*   Updated: 2021/07/23 20:02:53 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/26 16:45:46 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -436,6 +436,8 @@ namespace ft
 			*/
 			iterator begin()
 			{
+				if (this->empty())
+					return (iterator(_root));
 				return (iterator(this->getSmallestNode(_root)));
 			}
 
@@ -446,6 +448,8 @@ namespace ft
 			*/
 			const_iterator begin() const
 			{
+				if (this->empty())
+					return (const_iterator(_root));
 				return (const_iterator(this->getSmallestNode(_root)));
 			}
 
@@ -457,7 +461,7 @@ namespace ft
 			iterator end()
 			{
 				if (this->empty())
-					return (iterator());
+					return (iterator(_root));
 				return (iterator((this->getBiggestNode(_root))->right,
 					this->getBiggestNode(_root)));
 			}
@@ -471,7 +475,7 @@ namespace ft
 			const_iterator end() const
 			{
 				if (this->empty())
-					return (iterator());
+					return (const_iterator(_root));
 				return (const_iterator((this->getBiggestNode(_root))->right,
 					this->getBiggestNode(_root)));
 			}
@@ -484,6 +488,8 @@ namespace ft
 			*/
 			reverse_iterator rbegin()
 			{
+				if (this->empty())
+					return (reverse_iterator(_root));
 				return (reverse_iterator(this->getBiggestNode(_root)));
 			}
 
@@ -495,6 +501,8 @@ namespace ft
 			*/
 			const_reverse_iterator rbegin() const
 			{
+				if (this->empty())
+					return (const_reverse_iterator(_root));
 				return (const_reverse_iterator(this->getBiggestNode(_root)));
 			}
 
@@ -699,9 +707,11 @@ namespace ft
 			*/
 			void erase(iterator first, iterator last)
 			{
-				map tmp(first, last);
-				for (reverse_iterator it = tmp.rbegin(); it != tmp.rend(); ++it)
-					this->erase(it->first);
+				while (first != last)
+				{
+					std::cout << "erasing\n";
+					this->erase(first++);
+				}
 			}
 
 			/**

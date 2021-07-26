@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 19:28:07 by user42            #+#    #+#             */
-/*   Updated: 2021/07/26 14:54:31 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/26 17:54:37 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,8 +175,10 @@ namespace ft
 
 		private:
 			
-			const_reference operator[](size_t ) {return this->_ptr;
-		}
+			const_reference operator[](size_t )
+			{
+				return (this->_ptr);
+			}
 		
 			
 		public:
@@ -260,12 +262,10 @@ namespace ft
 
 			}
 			
-			explicit reverseVectorIterator(vectorIterator<T> rhs)
+			explicit reverseVectorIterator(vectorIterator<T> rhs) : _base(--rhs)
 			{
-				vectorIterator<T> tmp(rhs);
-				this->_base = --tmp;
 				// for (int i = 0; i < 5; i++)
-					// std::cout << *(rhs++) << "\n";
+				// 	std::cout << *(rhs--) << "\n";
 				// std::cout << "rev(vec) revIt\n";
 			}
 
@@ -321,7 +321,7 @@ namespace ft
 			
 			reference operator[](size_t n)
 			{
-				return this->_base.operator[](n);
+				return this->_base[-n];
 			}
 			
 			
@@ -349,7 +349,7 @@ namespace ft
 			
 			difference_type operator+(const reverseVectorIterator& other) const
 			{
-				return (other.base().operator-(this->_base));
+				return (other.base().operator-(this->_base + 1));
 			}
 			
 			reverseVectorIterator operator-(difference_type n) const
@@ -361,7 +361,7 @@ namespace ft
 			
 			difference_type operator-(const reverseVectorIterator& other) const
 			{
-				return (other.base().operator-(this->_base));
+				return (other.base().operator-(this->_base + 1));
 			}
 			reverseVectorIterator& operator+=(int n)
 			{
@@ -377,7 +377,8 @@ namespace ft
 			
 			reverseVectorIterator& operator++()
 			{
-				this->_base.operator--();
+				// this->_base.operator--();
+				--_base;
 				return (*this);
 			}
 			
