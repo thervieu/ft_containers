@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/28 16:03:32 by nforay            #+#    #+#             */
-/*   Updated: 2021/07/25 14:53:36 by user42           ###   ########.fr       */
+/*   Created: 2021/06/28 16:03:32 by user42            #+#    #+#             */
+/*   Updated: 2021/07/26 14:55:51 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ namespace ft
 				const allocator_type& alloc = allocator_type())
 				: _size(n), _capacity(n), _alloc(alloc)
 			{
+				// std::cout << "size = |" << _size << "|\n";
 				_head = _alloc.allocate(_capacity);
 				for (size_type i = 0; i < _size; i++)
 					_alloc.construct(&_head[i], val);
@@ -145,7 +146,10 @@ namespace ft
 			*/
 			vector& operator=(const vector& x)
 			{
+				// std::cout << "op= vector\n";
 				_size = x._size;
+				if (_capacity)
+					_alloc.deallocate(_head, _capacity);
 				_head = _alloc.allocate(x._size);
 				for (size_type i = 0; i < _size; i++)
 					_alloc.construct(&_head[i], x._head[i]);
@@ -193,6 +197,10 @@ namespace ft
 			*/
 			iterator end()
 			{
+				// std::cout << "end values: size = |" << _size << "|\n";
+				// for (int i = 0; i < 5; i++)
+					// std::cout << *(_head + i) << "\n";
+				// std::cout << "end values\n\n";
 				return (iterator(_head + _size));
 			}
 
@@ -221,7 +229,11 @@ namespace ft
 			*/
 			reverse_iterator rbegin()
 			{
-				return (reverse_iterator(_head + _size));
+				// std::cout << "rbegin\n";
+				// for (int i = 0; i < (int)_size; ++i)
+					// std::cout << "it[" << i << "] = |" << *(_head + i) << "|\n";
+				// std::cout << "\n\n";
+				return (reverse_iterator(end()));
 			}
 
 			/**
@@ -235,7 +247,7 @@ namespace ft
 			*/
 			const_reverse_iterator rbegin() const
 			{
-				return (const_reverse_iterator(_head + _size));
+				return (const_reverse_iterator(end()));
 			}
 
 			/**
@@ -249,7 +261,7 @@ namespace ft
 			*/
 			reverse_iterator rend()
 			{
-				return (reverse_iterator(_head + _size - 1));
+				return (reverse_iterator(begin()));
 			}
 
 			/**
@@ -263,7 +275,7 @@ namespace ft
 			*/
 			const_reverse_iterator rend() const
 			{
-				return (const_reverse_iterator(_head + _size - 1));
+				return (const_reverse_iterator(begin()));
 			}
 
 /*
@@ -501,7 +513,7 @@ namespace ft
 			void assign(typename ft::enable_if<!std::numeric_limits<InputIterator>
 				::is_integer, InputIterator>::type first, InputIterator last)
 			{
-				difference_type n = 0;//(last - first);
+				difference_type n = 0;
 				InputIterator tmp(first);
 				while (tmp != last)
 				{
@@ -753,8 +765,8 @@ namespace ft
 				pointer new_vector = _alloc.allocate(new_capacity);
 				for (size_type i = 0; i < _size; i++)
 				{
-					_alloc.construct(&new_vector[i], _head[i]);
 					_alloc.destroy(&_head[i]);
+					_alloc.construct(&new_vector[i], _head[i]);
 				}
 				if (_capacity)
 					_alloc.deallocate(_head, _capacity);
