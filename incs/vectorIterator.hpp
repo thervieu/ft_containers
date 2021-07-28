@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 19:28:07 by user42            #+#    #+#             */
-/*   Updated: 2021/07/26 17:54:37 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/28 10:42:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -437,7 +437,6 @@ namespace ft
 
 			constReverseVectorIterator& operator=(const constReverseVectorIterator& it)
 			{
-				// std::cout << "op= constRevIt\n";
 				if (this != &it) 
 					this->_base = it._base;
 				return (*this);

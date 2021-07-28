@@ -436,14 +436,14 @@ void map_tests(void)
 	clock_t t;
 
 	t = clock();
-	for (size_t i = 0; i < 100; i++)
+	for (size_t i = 0; i < 10000; i++)
 	{
 		std1[i * 10] = true;
 	}
 	t = clock() - t;
 	printf("\nstd: this took |%10ld| ticks\n", t);
 	
-	for (size_t i = 0; i < 100; i++)
+	for (size_t i = 0; i < 10000; i++)
 	{
 		ft1[i * 10] = true;
 	}
@@ -451,7 +451,7 @@ void map_tests(void)
 	printf("ft:  this took |%10ld| ticks\n", t);
 
 	t = clock();
-	for (size_t i = 0; i < 100; i++)
+	for (size_t i = 0; i < 10000; i++)
 	{
 		std1.find(i * 10);
 	}
@@ -459,7 +459,7 @@ void map_tests(void)
 	printf("\nstd: this took |%10ld| ticks\n", t);
 	
 	t = clock();
-	for (size_t i = 0; i < 100; i++)
+	for (size_t i = 0; i < 10000; i++)
 	{
 		ft1.find(i * 10);
 	}

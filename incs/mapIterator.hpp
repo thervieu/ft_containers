@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/04 19:17:59 by nforay            #+#    #+#             */
-/*   Updated: 2021/07/21 14:24:42 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/28 10:34:39 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,8 +256,8 @@ namespace ft
 			: _base(mapIterator<Key,T,Compare,Node>(node, endnode)) {}
 			explicit reverseMapIterator(mapIterator<Key,T,Compare,Node> rhs)
 			: _base(rhs) {}
-			reverseMapIterator(const reverseMapIterator<Key,T,Compare,Node>& rev_it)
-			: _base(rev_it._base) {}
+			reverseMapIterator(const reverseMapIterator<Key,T,Compare,Node>& rhs)
+			: _base(rhs._base) {}
 
 			NodePtr	getNode() const
 			{

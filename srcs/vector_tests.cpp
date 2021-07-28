@@ -294,34 +294,34 @@ static void operators(void)
 	v3 = v1;
 	v4 = v2;
 
-	// std::cout << "v1 == v2 : " << printBool(((v1 == v3) == (v2 == v4))) << std::endl;
-	// std::cout << "v1 != v2 : " << printBool(((v1 != v3) == (v2 != v4))) << std::endl;
-	// std::cout << "v1 >= v2 : " << printBool(((v1 >= v3) == (v2 >= v4))) << std::endl;
-	// std::cout << "v1 > v2  : " << printBool(((v1 > v3) == (v2 > v4))) << std::endl;
-	// std::cout << "v1 <= v2 : " << printBool(((v1 <= v3) == (v2 <= v4))) << std::endl;
-	// std::cout << "v1 < v2  : " << printBool(((v1 < v3) == (v2 < v4))) << std::endl;
-	// std::cout << std::endl;
+	std::cout << "v1 == v2 : " << printBool(((v1 == v3) == (v2 == v4))) << std::endl;
+	std::cout << "v1 != v2 : " << printBool(((v1 != v3) == (v2 != v4))) << std::endl;
+	std::cout << "v1 >= v2 : " << printBool(((v1 >= v3) == (v2 >= v4))) << std::endl;
+	std::cout << "v1 > v2  : " << printBool(((v1 > v3) == (v2 > v4))) << std::endl;
+	std::cout << "v1 <= v2 : " << printBool(((v1 <= v3) == (v2 <= v4))) << std::endl;
+	std::cout << "v1 < v2  : " << printBool(((v1 < v3) == (v2 < v4))) << std::endl;
+	std::cout << std::endl;
 
-	// v1.push_back(42);
-	// v2.push_back(42);
+	v1.push_back(42);
+	v2.push_back(42);
 
-	// std::cout << "v1 == v2 : " << printBool(((v1 == v3) == (v2 == v4))) << std::endl;
-	// std::cout << "v1 != v2 : " << printBool(((v1 != v3) == (v2 != v4))) << std::endl;
-	// std::cout << "v1 >= v2 : " << printBool(((v1 >= v3) == (v2 >= v4))) << std::endl;
-	// std::cout << "v1 > v2  : " << printBool(((v1 > v3) == (v2 > v4))) << std::endl;
-	// std::cout << "v1 <= v2 : " << printBool(((v1 <= v3) == (v2 <= v4))) << std::endl;
-	// std::cout << "v1 < v2  : " << printBool(((v1 < v3) == (v2 < v4))) << std::endl;
-	// std::cout << std::endl;
+	std::cout << "v1 == v2 : " << printBool(((v1 == v3) == (v2 == v4))) << std::endl;
+	std::cout << "v1 != v2 : " << printBool(((v1 != v3) == (v2 != v4))) << std::endl;
+	std::cout << "v1 >= v2 : " << printBool(((v1 >= v3) == (v2 >= v4))) << std::endl;
+	std::cout << "v1 > v2  : " << printBool(((v1 > v3) == (v2 > v4))) << std::endl;
+	std::cout << "v1 <= v2 : " << printBool(((v1 <= v3) == (v2 <= v4))) << std::endl;
+	std::cout << "v1 < v2  : " << printBool(((v1 < v3) == (v2 < v4))) << std::endl;
+	std::cout << std::endl;
 
-	// v3.push_back(43);
-	// v4.push_back(43);
+	v3.push_back(43);
+	v4.push_back(43);
 
-	// std::cout << "v1 == v2 : " << printBool(((v1 == v3) == (v2 == v4))) << std::endl;
-	// std::cout << "v1 != v2 : " << printBool(((v1 != v3) == (v2 != v4))) << std::endl;
-	// std::cout << "v1 >= v2 : " << printBool(((v1 >= v3) == (v2 >= v4))) << std::endl;
-	// std::cout << "v1 > v2  : " << printBool(((v1 > v3) == (v2 > v4))) << std::endl;
-	// std::cout << "v1 <= v2 : " << printBool(((v1 <= v3) == (v2 <= v4))) << std::endl;
-	// std::cout << "v1 < v2  : " << printBool(((v1 < v3) == (v2 < v4))) << std::endl;
+	std::cout << "v1 == v2 : " << printBool(((v1 == v3) == (v2 == v4))) << std::endl;
+	std::cout << "v1 != v2 : " << printBool(((v1 != v3) == (v2 != v4))) << std::endl;
+	std::cout << "v1 >= v2 : " << printBool(((v1 >= v3) == (v2 >= v4))) << std::endl;
+	std::cout << "v1 > v2  : " << printBool(((v1 > v3) == (v2 > v4))) << std::endl;
+	std::cout << "v1 <= v2 : " << printBool(((v1 <= v3) == (v2 <= v4))) << std::endl;
+	std::cout << "v1 < v2  : " << printBool(((v1 < v3) == (v2 < v4))) << std::endl;
 }
 
 void	vector_tests(void)

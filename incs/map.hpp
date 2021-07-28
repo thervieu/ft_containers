@@ -6,20 +6,18 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:21:43 by nforay            #+#    #+#             */
-/*   Updated: 2021/07/26 16:45:46 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/28 10:43:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_HPP
 # define MAP_HPP
 
-# include "ft_stl.hpp"
-# include "mapIterator.hpp"
-
 # include <memory>
 # include <limits>
 # include <functional>
-# include <iostream>
+# include "ft_stl.hpp"
+# include "mapIterator.hpp"
 
 namespace ft
 {
@@ -61,7 +59,7 @@ namespace ft
 			typedef Compare										key_compare;
 			typedef Alloc										allocator_type;
 			typedef typename Alloc::template
-			rebind<Node>::other									nodeAllocator;
+			rebind<Node>::other									Node_allocator;
 			typedef typename allocator_type::reference			reference;
 			typedef typename allocator_type::const_reference	const_reference;
 			typedef typename allocator_type::pointer			pointer;
@@ -76,274 +74,10 @@ namespace ft
 		private:
 
 			Node*			_root;
-			Node*			_lastinsert;
+			Node*			_lastInsert;
 			size_type		_size;
 			key_compare		_comp;
 			allocator_type	_alloc;
-
-			template<class I>
-			void swap(I& x, I& y)
-			{
-				I tmp = y;
-				y = x;
-				x = tmp;
-			}
-
-			/**
-			 * @brief Calculate the height of the given AVL Tree
-			 * @param node Pointer to the starting node for the depth calculation
-			 * @return An int representing the height of the given node
-			*/
-			int		getHeight(Node* node) const
-			{
-				if (node != NULL)
-					return (node->height);
-				return (0);
-			}
-
-			/**
-			 * @brief Calculate the balance factor of the given node
-			 * @param node Pointer to the node to be balanced
-			 * @return An int representing te balance factor. The value –1
-			 * indicates that the left sub-tree contains one extra, the value +1
-			 * indicates that the left sub-tree contains one extra and value 0
-			 * shows that the tree includes equal nodes on each side.
-			*/
-			int		getBalanceNode(Node* node) const
-			{
-				if (node == NULL)
-					return (0);
-				return (getHeight(node->left) - getHeight(node->right));
-			}
-			
-			/**
-			 * @brief Performs a Left-Left rotation of the given node.
-			 * This rotation is performed when a new node is inserted at the
-			 * left child of the left subtree.
-			 * @return The root of the new subtree.
-			*/
-			Node*	tree_ll_rotate(Node* node)
-			{
-				Node*	new_parent;
-
-				new_parent = node->left;
-				new_parent->parent = node->parent;
-				node->parent = new_parent;
-				node->left = new_parent->right;
-				if (new_parent->right)
-					new_parent->right->parent = node;
-				new_parent->right = node;
-				node->height = std::max(getHeight(node->left), getHeight(node->right)) + 1;
-				new_parent->height = std::max(getHeight(new_parent->left), getHeight(new_parent->right)) + 1;
-				return (new_parent);
-			}
-
-
-			/**
-			 * @brief Performs a Right-Right rotation of the given node.
-			 * This rotation is performed when a new node is inserted at the
-			 * right child of the right subtree.
-			 * @return The root of the new subtree.
-			*/
-			Node*	tree_rr_rotate(Node* node)
-			{
-				Node*	new_parent;
-
-				new_parent = node->right;
-				new_parent->parent = node->parent;
-				node->parent = new_parent;
-				node->right = new_parent->left;
-				if (new_parent->left)
-					new_parent->left->parent = node;
-				new_parent->left = node;
-				node->height = std::max(getHeight(node->left), getHeight(node->right)) + 1;
-				new_parent->height = std::max(getHeight(new_parent->left), getHeight(new_parent->right)) + 1;
-				return (new_parent);
-			}
-
-			/**
-			 * @brief Performs a Left-Right rotation of the given node.
-			 * This rotation is performed when a new node is inserted at the
-			 * right child of the left subtree.
-			 * @return The root of the new subtree.
-			*/
-			Node*	tree_lr_rotate(Node* node)
-			{
-				node->left = this->tree_rr_rotate(node->left);
-				return (this->tree_ll_rotate(node));
-			}
-
-			/**
-			 * @brief Performs a Right-Left rotation of the given node.
-			 * This rotation is performed when a new node is inserted at the
-			 * left child of the right subtree.
-			 * @return The root of the new subtree.
-			*/
-			Node*	tree_rl_rotate(Node* node)
-			{
-				node->right = this->tree_ll_rotate(node->right);
-				return (this->tree_rr_rotate(node));
-			}
-
-			/**
-			 * @brief Balance the given Tree
-			 * @param node The node where you want to start balancing.
-			 * @return The root of the AVL Tree
-			*/
-			Node*	balanceTree(Node* node)
-			{
-				int	factor = getBalanceNode(node);
-
-				if (factor == 2)
-				{
-					if (getBalanceNode(node->left) > 0)
-						return (this->tree_ll_rotate(node));
-					else
-						return (this->tree_lr_rotate(node));
-				}
-				else if (factor == -2)
-				{
-					if (getBalanceNode(node->right) < 0)						
-						return (this->tree_rr_rotate(node));
-					else
-						return (this->tree_rl_rotate(node));
-				}
-				return (node);
-			}
-
-			Node*	createNode(const value_type& val, Node* parent)
-			{
-				Node*	new_node = nodeAllocator(_alloc).allocate(1);
-				new_node->right = NULL;
-				new_node->left = NULL;
-				new_node->height = 1;
-				new_node->parent = parent;
-				_alloc.construct(&new_node->val, val);
-				_size++;
-				_lastinsert = new_node;
-				return (new_node);
-			}
-
-			/**
-			 * @brief Insert a new node in the given subtree.
-			 * @return The new root of the tree
-			*/
-			Node*	insertNode(Node* node, Node* parent, const value_type& val)
-			{
-				if (node == NULL)
-					return (createNode(val, parent));
-				if (_comp(val.first, node->val.first))
-					node->left = insertNode(node->left, node, val);
-				else if (_comp(node->val.first, val.first))
-					node->right = insertNode(node->right, node, val);
-				else
-					return (_lastinsert = node);
-				node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
-				return (balanceTree(node));
-			}
-
-			/**
-			 * @brief Delete the node with the corresponding key in the given
-			 * subtree.
-			 * @return The root of the subtree
-			*/
-			Node*	deleteNode(Node* node, const key_type& key)
-			{
-				if (node == NULL)
-					return (NULL);
-				if (_comp(key, node->val.first))
-					node->left = deleteNode(node->left, key);
-				else if (_comp(node->val.first, key))
-					node->right = deleteNode(node->right, key);
-				else
-				{
-					if ((node->right == NULL) || (node->left == NULL))
-					{
-						Node* tmp = node->right ? node->right : node->left;
-						if (tmp == NULL)
-							swap(tmp, node);
-						else
-						{
-							_alloc.destroy(&node->val);
-							_alloc.construct(&node->val, tmp->val);
-							node->right = node->left = NULL;
-						}
-						_alloc.destroy(&tmp->val);
-						nodeAllocator(_alloc).deallocate(tmp, 1);
-						_size--;
-					}
-					else
-					{
-						Node* tmp = this->getSmallestNode(node->right);
-						_alloc.destroy(&node->val);
-						_alloc.construct(&node->val, tmp->val);
-						node->right = deleteNode(node->right, tmp->val.first);
-					}
-				}
-				if (node == NULL)
-					return (node);
-				return (balanceTree(node));
-			}
-
-			/**
-			 * @brief Removes every node from the tree.
-			*/
-			Node*	clearTree(Node* node)
-			{
-				if (!node)
-					return (NULL);
-				if (node->left)
-					clearTree(node->left);
-				if (node->right)
-					clearTree(node->right);
-				_alloc.destroy(&node->val);
-				nodeAllocator(_alloc).deallocate(node, 1);
-				_size--;
-				return (NULL);
-			}
-
-			/**
-			 * @brief Find a node in the tree using the given key starting from
-			 * the given root
-			*/
-			Node*	searchValue(Node* node, const key_type& key) const
-			{
-				if (node == NULL)
-					return (NULL);
-				if (!_comp(node->val.first, key) && !_comp(key, node->val.first))
-					return (node);
-				if (_comp(key, node->val.first))
-					return (searchValue(node->left, key));
-				else if (_comp(node->val.first, key))
-					return (searchValue(node->right, key));
-				return (NULL);
-			}
-
-			/**
-			 * @brief Returns the smallest node in the tree, it's the farthest
-			 * node on the left from the root.
-			*/
-			Node*	getSmallestNode(Node* node) const
-			{
-				while (node && node->left != NULL)
-					node = node->left;
-				return (node);
-			}
-
-			/**
-			 * @brief Returns the biggest node in the tree, it's the farthest
-			 * node on the right from the root.
-			*/
-			Node*	getBiggestNode(Node* node) const
-			{
-				int i = 0;
-				while (node && node->right != NULL)
-				{
-					node = node->right;
-					i++;
-				}
-				return (node);
-			}
 
 		public:
 
@@ -359,7 +93,7 @@ namespace ft
 			*/
 			explicit map(const key_compare& comp = key_compare(),
 				const allocator_type& alloc = allocator_type())
-			: _root(NULL), _lastinsert(NULL), _size(0), _comp(comp), _alloc(alloc) {}
+			: _root(NULL), _lastInsert(NULL), _size(0), _comp(comp), _alloc(alloc) {}
 
 			/**
 			 * @brief range constructor: Constructs a container with as many
@@ -381,7 +115,7 @@ namespace ft
 				::is_integer, InputIterator>::type first, InputIterator last,
 				const key_compare& comp = key_compare(),
 				const allocator_type& alloc = allocator_type())
-			: _root(NULL), _lastinsert(NULL), _size(0), _comp(comp), _alloc(alloc)
+			: _root(NULL), _lastInsert(NULL), _size(0), _comp(comp), _alloc(alloc)
 			{
 				while (first != last)
 					this->insert(*first++);
@@ -395,7 +129,7 @@ namespace ft
 			 * contents are either copied or acquired.
 			*/
 			map(const map& x)
-			: _root(NULL), _lastinsert(NULL), _size(0), _comp(key_compare()), _alloc(allocator_type())
+			: _root(NULL), _lastInsert(NULL), _size(0), _comp(key_compare()), _alloc(allocator_type())
 			{
 				const_iterator ite = x.end();
 				for (const_iterator it = x.begin(); it != ite; it++)
@@ -436,9 +170,7 @@ namespace ft
 			*/
 			iterator begin()
 			{
-				if (this->empty())
-					return (iterator(_root));
-				return (iterator(this->getSmallestNode(_root)));
+				return (iterator(this->tree_smallest(_root)));
 			}
 
 			/**
@@ -448,9 +180,7 @@ namespace ft
 			*/
 			const_iterator begin() const
 			{
-				if (this->empty())
-					return (const_iterator(_root));
-				return (const_iterator(this->getSmallestNode(_root)));
+				return (const_iterator(this->tree_smallest(_root)));
 			}
 
 			/**
@@ -461,9 +191,9 @@ namespace ft
 			iterator end()
 			{
 				if (this->empty())
-					return (iterator(_root));
-				return (iterator((this->getBiggestNode(_root))->right,
-					this->getBiggestNode(_root)));
+					return (iterator());
+				return (iterator((this->tree_biggest(_root))->right,
+					this->tree_biggest(_root)));
 			}
 
 			/**
@@ -475,9 +205,9 @@ namespace ft
 			const_iterator end() const
 			{
 				if (this->empty())
-					return (const_iterator(_root));
-				return (const_iterator((this->getBiggestNode(_root))->right,
-					this->getBiggestNode(_root)));
+					return (iterator());
+				return (const_iterator((this->tree_biggest(_root))->right,
+					this->tree_biggest(_root)));
 			}
 
 			/**
@@ -488,9 +218,7 @@ namespace ft
 			*/
 			reverse_iterator rbegin()
 			{
-				if (this->empty())
-					return (reverse_iterator(_root));
-				return (reverse_iterator(this->getBiggestNode(_root)));
+				return (reverse_iterator(this->tree_biggest(_root)));
 			}
 
 			/**
@@ -501,9 +229,7 @@ namespace ft
 			*/
 			const_reverse_iterator rbegin() const
 			{
-				if (this->empty())
-					return (const_reverse_iterator(_root));
-				return (const_reverse_iterator(this->getBiggestNode(_root)));
+				return (const_reverse_iterator(this->tree_biggest(_root)));
 			}
 
 			/**
@@ -517,8 +243,8 @@ namespace ft
 			{
 				if (this->empty())
 					return (reverse_iterator(_root));
-				return (reverse_iterator((this->getSmallestNode(_root))->left,
-					this->getSmallestNode(_root)));
+				return (reverse_iterator((this->tree_smallest(_root))->left,
+					this->tree_smallest(_root)));
 			}
 
 			/**
@@ -532,8 +258,8 @@ namespace ft
 			{
 				if (this->empty())
 					return (const_reverse_iterator(_root));
-				return (const_reverse_iterator((this->getSmallestNode(_root))->left,
-					this->getSmallestNode(_root)));
+				return (const_reverse_iterator((this->tree_smallest(_root))->left,
+					this->tree_smallest(_root)));
 			}
 
 /*
@@ -567,7 +293,7 @@ namespace ft
 			*/
 			size_type max_size() const
 			{
-				return (nodeAllocator(_alloc).max_size());
+				return (Node_allocator(_alloc).max_size());
 			}
 
 /*
@@ -585,8 +311,8 @@ namespace ft
 			{
 				_root = this->insertNode(_root, NULL, ft::make_pair(k, mapped_type()));
 				_root = balanceTree(_root);
-				Node* element = _lastinsert;
-				_lastinsert = NULL;
+				Node* element = _lastInsert;
+				_lastInsert = NULL;
 				return (element->val.second);
 			}
 
@@ -609,8 +335,8 @@ namespace ft
 			{
 				size_type size_before = this->size();
 				_root = this->insertNode(_root, NULL, val);
-				Node* newnode = _lastinsert;
-				_lastinsert = NULL;
+				Node* newnode = _lastInsert;
+				_lastInsert = NULL;
 				return (ft::pair<iterator, bool>(iterator(newnode),
 					(this->size() > size_before)));
 			}
@@ -650,8 +376,8 @@ namespace ft
 						_root = _root->parent;
 					_root = this->balanceTree(_root);
 				}
-				Node*	new_node = _lastinsert;
-				_lastinsert = NULL;
+				Node*	new_node = _lastInsert;
+				_lastInsert = NULL;
 				return (iterator(new_node));
 			}
 
@@ -707,11 +433,9 @@ namespace ft
 			*/
 			void erase(iterator first, iterator last)
 			{
-				while (first != last)
-				{
-					std::cout << "erasing\n";
-					this->erase(first++);
-				}
+				map tmp(first, last);
+				for (reverse_iterator it = tmp.rbegin(); it != tmp.rend(); ++it)
+					this->erase(it->first);
 			}
 
 			/**
@@ -735,7 +459,7 @@ namespace ft
 			*/
 			void clear()
 			{
-				_root = this->clearTree(_root);
+				_root = this->tree_clear(_root);
 			}
 
 /*
@@ -744,7 +468,6 @@ namespace ft
 
 			/**
 			 * @brief Returns a copy of the comparison object used by the
-
 			 * container to compare keys.
 			 * @return The comparison object.
 			*/
@@ -801,7 +524,7 @@ namespace ft
 			*/
 			iterator find(const key_type& k)
 			{
-				Node* found = this->searchValue(_root, k);
+				Node* found = this->tree_search(_root, k);
 
 				if (found)
 					return (iterator(found));
@@ -818,7 +541,7 @@ namespace ft
 			*/
 			const_iterator find(const key_type& k) const
 			{
-				Node* found = this->searchValue(_root, k);
+				Node* found = this->tree_search(_root, k);
 
 				if (found)
 					return (const_iterator(found));
@@ -834,7 +557,7 @@ namespace ft
 			*/
 			size_type count(const key_type& k) const
 			{
-				Node* found = this->searchValue(_root, k);
+				Node* found = this->tree_search(_root, k);
 
 				if (found)
 					return (1);
@@ -963,6 +686,300 @@ namespace ft
 				return (_alloc);
 			}
 
+/*
+** ---------------------------- PRIVATE FUNCTIONS ------------------------------
+*/
+
+		private:
+
+			template<class U>
+			void swap(U& u1, U& u2)
+			{
+				U tmp = u2;
+				u2 = u1;
+				u1 = tmp;
+			}
+
+			/**
+			 * @brief Calculate the height of the given AVL Tree
+			 * @param node Pointer to the starting node for the depth calculation
+			 * @return An int representing the height of the given node
+			*/
+			int		getHeight(Node* node) const
+			{
+				if (node != NULL)
+					return (node->height);
+				return (0);
+			}
+
+			/**
+			 * @brief Calculate the balance factor of the given node
+			 * @param node Pointer to the node to be balanced
+			 * @return An int representing te balance factor. The value –1
+			 * indicates that the left sub-tree contains one extra, the value +1
+			 * indicates that the left sub-tree contains one extra and value 0
+			 * shows that the tree includes equal nodes on each side.
+			*/
+			int		getBalance(Node* node) const
+			{
+				if (node == NULL)
+					return (0);
+				return (getHeight(node->left) - getHeight(node->right));
+			}
+
+			/**
+			 * @brief Performs a Right-Right rotation of the given node.
+			 * This rotation is performed when a new node is inserted at the
+			 * right child of the right subtree.
+			 * @return The root of the new subtree.
+			*/
+			Node*	tree_rr_rotate(Node* node)
+			{
+				Node*	new_parent;
+
+				new_parent = node->right;
+				new_parent->parent = node->parent;
+				node->parent = new_parent;
+				node->right = new_parent->left;
+				if (new_parent->left)
+					new_parent->left->parent = node;
+				new_parent->left = node;
+				node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
+				new_parent->height = 1 + std::max(getHeight(new_parent->left), getHeight(new_parent->right));
+				return (new_parent);
+			}
+
+			/**
+			 * @brief Performs a Left-Left rotation of the given node.
+			 * This rotation is performed when a new node is inserted at the
+			 * left child of the left subtree.
+			 * @return The root of the new subtree.
+			*/
+			Node*	tree_ll_rotate(Node* node)
+			{
+				Node*	new_parent;
+
+				new_parent = node->left;
+				new_parent->parent = node->parent;
+				node->parent = new_parent;
+				node->left = new_parent->right;
+				if (new_parent->right)
+					new_parent->right->parent = node;
+				new_parent->right = node;
+				node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
+				new_parent->height = 1 + std::max(getHeight(new_parent->left), getHeight(new_parent->right));
+				return (new_parent);
+			}
+
+			/**
+			 * @brief Performs a Left-Right rotation of the given node.
+			 * This rotation is performed when a new node is inserted at the
+			 * right child of the left subtree.
+			 * @return The root of the new subtree.
+			*/
+			Node*	tree_lr_rotate(Node* node)
+			{
+				node->left = this->tree_rr_rotate(node->left);
+				return (this->tree_ll_rotate(node));
+			}
+
+			/**
+			 * @brief Performs a Right-Left rotation of the given node.
+			 * This rotation is performed when a new node is inserted at the
+			 * left child of the right subtree.
+			 * @return The root of the new subtree.
+			*/
+			Node*	tree_rl_rotate(Node* node)
+			{
+				node->right = this->tree_ll_rotate(node->right);
+				return (this->tree_rr_rotate(node));
+			}
+
+			/**
+			 * @brief Balance the given Tree
+			 * @param node The node where you want to start balancing.
+			 * @return The root of the AVL Tree
+			*/
+			Node*	balanceTree(Node* node)
+			{
+				int	factor = getBalance(node);
+
+				if (factor >= 2)
+				{
+					if (getBalance(node->left) >= 1)
+						return (this->tree_ll_rotate(node));
+					else
+						return (this->tree_lr_rotate(node));
+				}
+				else if (factor <= -2)
+				{
+					if (getBalance(node->right) <= -1)						
+						return (this->tree_rr_rotate(node));
+					else
+						return (this->tree_rl_rotate(node));
+				}
+				return (node);
+			}
+
+			Node*	createNode(const value_type& val, Node* parent)
+			{
+				Node*	new_node = Node_allocator(_alloc).allocate(1);
+				new_node->right = NULL;
+				new_node->left = NULL;
+				new_node->height = 1;
+				new_node->parent = parent;
+				_alloc.construct(&new_node->val, val);
+				_size++;
+				_lastInsert = new_node;
+				return (new_node);
+			}
+
+			/**
+			 * @brief Insert a new node in the given subtree.
+			 * @return The new root of the tree
+			*/
+			Node*	insertNode(Node* node, Node* parent, const value_type& val)
+			{
+				if (node == NULL)
+					return (createNode(val, parent));
+				if (_comp(val.first, node->val.first))
+					node->left = insertNode(node->left, node, val);
+				else if (_comp(node->val.first, val.first))
+					node->right = insertNode(node->right, node, val);
+				else
+					return (_lastInsert = node);
+				node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
+				int	factor = getBalance(node);
+				if (factor >= 2)
+				{
+					if (getBalance(node->left) >= 0)
+						return (tree_ll_rotate(node));
+					else
+						return (tree_lr_rotate(node));
+				}
+				else if (factor <= -2)
+				{
+					if (getBalance(node->right) <= 0)
+						return (tree_rr_rotate(node));
+					else
+						return (tree_rl_rotate(node));
+				}
+				return (node);
+			}
+
+			/**
+			 * @brief Delete the node with the corresponding key in the given
+			 * subtree.
+			 * @return The root of the subtree
+			*/
+			Node*	deleteNode(Node* node, const key_type& key)
+			{
+				if (node == NULL)
+					return (NULL);
+				if (_comp(key, node->val.first))
+					node->left = deleteNode(node->left, key);
+				else if (_comp(node->val.first, key))
+					node->right = deleteNode(node->right, key);
+				else
+				{
+					if ((node->left == NULL) || (node->right == NULL))
+					{
+						Node* tmp = node->left ? node->left : node->right;
+						if (tmp == NULL)
+							swap(tmp, node);
+						else
+						{
+							_alloc.destroy(&node->val);
+							_alloc.construct(&node->val, tmp->val);
+							node->right = node->left = NULL;
+						}
+						_alloc.destroy(&tmp->val);
+						Node_allocator(_alloc).deallocate(tmp, 1);
+						_size--;
+					}
+					else
+					{
+						Node* tmp = this->tree_smallest(node->right);
+						_alloc.destroy(&node->val);
+						_alloc.construct(&node->val, tmp->val);
+						node->right = deleteNode(node->right, tmp->val.first);
+					}
+				}
+				if (node == NULL)
+					return (node);
+				int	factor = getBalance(node);
+				if (factor >= 2)
+				{
+					if (getBalance(node->left) >= 0)
+						return (tree_ll_rotate(node));
+					else
+						return (tree_lr_rotate(node));
+				}
+				else if (factor <= -2)
+				{
+					if (getBalance(node->right) <= 0)
+						return (tree_rr_rotate(node));
+					else
+						return (tree_rl_rotate(node));
+				}
+				return (node);
+			}
+
+			/**
+			 * @brief Removes every node from the tree.
+			*/
+			Node*	tree_clear(Node* node)
+			{
+				if (!node)
+					return (NULL);
+				if (node->left)
+					tree_clear(node->left);
+				if (node->right)
+					tree_clear(node->right);
+				_alloc.destroy(&node->val);
+				Node_allocator(_alloc).deallocate(node, 1);
+				_size--;
+				return (NULL);
+			}
+
+			/**
+			 * @brief Find a node in the tree using the given key starting from
+			 * the given root
+			*/
+			Node*	tree_search(Node* node, const key_type& key) const
+			{
+				if (node == NULL)
+					return (NULL);
+				if (!_comp(node->val.first, key) && !_comp(key, node->val.first))
+					return (node);
+				if (_comp(key, node->val.first))
+					return (tree_search(node->left, key));
+				else if (_comp(node->val.first, key))
+					return (tree_search(node->right, key));
+				return (NULL);
+			}
+
+			/**
+			 * @brief Returns the smallest node in the tree, it's the farthest
+			 * node on the left from the root.
+			*/
+			Node*	tree_smallest(Node* node) const
+			{
+				while (node && node->left != NULL)
+					node = node->left;
+				return (node);
+			}
+
+			/**
+			 * @brief Returns the biggest node in the tree, it's the farthest
+			 * node on the right from the root.
+			*/
+			Node*	tree_biggest(Node* node) const
+			{
+				while (node && node->right != NULL)
+					node = node->right;
+				return (node);
+			}
 	};
 
 /*
