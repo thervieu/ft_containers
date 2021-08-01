@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 19:28:07 by user42            #+#    #+#             */
-/*   Updated: 2021/07/28 10:42:40 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/28 15:40:36 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -377,7 +377,6 @@ namespace ft
 			
 			reverseVectorIterator& operator++()
 			{
-				// this->_base.operator--();
 				--_base;
 				return (*this);
 			}

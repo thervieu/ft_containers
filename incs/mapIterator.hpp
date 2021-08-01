@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/04 19:17:59 by nforay            #+#    #+#             */
-/*   Updated: 2021/07/28 10:34:39 by user42           ###   ########.fr       */
+/*   Updated: 2021/08/01 11:30:33 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MAP_ITERATORS_HPP
 
 # include <stddef.h>
+# include <iostream>
 # include "ft_stl.hpp"
 
 namespace ft
@@ -55,14 +56,14 @@ namespace ft
 						_endNode = _endNode->right;
 				}
 			}
-			
+
 			mapIterator(NodePtr node, NodePtr endnode)
 			: _node(node), _endNode(endnode)
 			{}
 			mapIterator(const mapIterator& rhs)
 			: _node(rhs._node), _endNode(rhs._endNode)
 			{}
-			
+
 			~mapIterator()
 			{}
 
@@ -103,9 +104,11 @@ namespace ft
 
 			mapIterator& operator++()
 			{
+				// std::cout << "mapIt ++\n";
 				if (_node == NULL)
 				{
 					_node = _endNode;
+					_endNode = NULL;
 					return (*this);
 				}
 				else if (_node->right != NULL)
@@ -133,12 +136,14 @@ namespace ft
 				++(*this);
 				return (tmp);
 			}
-			
+
 			mapIterator& operator--()
 			{
+				// std::cout << "mapIt --\n";
 				if (_node == NULL)
 				{
 					_node = _endNode;
+					_endNode = NULL;
 					return (*this);
 				}
 				else if (_node->left != NULL)
@@ -219,7 +224,7 @@ namespace ft
 			{
 				return (this->_node != it._node);
 			}
-			
+
 			const_reference operator*() const { return (this->_node->val); }
 			const_pointer operator->() const { return (&(this->_node->val)); }
 	};
@@ -263,37 +268,36 @@ namespace ft
 			{
 				return (this->_base.getNode());
 			}
-			
+
 			mapIterator<Key,T,Compare,Node> base() const
 			{
 				return (this->_base);
 			}
-			
+
 			reverseMapIterator& operator=(const reverseMapIterator& it)
 			{
 				if (this != &it)
 				{
-					_base = it._base;
-					_base.operator++();
+					this->_base = it._base;
 				}
 				return (*this);
 			}
-			
+
 			bool operator==(const reverseMapIterator& it) const
 			{
 				return (_base == it._base);
 			}
-			
+
 			bool operator!=(const reverseMapIterator& it) const
 			{
 				return (_base != it._base);
 			}
-			
+
 			reference operator*() const
 			{
 				return (*(mapIterator<Key,T,Compare,Node>(this->_base)));
 			}
-			
+
 			pointer operator->() const
 			{
 				return (&this->operator*());
@@ -302,6 +306,7 @@ namespace ft
 			reverseMapIterator& operator++()
 			{
 				this->_base.operator--();
+				
 				return (*this);
 			}
 
@@ -339,10 +344,9 @@ namespace ft
 			typedef value_type const *						const_pointer;
 			typedef Node*									NodePtr;
 
-			explicit constReverseMapIterator(mapIterator<Key,T,Compare,Node> rhs)
+			explicit constReverseMapIterator(mapIterator<Key,T,Compare,Node> & rhs)
 			{
 				this->_base = rhs.getNode();
-				this->_base.operator--();
 			}
 			constReverseMapIterator(NodePtr node = NULL)
 			{
@@ -355,7 +359,6 @@ namespace ft
 			constReverseMapIterator(constMapIterator<Key,T,Compare,Node> rhs)
 			{
 				this->_base = rhs.getNode();
-				this->_base.operator--();
 			}
 			constReverseMapIterator(const reverseMapIterator<Key,T,Compare,Node>& rhs)
 			{
@@ -368,22 +371,22 @@ namespace ft
 					this->_base = it._base;
 				return (*this);
 			}
-			
+
 			bool operator==(const constReverseMapIterator& it) const
 			{
 				return (this->_base == it._base);
 			}
-			
+
 			bool operator!=(const constReverseMapIterator& it) const
 			{
 				return (this->_base != it._base);
 			}
-			
+
 			const_reference operator*() const
 			{
 				return (*(mapIterator<Key,T,Compare,Node>(this->_base)));
 			}
-			
+
 			const_pointer operator->() const { return (&this->operator*()); }
 	};
 }
