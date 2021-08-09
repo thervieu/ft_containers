@@ -3,6 +3,8 @@
 template <typename T>
 bool operator==(ft::vector<T> &a, std::vector<T> &b)
 {
+	if (a.capacity() != b.capacity())
+		return (false);
 	if (a.size() != b.size())
 		return (false);
 	if (a.empty() != b.empty())
@@ -27,14 +29,22 @@ static void constructors(void)
 	v1.push_back(1);
 	v1.push_back(2);
 	v1.push_back(3);
+
 	v2.push_back(1);
 	v2.push_back(2);
 	v2.push_back(3);
+
+	
+	ft::vector<int> v3(v1);
+	std::vector<int> v4(v2);
+	
+	std::cout << "copy : " << printBool((v3 == v4)) << std::endl;
 
 	ft::vector<int> v5((size_t)3, 8);
 	std::vector<int> v6((size_t)3, 8);
 	
 	std::cout << "fill : " << printBool((v5 == v6)) << std::endl;
+
 
 	int a[] = {1, 2, 3, 4};
 
@@ -42,11 +52,7 @@ static void constructors(void)
 	std::vector<int> v12(a, a + 3);
 	
 	std::cout << "range : " << printBool((v11 == v12)) << std::endl;
-	
-	ft::vector<int> v3(v1);
-	std::vector<int> v4(v2);
-	
-	std::cout << "copy : " << printBool((v3 == v4)) << std::endl;
+
 
 	ft::vector<int> v9;
 	std::vector<int> v10;
@@ -90,12 +96,12 @@ static void resize(void)
 	v1.resize(10, "test");
 	v2.resize(10, "test");
 
-	std::cout << "test1 : " << printBool((v1 == v2)) << std::endl;
+	std::cout << "resize from empty vector : " << printBool((v1 == v2)) << std::endl;
 
 	v1.resize(2, "42");
 	v2.resize(2, "42");
 	
-	std::cout << "test2 : " << printBool((v1 == v2)) << std::endl;
+	std::cout << "resize from already existing vector : " << printBool((v1 == v2)) << std::endl;
 	std::cout << std::endl;
 }
 
@@ -161,14 +167,15 @@ static void front_back(void)
 	
 	ft::vector<int> v1;
 	std::vector<int> v2;
-	
+
 	v1.push_back(1);
 	v1.push_back(2);
 	v1.push_back(3);
 	v2.push_back(1);
 	v2.push_back(2);
 	v2.push_back(3);
-	
+
+	std::cout << "push_back 1 2 and 3 in both vectors:" << std::endl;
 	std::cout << "v1.front() == v2.front() : " << printBool((v1.front() == v2.front())) << std::endl;
 	std::cout << "v1.back() == v2.back() : " << printBool((v1.front() == v2.front())) << std::endl;
 	std::cout << std::endl;
@@ -186,9 +193,8 @@ static void assign(void)
 	v2.assign(test, test + 4);
 	
 	std::cout << "range : " << printBool((v1 == v2)) << std::endl;
-	std::cout << "v1.assign(10, ?);\n";
+	
 	v1.assign(10, "?");
-	std::cout << "v2.assign(10, ?);\n";
 	v2.assign(10, "?");
 	
 	std::cout << "fill : " << printBool((v1 == v2)) << std::endl;
@@ -286,10 +292,10 @@ static void operators(void)
 	
 	v1.push_back(1);
 	v1.push_back(2);
-	v1.push_back(3);
+	v1.push_back(50);
 	v2.push_back(1);
 	v2.push_back(2);
-	v2.push_back(3);
+	v2.push_back(50);
 	
 	v3 = v1;
 	v4 = v2;
@@ -313,15 +319,107 @@ static void operators(void)
 	std::cout << "v1 < v2  : " << printBool(((v1 < v3) == (v2 < v4))) << std::endl;
 	std::cout << std::endl;
 
-	v3.push_back(43);
-	v4.push_back(43);
+	v3.push_back(41);
+	v4.push_back(41);
 
 	std::cout << "v1 == v2 : " << printBool(((v1 == v3) == (v2 == v4))) << std::endl;
 	std::cout << "v1 != v2 : " << printBool(((v1 != v3) == (v2 != v4))) << std::endl;
 	std::cout << "v1 >= v2 : " << printBool(((v1 >= v3) == (v2 >= v4))) << std::endl;
 	std::cout << "v1 > v2  : " << printBool(((v1 > v3) == (v2 > v4))) << std::endl;
 	std::cout << "v1 <= v2 : " << printBool(((v1 <= v3) == (v2 <= v4))) << std::endl;
-	std::cout << "v1 < v2  : " << printBool(((v1 < v3) == (v2 < v4))) << std::endl;
+	std::cout << "v1 < v2  : " << printBool(((v1 < v3) == (v2 < v4))) << std::endl << std::endl;
+}
+
+void	iterators(void)
+{
+	printTitle("Iterators");
+
+
+	ft::vector<std::string> ft2(5);
+	std::vector<std::string> std2(5);
+
+	ft::vector<std::string>::reverse_iterator it2_ft(ft2.rbegin());
+	ft::vector<std::string>::const_reverse_iterator it_const2_ft(ft2.rend());
+
+	std::vector<std::string>::reverse_iterator it2_std(std2.rbegin());
+	std::vector<std::string>::const_reverse_iterator it_const2_std(std2.rend());
+
+	for (int i = 1; it2_ft != it_const2_ft; ++i)
+	{
+		*it2_ft++ = (i * 7);
+		*it2_std++ = (i * 7);
+	}
+
+	it2_ft = ft2.rbegin();
+	it_const2_ft = ft2.rbegin();
+
+
+	it2_std = std2.rbegin();
+	it_const2_std = std2.rbegin();
+	
+	std::cout << "First Test is about verifying the use of operators *, -> and [] on reverse_iterator\n";
+	std::cout << "Operator* :\n";
+	std::cout << printBool((*it2_ft).capacity() == (*it2_std).capacity()) << std::endl;
+	std::cout << printBool((*it_const2_ft).capacity() == (*it_const2_std).capacity()) << std::endl;
+
+	std::cout << "Operator-> :\n";
+	std::cout << printBool(it2_ft->capacity() == it2_std->capacity()) << std::endl;
+	std::cout << printBool(it_const2_ft->capacity() == it_const2_std->capacity()) << std::endl;
+
+	std::cout << "Operator[] :\n";
+	std::cout << printBool(it2_ft[2] == it2_std[2]) << std::endl;
+	std::cout << printBool(it_const2_ft[2] == it_const2_std[2]) << std::endl;
+
+	std::cout << "\nSecond test is about using operator++ and -- on iterator and const_iterator\n";
+	std::cout << "\nIterator :\n";
+	std::cout << printBool(*(++it2_ft) == (*(++it2_std))) << std::endl;
+	std::cout << printBool(*(it2_ft++) == *(it2_std++)) << std::endl;
+	std::cout << printBool(*it2_ft++ == *it2_std++) << std::endl;
+	std::cout << printBool(*++it2_ft == *++it2_std) << std::endl;
+
+	std::cout << printBool(*(--it2_ft) == (*(--it2_std))) << std::endl;
+	std::cout << printBool(*(it2_ft--) == *(it2_std--)) << std::endl;
+	std::cout << printBool(*it2_ft-- == *it2_std--) << std::endl;
+	std::cout << printBool(*--it2_ft == *--it2_std) << std::endl;
+
+	std::cout << "\nConst_iterator :\n";
+	std::cout << printBool(*(++it_const2_ft) == (*(++it_const2_std))) << std::endl;
+	std::cout << printBool(*(it_const2_ft++) == *(it_const2_std++)) << std::endl;
+	std::cout << printBool(*it_const2_ft++ == *it_const2_std++) << std::endl;
+	std::cout << printBool(*++it_const2_ft == *++it_const2_std) << std::endl;
+
+	std::cout << printBool(*(--it_const2_ft) == (*(--it_const2_std))) << std::endl;
+	std::cout << printBool(*(it_const2_ft--) == *(it_const2_std--)) << std::endl;
+	std::cout << printBool(*it_const2_ft-- == *it_const2_std--) << std::endl;
+	std::cout << printBool(*--it_const2_ft == *--it_const2_std) << std::endl;
+	
+	ft::vector<int> ft1(5);
+	ft::vector<int>::iterator it_ft = ft1.begin();
+	ft::vector<int>::reverse_iterator rev_it_ft(it_ft);
+
+
+	std::vector<int> std1(5);
+	std::vector<int>::iterator it_std = std1.begin();
+	std::vector<int>::reverse_iterator rev_it_std(it_std);
+
+
+	for (int i = 0; i < 5; ++i)
+	{
+		ft1[i] = 14 * i;
+		std1[i] = ft1[i];
+	}
+
+
+	std::cout << "\nThird Test is about using reverse_iterator and verifying that base() and operators work :\n";
+	std::cout << "\nVerify that rev_it.base() is the iterator we created it with : " << printBool((it_ft == rev_it_ft.base()) == (it_std == rev_it_std.base())) << std::endl;
+	std::cout << "Even if we move through the reverse iterator : " << printBool((it_ft == (rev_it_ft + 3).base()) == (it_std == (rev_it_std + 3).base())) << std::endl;
+
+	std::cout << "Verify that the values are equal : " << printBool(*(rev_it_ft) == *(rev_it_std)) << std::endl;
+	std::cout << "Same but moving through iterator : " << printBool(*(rev_it_ft - 3).base() == *(rev_it_std - 3).base()) << std::endl;
+	std::cout << "Same but moving through base iterator and calling it  : " << printBool(*(rev_it_ft.base() + 1) == *(rev_it_std.base() + 1)) << std::endl;
+	rev_it_ft -= 3;
+	rev_it_std -= 3;
+	std::cout << "Verify that base gets iterated through (-= 3 on rev iterator does += 3 on base iterator) : " << printBool(*rev_it_ft.base() == *rev_it_std.base()) << std::endl;
 }
 
 void	vector_tests(void)
@@ -337,4 +435,5 @@ void	vector_tests(void)
 	erase();
 	swap();
 	operators();
+	iterators();
 }

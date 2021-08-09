@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 16:03:32 by user42            #+#    #+#             */
-/*   Updated: 2021/07/26 17:48:29 by user42           ###   ########.fr       */
+/*   Updated: 2021/08/09 17:37:48 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ namespace ft
 			size_type		_capacity;
 			allocator_type	_alloc;
 			pointer			_head;
+			bool			_ugly_boolean;
 
 		public:
 
@@ -63,7 +64,7 @@ namespace ft
 			 * internal copy of this allocator.
 			*/
 			explicit vector(const allocator_type& alloc = allocator_type())
-			: _size(0), _capacity(1), _alloc(alloc)
+			: _size(0), _capacity(1), _alloc(alloc), _ugly_boolean(false)
 			{
 				_head = _alloc.allocate(1);
 			}
@@ -81,9 +82,8 @@ namespace ft
 			*/
 			explicit vector(size_type n, const value_type& val = value_type(),
 				const allocator_type& alloc = allocator_type())
-				: _size(n), _capacity(n), _alloc(alloc)
+				: _size(n), _capacity(n), _alloc(alloc), _ugly_boolean(true)
 			{
-				// std::cout << "size = |" << _size << "|\n";
 				_head = _alloc.allocate(_capacity);
 				for (size_type i = 0; i < _size; i++)
 					_alloc.construct(&_head[i], val);
@@ -104,7 +104,7 @@ namespace ft
 			vector(typename ft::enable_if<!std::numeric_limits<InputIterator>
 				::is_integer, InputIterator>::type first, InputIterator last,
 				const allocator_type& alloc = allocator_type())
-			: _size(0), _capacity(0), _alloc(alloc)
+			: _size(0), _capacity(0), _alloc(alloc), _ugly_boolean(true)
 			{
 				this->assign(first, last);
 			}
@@ -116,8 +116,8 @@ namespace ft
 			 * class template arguments T and Alloc), whose contents are either
 			 * copied or acquired.
 			*/
-			vector(const vector& x) : _size(x._size), _capacity(x._capacity),
-				_alloc(x._alloc)
+			vector(const vector& x) : _size(x._size), _capacity(x._size),
+				_alloc(x._alloc), _ugly_boolean(true)
 			{
 				_head = _alloc.allocate(_capacity);
 				for (size_type i = 0; i < _capacity; i++)
@@ -133,7 +133,8 @@ namespace ft
 			{
 				for (size_type i = 0; i < _size; i++)
 					_alloc.destroy(&_head[i]);
-				_alloc.deallocate(_head, _capacity);
+				if (_capacity)
+					_alloc.deallocate(_head, _capacity);
 			}
 
 			/**
@@ -146,7 +147,7 @@ namespace ft
 			*/
 			vector& operator=(const vector& x)
 			{
-				// std::cout << "op= vector\n";
+				_ugly_boolean = true;
 				_size = x._size;
 				if (_capacity)
 					_alloc.deallocate(_head, _capacity);
@@ -197,10 +198,6 @@ namespace ft
 			*/
 			iterator end()
 			{
-				// std::cout << "end values: size = |" << _size << "|\n";
-				// for (int i = 0; i < 5; i++)
-					// std::cout << *(_head + i) << "\n";
-				// std::cout << "end values\n\n";
 				return (iterator(_head + _size));
 			}
 
@@ -229,10 +226,6 @@ namespace ft
 			*/
 			reverse_iterator rbegin()
 			{
-				// std::cout << "rbegin\n";
-				// for (int i = 0; i < (int)_size; ++i)
-				// 	std::cout << "it[" << i << "] = |" << *(_head + i) << "|\n";
-				// std::cout << "\n\n";
 				return (reverse_iterator(end()));
 			}
 
@@ -326,6 +319,7 @@ namespace ft
 			*/
 			void resize(size_type n, value_type val = value_type())
 			{
+				_ugly_boolean = true;
 				if (n > _capacity)
 					reallocate((n > _size * 2) ? n : _size * 2);
 				while (n > _size)
@@ -345,7 +339,7 @@ namespace ft
 			*/
 			size_type capacity() const
 			{
-				return (_capacity);
+				return (_ugly_boolean ? _capacity : 0);
 			}
 
 			/**
@@ -373,6 +367,7 @@ namespace ft
 			*/
 			void reserve(size_type n)
 			{
+				_ugly_boolean = true;
 				if (n > this->max_size())
 					throw std::length_error("resized above max_size");
 				if (n > _capacity)
@@ -513,6 +508,7 @@ namespace ft
 			void assign(typename ft::enable_if<!std::numeric_limits<InputIterator>
 				::is_integer, InputIterator>::type first, InputIterator last)
 			{
+				_ugly_boolean = true;
 				difference_type n = 0;
 				InputIterator tmp(first);
 				while (tmp != last)
@@ -540,6 +536,7 @@ namespace ft
 			*/
 			void assign(size_type n, const value_type& val)
 			{
+				_ugly_boolean = true;
 				this->clear();
 				this->reserve(n);
 				for (size_type i = 0; i < n; i++)
@@ -554,6 +551,7 @@ namespace ft
 			*/
 			void push_back(const value_type& val)
 			{
+				_ugly_boolean = true;
 				if (_size ==_capacity)
 					reallocate(grow(_size + 1));
 				_alloc.construct(&_head[_size++], val);
@@ -566,6 +564,7 @@ namespace ft
 			*/
 			void pop_back()
 			{
+				_ugly_boolean = true;
 				_alloc.destroy(&_head[--_size]);
 			}
 
@@ -582,6 +581,7 @@ namespace ft
 			*/
 			iterator insert(iterator position, const value_type& val)
 			{
+				_ugly_boolean = true;
 				difference_type shift = (position - this->begin());
 				if (_size + 1 > _capacity)
 					reallocate(grow(_size + 1));
@@ -602,6 +602,7 @@ namespace ft
 			*/
 			void insert(iterator position, size_type n, const value_type& val)
 			{
+				_ugly_boolean = true;
 				if (n == 0)
 					return;
 				difference_type shift = position - this->begin();
@@ -636,6 +637,7 @@ namespace ft
 				<!std::numeric_limits<InputIterator>::is_integer, InputIterator>
 				::type first, InputIterator last)
 			{
+				_ugly_boolean = true;
 				difference_type shift = (position - this->begin());
 				size_type n = 0;
 				InputIterator tmp(first);
