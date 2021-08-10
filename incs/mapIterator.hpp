@@ -6,15 +6,16 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/04 19:17:59 by nforay            #+#    #+#             */
-/*   Updated: 2021/08/10 14:17:24 by user42           ###   ########.fr       */
+/*   Updated: 2021/08/10 18:29:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_ITERATORS_HPP
-# define MAP_ITERATORS_HPP
+#ifndef MAPITERATOR_HPP
+# define MAPITERATOR_HPP
 
 # include <stddef.h>
 # include <iostream>
+
 # include "ft_stl.hpp"
 
 namespace ft
@@ -33,12 +34,12 @@ namespace ft
 			typedef ptrdiff_t								difference_type;
 			typedef value_type*								pointer;
 			typedef value_type&								reference;
-			typedef Node*									NodePtr;
+			typedef Node*									node_pointer;
 
 		protected:
 
-			NodePtr	_node;
-			NodePtr	_endNode;
+			node_pointer	_node;
+			node_pointer	_endNode;
 
 		private:
 
@@ -46,7 +47,7 @@ namespace ft
 
 		public:
 
-			mapIterator(NodePtr node = NULL) : _node(node), _endNode(node)
+			mapIterator(node_pointer node = NULL) : _node(node), _endNode(node)
 			{
 				if (_endNode != NULL)
 				{
@@ -57,9 +58,10 @@ namespace ft
 				}
 			}
 
-			mapIterator(NodePtr node, NodePtr endnode)
+			mapIterator(node_pointer node, node_pointer endnode)
 			: _node(node), _endNode(endnode)
 			{}
+
 			mapIterator(const mapIterator& rhs)
 			: _node(rhs._node), _endNode(rhs._endNode)
 			{}
@@ -67,7 +69,7 @@ namespace ft
 			~mapIterator()
 			{}
 
-			NodePtr	getNode() const
+			node_pointer	getNode() const
 			{
 				return (_node);
 			}
@@ -182,9 +184,9 @@ namespace ft
 			typedef ft::pair<const key_type, mapped_type>	value_type;
 			typedef value_type const &						const_reference;
 			typedef value_type const *						const_pointer;
-			typedef Node*									NodePtr;
+			typedef Node*									node_pointer;
 
-			constMapIterator(NodePtr node = NULL)
+			constMapIterator(node_pointer node = NULL)
 			{
 				this->_node = node;
 				this->_endNode = node;
@@ -196,11 +198,13 @@ namespace ft
 						this->_endNode = this->_endNode->right;
 				}
 			}
-			constMapIterator(NodePtr node, NodePtr endnode)
+
+			constMapIterator(node_pointer node, node_pointer endnode)
 			{
 				this->_node = node;
 				this->_endNode = endnode;
 			}
+
 			constMapIterator(const mapIterator<Key,T,Compare,Node>& rhs)
 			{
 				this->_node = rhs.getNode();
@@ -223,8 +227,15 @@ namespace ft
 				return (this->_node != it._node);
 			}
 
-			const_reference operator*() const { return (this->_node->val); }
-			const_pointer operator->() const { return (&(this->_node->val)); }
+			const_reference operator*() const
+			{
+				return (this->_node->val);
+			}
+
+			const_pointer operator->() const
+			{
+				return (&(this->_node->val));
+			}
 	};
 	
 	template<class Key, class T, class Compare, typename Node> class constReverseMapIterator;
@@ -241,7 +252,7 @@ namespace ft
 			typedef ptrdiff_t								difference_type;
 			typedef value_type*								pointer;
 			typedef value_type&								reference;
-			typedef Node*									NodePtr;
+			typedef Node*									node_pointer;
 
 		protected:
 
@@ -253,16 +264,23 @@ namespace ft
 
 		public:
 
-			explicit reverseMapIterator(NodePtr node = NULL)
-			: _base(mapIterator<Key,T,Compare,Node>(node)) {}
-			reverseMapIterator(NodePtr node, NodePtr endnode)
-			: _base(mapIterator<Key,T,Compare,Node>(node, endnode)) {}
-			explicit reverseMapIterator(mapIterator<Key,T,Compare,Node> rhs)
-			: _base(rhs) {}
-			reverseMapIterator(const reverseMapIterator<Key,T,Compare,Node>& rhs)
-			: _base(rhs._base) {}
+			explicit reverseMapIterator(node_pointer node = NULL)
+			: _base(mapIterator<Key,T,Compare,Node>(node))
+			{}
 
-			NodePtr	getNode() const
+			reverseMapIterator(node_pointer node, node_pointer endnode)
+			: _base(mapIterator<Key,T,Compare,Node>(node, endnode))
+			{}
+
+			explicit reverseMapIterator(mapIterator<Key,T,Compare,Node> rhs)
+			: _base(rhs)
+			{}
+
+			reverseMapIterator(const reverseMapIterator<Key,T,Compare,Node>& rhs)
+			: _base(rhs._base)
+			{}
+
+			node_pointer	getNode() const
 			{
 				return (this->_base.getNode());
 			}
@@ -340,24 +358,28 @@ namespace ft
 			typedef ft::pair<const key_type, mapped_type>	value_type;
 			typedef value_type const &						const_reference;
 			typedef value_type const *						const_pointer;
-			typedef Node*									NodePtr;
+			typedef Node*									node_pointer;
 
 			explicit constReverseMapIterator(mapIterator<Key,T,Compare,Node> & rhs)
 			{
 				this->_base = rhs.getNode();
 			}
-			constReverseMapIterator(NodePtr node = NULL)
+
+			constReverseMapIterator(node_pointer node = NULL)
 			{
 				this->_base = mapIterator<Key,T,Compare,Node>(node);
 			}
-			constReverseMapIterator(NodePtr node, NodePtr endnode)
+
+			constReverseMapIterator(node_pointer node, node_pointer endnode)
 			{
 				this->_base = mapIterator<Key,T,Compare,Node>(node, endnode);
 			}
+
 			constReverseMapIterator(constMapIterator<Key,T,Compare,Node> rhs)
 			{
 				this->_base = rhs.getNode();
 			}
+
 			constReverseMapIterator(const reverseMapIterator<Key,T,Compare,Node>& rhs)
 			{
 				this->_base = rhs.getNode();
@@ -385,7 +407,10 @@ namespace ft
 				return (*(mapIterator<Key,T,Compare,Node>(this->_base)));
 			}
 
-			const_pointer operator->() const { return (&this->operator*()); }
+			const_pointer operator->() const
+			{
+				return (&this->operator*());
+			}
 	};
 }
 

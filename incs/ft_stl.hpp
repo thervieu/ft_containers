@@ -6,19 +6,15 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 03:33:28 by nforay            #+#    #+#             */
-/*   Updated: 2021/07/20 14:21:17 by user42           ###   ########.fr       */
+/*   Updated: 2021/08/10 17:34:39 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_HPP
-# define UTILS_HPP
+#ifndef FT_STL_HPP
+# define FT_STL_HPP
 
 namespace ft
 {
-	/**
-	 * SFINAE
-	 * https://en.cppreference.com/w/cpp/language/sfinae
-	*/
 	template <bool B, typename T = void>
 	struct enable_if {};
 
@@ -28,33 +24,33 @@ namespace ft
 		typedef T type;
 	};
 
-	template <class Ite1, class Ite2>
-	static bool	equal(Ite1 first1, Ite1 last1, Ite2 first2)
+	template <class Iterator1, class Iterato2>
+	static bool	equal(Iterator1 begin1, Iterator1 end1, Iterato2 begin2)
 	{
-		while (first1 != last1)
+		while (begin1 != end1)
 		{
-			if (*first1 != *first2)
+			if (*begin1 != *begin2)
 				return (false);
-			++first1;
-			++first2;
+			begin1++;
+			begin2++;
 		}
 		return (true);
 	}
 
-	template <class Ite1, class Ite2>
-	static bool	lexicographical_compare(Ite1 first1, Ite1 last1,
-		Ite2 first2, Ite2 last2)
+	template <class Iterator1, class Iterato2>
+	static bool	lexicographical_compare(Iterator1 begin1, Iterator1 end1,
+		Iterato2 begin2, Iterato2 end2)
 	{
-		while (first1 != last1)
+		while (begin1 != end1)
 		{
-			if (first2 == last2 || *first2 < *first1)
+			if (begin2 == end2 || *begin2 < *begin1)
 				return (false);
-			else if (*first1 < *first2)
+			else if (*begin1 < *begin2)
 				return (true);
-			++first1;
-			++first2;
+			begin1++;
+			begin2++;
 		}
-		return (first2!=last2);
+		return (begin2 != end2);
 	}
 
 	template<class T1, class T2>
@@ -73,12 +69,12 @@ namespace ft
 			pair(const pair<U,V>& src) : first(src.first), second(src.second) {}
 			~pair() {}
 
-			pair& operator=(const pair& other)
+			pair& operator=(const pair& rhs)
 			{
-				if (this != &other)
+				if (this != &rhs)
 				{
-					first = other.first;
-					second = other.second;
+					first = rhs.first;
+					second = rhs.second;
 				}
 				return (*this);
 			}
@@ -99,9 +95,7 @@ namespace ft
 	template<class T1, class T2>
 	bool operator<(const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
 	{
-		if (lhs.first < rhs.first)
-			return (true);
-		if (lhs.second < rhs.second)
+		if (lhs.first < rhs.first || lhs.second < rhs.second)
 			return (true);
 		return (false);
 	}
@@ -109,9 +103,7 @@ namespace ft
 	template<class T1, class T2>
 	bool operator<=(const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
 	{
-		if (lhs.first <= rhs.first)
-			return (true);
-		if (lhs.second <= rhs.second)
+		if (lhs.first <= rhs.first || lhs.second <= rhs.second)
 			return (true);
 		return (false);
 	}
@@ -135,4 +127,4 @@ namespace ft
 	}
 }
 
-#endif /* ********************************************************* UTILS_HPP */
+#endif

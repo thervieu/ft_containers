@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 16:03:32 by user42            #+#    #+#             */
-/*   Updated: 2021/08/10 15:28:02 by user42           ###   ########.fr       */
+/*   Updated: 2021/08/10 17:48:30 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,28 @@ namespace ft
 	class vector
 	{
 		public:
-
 			typedef T											value_type;
+		
 			typedef Alloc										allocator_type;
 			typedef typename allocator_type::reference			reference;
 			typedef typename allocator_type::const_reference	const_reference;
 			typedef typename allocator_type::pointer			pointer;
 			typedef typename allocator_type::const_pointer		const_pointer;
+		
 			typedef vectorIterator<T>							iterator;
 			typedef constVectorIterator<T>						const_iterator;
 			typedef constReverseVectorIterator<T>				const_reverse_iterator;
 			typedef reverseVectorIterator<T>					reverse_iterator;
+		
 			typedef ptrdiff_t									difference_type;
+		
 			typedef size_t										size_type;
 
 		private:
-
+			pointer			_head;
 			size_type		_size;
 			size_type		_capacity;
 			allocator_type	_alloc;
-			pointer			_head;
 			bool			_ugly_boolean;
 
 		public:
@@ -63,10 +65,10 @@ namespace ft
 			 * @param alloc Allocator object. The container keeps and uses an
 			 * internal copy of this allocator.
 			*/
-			explicit vector(const allocator_type& alloc = allocator_type())
-			: _size(0), _capacity(1), _alloc(alloc), _ugly_boolean(false)
+			explicit vector(const allocator_type& alloc = allocator_type()) : _size(0), _capacity(1), _alloc(alloc)
 			{
 				_head = _alloc.allocate(1);
+				_ugly_boolean = false;
 			}
 
 			/**
@@ -82,11 +84,12 @@ namespace ft
 			*/
 			explicit vector(size_type n, const value_type& val = value_type(),
 				const allocator_type& alloc = allocator_type())
-				: _size(n), _capacity(n), _alloc(alloc), _ugly_boolean(true)
+				: _size(n), _capacity(n), _alloc(alloc)
 			{
-				_head = _alloc.allocate(_capacity);
+				this->_head = _alloc.allocate(this->_capacity);
 				for (size_type i = 0; i < _size; i++)
 					_alloc.construct(&_head[i], val);
+				_ugly_boolean = true;
 			}
 
 			/**
@@ -833,4 +836,4 @@ namespace ft
 		}
 }
 
-#endif /* ******************************************************** VECTOR_HPP */
+#endif

@@ -32,32 +32,6 @@ bool operator==(ft::map<T, S> &a, std::map<T, S> &b)
 	return (true);
 };
 
-// template <typename T, typename S>
-// static void	printMap(ft::map<T, S> &lhs)
-// {
-// 	typename ft::map<T, S>::iterator it = lhs.begin();
-// 	std::cout << "ft :  ";
-// 	while (it != lhs.end())
-// 	{
-// 		std::cout << "lhs(" << it->first << ") = " << it->second << " - ";
-// 		++it;
-// 	}
-// 	std::cout << std::endl;
-// }
-
-// template <typename T, typename S>
-// static void	printTrueMap(std::map<T, S> &lhs)
-// {
-// 	typename std::map<T, S>::iterator it = lhs.begin();
-// 	std::cout << "std : ";
-// 	while (it != lhs.end())
-// 	{
-// 		std::cout << "lhs(" << it->first << ") = " << it->second << " - ";
-// 		++it;
-// 	}
-// 	std::cout << std::endl;
-// }
-
 static void constructors(void)
 {
 	printTitle("Constructors");
@@ -530,9 +504,6 @@ static void iterators(void)
 	std::cout << std::endl;
 }
 
-#include <ctime>
-#include <stdio.h>
-
 static void timing(void)
 {
 	printTitle("Timing");
@@ -545,6 +516,7 @@ static void timing(void)
 
 	// TESTING TIMING FOR 1M ELEMENTS INSERT AND BALANCE
 	printf("Insert w/ balance 1M elements\n");
+	printf("Worst Case : Each element added is greater than the previous one\n");
 	t = clock();
 	for (size_t i = 0; i < 1000000; i++)
 	{
@@ -586,6 +558,7 @@ static void timing(void)
 void map_tests(void)
 {
 	printTitle("MAP_TESTER");
+
 	constructors();
 	max_size();
 	access_operator();

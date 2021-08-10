@@ -6,18 +6,16 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/29 20:38:55 by user42            #+#    #+#              #
-#    Updated: 2021/08/10 15:40:08 by user42           ###   ########.fr        #
+#    Updated: 2021/08/10 18:15:20 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME =	exec_tester
 
 SRCS =	main.cpp			\
-		list_tests.cpp		\
 		vector_tests.cpp	\
 		map_tests.cpp		\
-		stack_tests.cpp		\
-		queue_tests.cpp
+		stack_tests.cpp
 
 SRCS_DIR = ./srcs/
 
@@ -55,9 +53,6 @@ re: fclean all
 run: all
 	@./$(NAME)
 
-list: all
-	@./$(NAME) list
-
 vector: all
 	@./$(NAME) vector
 
@@ -66,6 +61,3 @@ map: all
 
 stack: all
 	@./$(NAME) stack
-
-queue: all
-	@./$(NAME) queue

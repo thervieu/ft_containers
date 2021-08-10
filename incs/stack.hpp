@@ -7,8 +7,7 @@
 ** all functions implemented are those of stack (c++98)
 ** See: https://www.cplusplus.com/reference/stack/stack/
 ** Please note that std::stack is actually implmented using the std::deque function.
-** However in the pdf of the school project, implementing dequ is a bonus that I do not wish to implement.
-** Besides, using vector is sufficient as stated in the link above (container vector has the sufficient functions)
+** However in the pdf of the school project,they specifically ask us to use vector (which is enough as it has the right functions)
 */
 
 namespace ft
@@ -18,8 +17,8 @@ namespace ft
 	{
 		public:
 
-			typedef T value_type;
-			typedef Container container_type;
+			typedef T				value_type;
+			typedef Container		container_type;
 			typedef	unsigned long size_type;
 
 		protected:
@@ -66,14 +65,19 @@ namespace ft
 
 			template <class A, class B>
 			friend bool	operator==(const stack<A, B> &lhs, const stack<A, B> &rhs);
+			
 			template <class A, class B>
 			friend bool	operator!=(const stack<A, B> &lhs, const stack<A, B> &rhs);
+			
 			template <class A, class B>
 			friend bool	operator<(const stack<A, B> &lhs, const stack<A, B> &rhs);
+			
 			template <class A, class B>
 			friend bool	operator<=(const stack<A, B> &lhs, const stack<A, B> &rhs);
+			
 			template <class A, class B>
 			friend bool	operator>(const stack<A, B> &lhs, const stack<A, B> &rhs);
+			
 			template <class A, class B>
 			friend bool	operator>=(const stack<A, B> &lhs, const stack<A, B> &rhs);	
 		

@@ -422,9 +422,6 @@ void	iterators(void)
 	std::cout << "Verify that base gets iterated through (-= 3 on rev iterator does += 3 on base iterator) : " << printBool(*rev_it_ft.base() == *rev_it_std.base()) << std::endl;
 }
 
-#include <ctime>
-#include <stdio.h>
-
 static void timing(void)
 {
 	printTitle("Timing");
