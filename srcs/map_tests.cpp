@@ -5,28 +5,29 @@
 template <typename T, typename S>
 bool operator==(ft::map<T, S> &a, std::map<T, S> &b)
 {
-	// std::cout << "op== ft std\n";
 	if (a.size() != b.size())
 		return (false);
 	if (a.empty() != b.empty())
 		return (false);
-	// std::cout << "size and empty ok\n";
+
 	typename ft::map<T, S>::iterator it = a.begin();
 	typename std::map<T, S>::iterator it2 = b.begin();
-	// std::cout << "iterator ok\n";
-	int i = 0;
 	while (it != a.end())
 	{
-		// std::cout << "i = " << i << "\n";
-		// std::cout << "it->first = " << it->first << "\n";
-		// std::cout << "it2->first = " << it2->first << "\n";
-		// std::cout << "it->second = " << it->second << "\n";
-		// std::cout << "it2->second = " << it2->second << "\n";
 		if (it->first != it2->first || it->second != it2->second)
 			return (false);
 		++it;
 		++it2;
-		i++;
+	}
+
+	typename ft::map<T, S>::reverse_iterator rev = a.rbegin();
+	typename std::map<T, S>::reverse_iterator rev2 = b.rbegin();
+	while (rev != a.rend())
+	{
+		if (rev->first != rev2->first || rev->second != rev2->second)
+			return (false);
+		++rev;
+		++rev2;
 	}
 	return (true);
 };
@@ -408,11 +409,179 @@ static void operators_comp(void)
 	std::cout << "m1 >= m2 : " << printBool(((m1 >= m3) == (m2 >= m4))) << std::endl;
 	std::cout << "m1 > m2  : " << printBool(((m1 > m3) == (m2 > m4))) << std::endl;
 	std::cout << "m1 <= m2 : " << printBool(((m1 <= m3) == (m2 <= m4))) << std::endl;
-	std::cout << "m1 < m2  : " << printBool(((m1 < m3) == (m2 < m4))) << std::endl;
+	std::cout << "m1 < m2  : " << printBool(((m1 < m3) == (m2 < m4))) << std::endl << std::endl;
+}
+
+template <typename T, typename S>
+bool operator==(ft::pair<T, S> &a, std::pair<T, S> &b)
+{
+	if (a.first != b.first || a.second != b.second)
+		return (false);
+	return (true);
+};
+
+
+template <typename T, typename S>
+bool operator==(ft::pair<T, S> &a, const std::pair<T, S> &b)
+{
+	if (a.first != b.first || a.second != b.second)
+		return (false);
+	return (true);
+};
+
+static void iterators(void)
+{
+	printTitle("Iterators");
+
+
+	ft::map<std::string, bool> ft2;
+	std::map<std::string, bool> std2;
+
+	for (unsigned int i = 1; i < 10; ++i)
+	{
+		std::string str;
+		for (int j = 0; j < (int)i; j++)
+			str += "a";
+		
+		ft2.insert(ft::make_pair(str, i % 2 == 0 ? true : false));
+		std2.insert(std::make_pair(str, i % 2 == 0 ? true : false));
+	}
+
+	ft::map<std::string, bool>::reverse_iterator it(ft2.rbegin());
+	ft::map<std::string, bool>::const_reverse_iterator ite(ft2.rbegin());
+
+	std::map<std::string, bool>::reverse_iterator it_std(std2.rbegin());
+	std::map<std::string, bool>::const_reverse_iterator ite_std(std2.rbegin());
+
+	std::cout << "First Test is about verifying the use of operators ++, -- (pre and post), * and -> on reverse_iterator\n";
+	std::cout << "Operator++ :\n";
+	std::cout << printBool(*(++it) == (*(++it_std))) << std::endl;
+	std::cout << printBool(*(it++) == *(it_std++)) << std::endl;
+	std::cout << printBool(*it++ == *it_std++) << std::endl;
+	std::cout << printBool(*++it == *++it_std) << std::endl;
+
+
+	std::cout << "Operator-- :\n";
+	std::cout << printBool(*(--it) == (*(--it_std))) << std::endl;
+	std::cout << printBool(*(it--) == *(it_std--)) << std::endl;
+	std::cout << printBool(*it-- == *it_std--) << std::endl;
+	std::cout << printBool(*--it == *--it_std) << std::endl;
+
+	std::cout << "Operator* :\n";
+	std::cout << printBool((*it).first.capacity() == (*it_std).first.capacity()) << std::endl;
+	std::cout << printBool((*ite).first.capacity() == (*ite_std).first.capacity()) << std::endl;
+
+	std::cout << "Operator-> :\n";
+	std::cout << printBool(it->first.capacity() == it_std->first.capacity()) << std::endl;
+	std::cout << printBool(ite->first.capacity() == ite_std->first.capacity()) << std::endl;
+
+
+	ft::map<std::string, bool>::iterator it_(ft2.begin());
+	ft::map<std::string, bool>::const_iterator ite_(ft2.begin());
+
+	std::map<std::string, bool>::iterator it__std(std2.begin());
+	std::map<std::string, bool>::const_iterator ite__std(std2.begin());
+
+	std::cout << "\nSecond test is about using operator++ and -- on iterator and const_iterator\n";
+	std::cout << "\nIterator :\n";
+	std::cout << "Operator++ :\n";
+	std::cout << printBool(*(++it_) == (*(++it__std))) << std::endl;
+	std::cout << printBool(*(it_++) == *(it__std++)) << std::endl;
+	std::cout << printBool(*it_++ == *it__std++) << std::endl;
+	std::cout << printBool(*++it_ == *++it__std) << std::endl;
+
+
+	std::cout << "Operator-- :\n";
+	std::cout << printBool(*(--it_) == (*(--it__std))) << std::endl;
+	std::cout << printBool(*(it_--) == *(it__std--)) << std::endl;
+	std::cout << printBool(*it_-- == *it__std--) << std::endl;
+	std::cout << printBool(*--it_ == *--it__std) << std::endl;
+
+	std::cout << "\nConst_iterator :\n";
+	std::cout << "Operator++ :\n";
+	std::cout << printBool(*(++ite_) == (*(++ite__std))) << std::endl;
+	std::cout << printBool(*(ite_++) == *(ite__std++)) << std::endl;
+	std::cout << printBool(*ite_++ == *ite__std++) << std::endl;
+	std::cout << printBool(*++ite_ == *++ite__std) << std::endl;
+
+
+	std::cout << "Operator-- :\n";
+	std::cout << printBool(*(--ite_) == (*(--ite__std))) << std::endl;
+	std::cout << printBool(*(ite_--) == *(ite__std--)) << std::endl;
+	std::cout << printBool(*ite_-- == *ite__std--) << std::endl;
+	std::cout << printBool(*--ite_ == *--ite__std) << std::endl;
+	
+	it_ = ft2.begin();
+	ft::map<std::string, bool>::reverse_iterator rev_it_ft(it_);
+
+	it__std = std2.begin();
+	std::map<std::string, bool>::reverse_iterator rev_it_std(it__std);
+
+	std::cout << "\nThird Test is about using reverse_iterator and verifying that base() and operators work :\n";
+	std::cout << "\nVerify that rev_it.base() is the iterator we created it with : " << printBool((it_ == rev_it_ft.base()) == (it__std == rev_it_std.base())) << std::endl;
+	std::cout << "Even if we move through the reverse iterator : " << printBool((it_ == (rev_it_ft--).base()) == (it__std == (rev_it_std--).base())) << std::endl;
+
+	std::cout << "Verify that the values are equal : " << printBool(*(rev_it_ft).base() == *(rev_it_std).base()) << std::endl;
+	std::cout << "Same but moving through iterator : " << printBool(*(rev_it_ft------).base() == *(rev_it_std------).base()) << std::endl;
+	std::cout << "Same but moving through base iterator and calling it  : " << printBool(*(rev_it_ft.base()++) == *(rev_it_std.base()++)) << std::endl;
+	rev_it_ft.base()++++++;
+	rev_it_std.base()++++++;
+	std::cout << "Verify that base gets iterated through (-= 3 on rev iterator does += 3 on base iterator) : " << printBool(*rev_it_ft.base() == *rev_it_std.base()) << std::endl;
+	std::cout << std::endl;
 }
 
 #include <ctime>
 #include <stdio.h>
+
+static void timing(void)
+{
+	printTitle("Timing");
+
+	ft::map<int, bool> ft1;
+	std::map<int, bool> std1;
+
+	clock_t t;
+	clock_t dt;
+
+	// TESTING TIMING FOR 1M ELEMENTS INSERT AND BALANCE
+	printf("Insert w/ balance 1M elements\n");
+	t = clock();
+	for (size_t i = 0; i < 1000000; i++)
+	{
+		std1[i * 10] = true;
+	}
+	t = clock() - t;
+	printf("\nstd: this took |%10ld| ticks\n", t);
+	
+	dt = clock();
+	for (size_t i = 0; i < 1000000; i++)
+	{
+		ft1[i * 10] = true;
+	}
+	dt = clock() - dt;
+	printf("ft:  this took |%10ld| ticks\n", dt);
+	printf("Are the two maps equal ? -> %s\n", printBool(ft1 == std1).c_str());
+	printf("ft / std = |%f|\n\n", (float)dt / (float)t);
+
+	// TESTING FOR 1M ELEMENTS
+	printf("Find 1M elements\n");
+	t = clock();
+	for (size_t i = 0; i < 1000000; i++)
+	{
+		std1.find(i * 10);
+	}
+	t = clock() - t;
+	printf("\nstd: this took |%10ld| ticks\n", t);
+	
+	dt = clock();
+	for (size_t i = 0; i < 1000000; i++)
+	{
+		ft1.find(i * 10);
+	}
+	dt = clock() - dt;
+	printf("ft:  this took |%10ld| ticks\n", dt);
+	printf("ft / std = |%f|\n", (float)dt / (float)t);
+}
 
 void map_tests(void)
 {
@@ -429,40 +598,6 @@ void map_tests(void)
 	bounds();
 	range();
 	operators_comp();
-
-	ft::map<int, bool> ft1;
-	std::map<int, bool> std1;
-
-	clock_t t;
-
-	t = clock();
-	for (size_t i = 0; i < 10000; i++)
-	{
-		std1[i * 10] = true;
-	}
-	t = clock() - t;
-	printf("\nstd: this took |%10ld| ticks\n", t);
-	
-	for (size_t i = 0; i < 10000; i++)
-	{
-		ft1[i * 10] = true;
-	}
-	t = clock() - t;
-	printf("ft:  this took |%10ld| ticks\n", t);
-
-	t = clock();
-	for (size_t i = 0; i < 10000; i++)
-	{
-		std1.find(i * 10);
-	}
-	t = clock() - t;
-	printf("\nstd: this took |%10ld| ticks\n", t);
-	
-	t = clock();
-	for (size_t i = 0; i < 10000; i++)
-	{
-		ft1.find(i * 10);
-	}
-	t = clock() - t;
-	printf("ft:  this took |%10ld| ticks\n", t);
+	iterators();
+	timing();
 }

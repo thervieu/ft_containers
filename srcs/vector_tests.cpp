@@ -422,9 +422,43 @@ void	iterators(void)
 	std::cout << "Verify that base gets iterated through (-= 3 on rev iterator does += 3 on base iterator) : " << printBool(*rev_it_ft.base() == *rev_it_std.base()) << std::endl;
 }
 
+#include <ctime>
+#include <stdio.h>
+
+static void timing(void)
+{
+	printTitle("Timing");
+
+	ft::vector<int> ft1;
+	std::vector<int> std1;
+
+	clock_t t;
+	clock_t dt;
+
+	// TESTING TIMING FOR 1M ELEMENTS INSERT
+	printf("Push_back 1M elements\n");
+	t = clock();
+	for (size_t i = 0; i < 1000000; i++)
+	{
+		std1.push_back(i * 10);
+	}
+	t = clock() - t;
+	printf("\nstd: this took |%10ld| ticks\n", t);
+	
+	dt = clock();
+	for (size_t i = 0; i < 1000000; i++)
+	{
+		ft1.push_back(i * 10);
+	}
+	dt = clock() - dt;
+	printf("ft:  this took |%10ld| ticks\n", dt);
+	printf("Are the two vectors equal ? -> %s\n", printBool(ft1 == std1).c_str());
+	printf("ft / std = |%f|\n", (float)dt / (float)t);
+}
 void	vector_tests(void)
 {
 	printTitle("VECTOR_TESTER");
+
 	constructors();
 	max_size();
 	resize();
@@ -436,4 +470,5 @@ void	vector_tests(void)
 	swap();
 	operators();
 	iterators();
+	timing();
 }

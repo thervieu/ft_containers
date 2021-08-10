@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/04 19:17:59 by nforay            #+#    #+#             */
-/*   Updated: 2021/08/01 11:30:33 by user42           ###   ########.fr       */
+/*   Updated: 2021/08/10 14:17:24 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ namespace ft
 
 			mapIterator& operator++()
 			{
-				// std::cout << "mapIt ++\n";
 				if (_node == NULL)
 				{
 					_node = _endNode;
@@ -139,7 +138,6 @@ namespace ft
 
 			mapIterator& operator--()
 			{
-				// std::cout << "mapIt --\n";
 				if (_node == NULL)
 				{
 					_node = _endNode;
