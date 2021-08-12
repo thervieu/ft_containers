@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:21:43 by nforay            #+#    #+#             */
-/*   Updated: 2021/08/10 18:29:17 by user42           ###   ########.fr       */
+/*   Updated: 2021/08/12 16:43:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ namespace ft
 	 * @tparam Alloc Type of the allocator object used to define the storage
 	 * allocation model.
 	*/
-	template <class Key, class T, class Compare = std::less<Key>
-	, class Alloc = std::allocator<ft::pair<const Key, T> > >
+	template <class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<ft::pair<const Key, T> > >
 	class map
 	{
 		struct Node
@@ -116,8 +115,8 @@ namespace ft
 			 * internal copy of this allocator.
 			*/
 			template <class InputIterator>
-			map(typename ft::enable_if<!std::numeric_limits<InputIterator>
-				::is_integer, InputIterator>::type first, InputIterator last,
+			map(typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type first,
+				InputIterator last,
 				const key_compare& comp = key_compare(),
 				const allocator_type& alloc = allocator_type())
 			: _root(NULL), _lastInsert(NULL), _size(0), _comp(comp), _alloc(alloc)
@@ -136,8 +135,7 @@ namespace ft
 			map(const map& x)
 			: _root(NULL), _lastInsert(NULL), _size(0), _comp(key_compare()), _alloc(allocator_type())
 			{
-				const_iterator ite = x.end();
-				for (const_iterator it = x.begin(); it != ite; it++)
+				for (const_iterator it = x.begin(); it != x.end(); it++)
 					this->insert(*it);
 			}
 
@@ -272,8 +270,7 @@ namespace ft
 */
 
 			/**
-			 * @brief Returns whether the map container is empty (i.e. whether
-			 * its size is 0).
+			 * @brief Returns whether the map container is empty.
 			 * @return true if the container size is 0, false otherwise.
 			*/
 			bool empty() const
@@ -315,7 +312,7 @@ namespace ft
 			mapped_type& operator[](const key_type& k)
 			{
 				_root = this->insertNode(_root, NULL, ft::make_pair(k, mapped_type()));
-				_root = balanceTree(_root);
+
 				node_pointer element = _lastInsert;
 				_lastInsert = NULL;
 				return (element->val.second);
@@ -338,12 +335,13 @@ namespace ft
 			*/
 			pair<iterator,bool> insert(const value_type& val)
 			{
-				size_type size_before = this->size();
+				size_type prev_size = this->size();
+				
 				_root = this->insertNode(_root, NULL, val);
 				node_pointer newnode = _lastInsert;
 				_lastInsert = NULL;
 				return (ft::pair<iterator, bool>(iterator(newnode),
-					(this->size() > size_before)));
+					(this->size() > prev_size)));
 			}
 
 			/**
@@ -360,8 +358,10 @@ namespace ft
 			{
 				if (this->size() < 3)
 					return ((this->insert(val)).first);
+				
 				while (position->first > val.first && position != this->begin())
 					position--;
+				
 				iterator	tmp(position);
 				tmp++;
 				while (position->first < val.first && tmp != this->end())
@@ -371,6 +371,7 @@ namespace ft
 				}
 				if (position->first == val.first)
 					return (position);
+				
 				node_pointer parent = position.getNode()->parent;
 				if (!parent)
 					_root = this->insertNode(_root, NULL, val);
@@ -381,7 +382,8 @@ namespace ft
 						_root = _root->parent;
 					_root = this->balanceTree(_root);
 				}
-				node_pointer	new_node = _lastInsert;
+				
+				node_pointer new_node = _lastInsert;
 				_lastInsert = NULL;
 				return (iterator(new_node));
 			}
@@ -422,9 +424,10 @@ namespace ft
 			*/
 			size_type erase(const key_type& k)
 			{
-				size_type tmp = this->size();
+				size_type prev_size = this->size();
 				_root = this->deleteNode(_root, k);
-				return ((this->size() == tmp) ? 0 : 1);
+				
+				return ((this->size() == prev_size) ? 0 : 1);
 			}
 
 			/**
@@ -529,11 +532,7 @@ namespace ft
 			*/
 			iterator find(const key_type& k)
 			{
-				node_pointer found = this->searchTree(_root, k);
-
-				if (found)
-					return (iterator(found));
-				return (this->end());
+				return (searchTree(_root, k) ? iterator(searchTree(_root, k)) : end());
 			}
 
 			/**
@@ -546,11 +545,7 @@ namespace ft
 			*/
 			const_iterator find(const key_type& k) const
 			{
-				node_pointer found = this->searchTree(_root, k);
-
-				if (found)
-					return (const_iterator(found));
-				return (this->end());
+				return (searchTree(_root, k) ? const_iterator(searchTree(_root, k)) : end());
 			}
 
 			/**
@@ -562,11 +557,7 @@ namespace ft
 			*/
 			size_type count(const key_type& k) const
 			{
-				node_pointer found = this->searchTree(_root, k);
-
-				if (found)
-					return (1);
-				return (0);
+				return (searchTree(_root, k) ? 1 : 0);
 			}
 
 			/**
@@ -733,48 +724,63 @@ namespace ft
 			}
 
 			/**
-			 * @brief Performs a Right-Right rotation of the given node.
+			 * @brief Performs a Left-Left rotation of the given node.
 			 * This rotation is performed when a new node is inserted at the
-			 * right child of the right subtree.
+			 * left child of the left subtree.
 			 * @return The root of the new subtree.
+			
+                              Q                                 P
+                             / \          LEFT ROTATION        / \
+                            P   C      ---------------->>>    A   Q
+                           / \                                   / \
+                          A   B                                 B   C
 			*/
-			node_pointer	rightRightRotate(node_pointer node)
+
+			node_pointer	leftRotate(node_pointer node)
 			{
 				node_pointer	new_parent;
 
-				new_parent = node->right;
-				new_parent->parent = node->parent;
-				node->parent = new_parent;
-				node->right = new_parent->left;
-				if (new_parent->left)
-					new_parent->left->parent = node;
-				new_parent->left = node;
+				new_parent = node->left;				// new_parent = P;
+				new_parent->parent = node->parent;		// P->parent = Q->parent;
+				node->parent = new_parent;				// Q->parent = P;
+				node->left = new_parent->right;			// Q->left = B;
+				if (new_parent->right)					// if (P->right)
+					new_parent->right->parent = node;	//     B->parent = Q;
+				new_parent->right = node;				// P->right = Q;
 				node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
 				new_parent->height = 1 + std::max(getHeight(new_parent->left), getHeight(new_parent->right));
 				return (new_parent);
 			}
 
 			/**
-			 * @brief Performs a Left-Left rotation of the given node.
+			 * @brief Performs a Right-Right rotation of the given node.
 			 * This rotation is performed when a new node is inserted at the
-			 * left child of the left subtree.
+			 * right child of the right subtree.
 			 * @return The root of the new subtree.
+			
+                           Q                                P
+                          / \      RIGHT ROTATION          / \
+                         P   C   <<<----------------      A   Q
+                        / \                                  / \
+                       A   B                                B   C
 			*/
-			node_pointer	leftLeftRotate(node_pointer node)
+
+			node_pointer	rightRotate(node_pointer node)
 			{
 				node_pointer	new_parent;
 
-				new_parent = node->left;
-				new_parent->parent = node->parent;
-				node->parent = new_parent;
-				node->left = new_parent->right;
-				if (new_parent->right)
-					new_parent->right->parent = node;
-				new_parent->right = node;
+				new_parent = node->right;				// new_parent = Q;
+				new_parent->parent = node->parent;		// Q->parent = P->parent;
+				node->parent = new_parent;				// P->parent = Q;
+				node->right = new_parent->left;			// P->right = B;
+				if (new_parent->left)					// if (Q->left)
+					new_parent->left->parent = node;	//	   B->parent = P;
+				new_parent->left = node;				// Q->left = P;
 				node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
 				new_parent->height = 1 + std::max(getHeight(new_parent->left), getHeight(new_parent->right));
 				return (new_parent);
 			}
+
 
 			/**
 			 * @brief Performs a Left-Right rotation of the given node.
@@ -784,8 +790,8 @@ namespace ft
 			*/
 			node_pointer	leftRightRotate(node_pointer node)
 			{
-				node->left = this->rightRightRotate(node->left);
-				return (this->leftLeftRotate(node));
+				node->left = this->rightRotate(node->left);
+				return (this->leftRotate(node));
 			}
 
 			/**
@@ -796,8 +802,8 @@ namespace ft
 			*/
 			node_pointer	rightLeftRotate(node_pointer node)
 			{
-				node->right = this->leftLeftRotate(node->right);
-				return (this->rightRightRotate(node));
+				node->right = this->leftRotate(node->right);
+				return (this->rightRotate(node));
 			}
 
 			/**
@@ -811,14 +817,14 @@ namespace ft
 				if (factor == 2)
 				{
 					if (getBalance(node->left) >= 0)
-						return (this->leftLeftRotate(node));
+						return (this->leftRotate(node));
 					else
 						return (this->leftRightRotate(node));
 				}
 				else if (factor == -2)
 				{
 					if (getBalance(node->right) <= 0)						
-						return (this->rightRightRotate(node));
+						return (this->rightRotate(node));
 					else
 						return (this->rightLeftRotate(node));
 				}
@@ -828,12 +834,15 @@ namespace ft
 			node_pointer	createNode(const value_type& val, node_pointer parent)
 			{
 				node_pointer	new_node = nodeAllocator(_alloc).allocate(1);
-				new_node->right = NULL;
+				
 				new_node->left = NULL;
+				new_node->right = NULL;
 				new_node->height = 1;
 				new_node->parent = parent;
 				_alloc.construct(&new_node->val, val);
+				
 				_size++;
+				
 				_lastInsert = new_node;
 				return (new_node);
 			}

@@ -420,12 +420,14 @@ static void iterators(void)
 		ft2.insert(ft::make_pair(str, i % 2 == 0 ? true : false));
 		std2.insert(std::make_pair(str, i % 2 == 0 ? true : false));
 	}
+	std::cout << printBool(ft2 == std2) << std::endl;
 
 	ft::map<std::string, bool>::reverse_iterator it(ft2.rbegin());
 	ft::map<std::string, bool>::const_reverse_iterator ite(ft2.rbegin());
 
 	std::map<std::string, bool>::reverse_iterator it_std(std2.rbegin());
 	std::map<std::string, bool>::const_reverse_iterator ite_std(std2.rbegin());
+	std::cout << "Verify that the values are equal : " << printBool((it)->first == (it_std)->first) << std::endl;
 
 	std::cout << "First Test is about verifying the use of operators ++, -- (pre and post), * and -> on reverse_iterator\n";
 	std::cout << "Operator++ :\n";
@@ -490,16 +492,16 @@ static void iterators(void)
 
 	it__std = std2.begin();
 	std::map<std::string, bool>::reverse_iterator rev_it_std(it__std);
-
+	
 	std::cout << "\nThird Test is about using reverse_iterator and verifying that base() and operators work :\n";
 	std::cout << "\nVerify that rev_it.base() is the iterator we created it with : " << printBool((it_ == rev_it_ft.base()) == (it__std == rev_it_std.base())) << std::endl;
 	std::cout << "Even if we move through the reverse iterator : " << printBool((it_ == (rev_it_ft--).base()) == (it__std == (rev_it_std--).base())) << std::endl;
 
-	std::cout << "Verify that the values are equal : " << printBool(*(rev_it_ft).base() == *(rev_it_std).base()) << std::endl;
+	std::cout << "Verify that the values are equal : " << printBool((rev_it_ft).base()->first == (rev_it_std).base()->first) << std::endl;
 	std::cout << "Same but moving through iterator : " << printBool(*(rev_it_ft------).base() == *(rev_it_std------).base()) << std::endl;
 	std::cout << "Same but moving through base iterator and calling it  : " << printBool(*(rev_it_ft.base()++) == *(rev_it_std.base()++)) << std::endl;
-	rev_it_ft.base()++++++;
-	rev_it_std.base()++++++;
+	rev_it_ft------;
+	rev_it_std------;
 	std::cout << "Verify that base gets iterated through (-= 3 on rev iterator does += 3 on base iterator) : " << printBool(*rev_it_ft.base() == *rev_it_std.base()) << std::endl;
 	std::cout << std::endl;
 }
@@ -515,10 +517,10 @@ static void timing(void)
 	clock_t dt;
 
 	// TESTING TIMING FOR 1M ELEMENTS INSERT AND BALANCE
-	printf("Insert w/ balance 1M elements\n");
+	printf("Insert w/ balance 100k elements\n");
 	printf("Worst Case : Each element added is greater than the previous one\n");
 	t = clock();
-	for (size_t i = 0; i < 1000000; i++)
+	for (size_t i = 0; i < 100000; i++)
 	{
 		std1[i * 10] = true;
 	}
@@ -526,7 +528,7 @@ static void timing(void)
 	printf("\nstd: this took |%10ld| ticks\n", t);
 	
 	dt = clock();
-	for (size_t i = 0; i < 1000000; i++)
+	for (size_t i = 0; i < 100000; i++)
 	{
 		ft1[i * 10] = true;
 	}
@@ -536,9 +538,9 @@ static void timing(void)
 	printf("ft / std = |%f|\n\n", (float)dt / (float)t);
 
 	// TESTING FOR 1M ELEMENTS
-	printf("Find 1M elements\n");
+	printf("Find 100k elements\n");
 	t = clock();
-	for (size_t i = 0; i < 1000000; i++)
+	for (size_t i = 0; i < 100000; i++)
 	{
 		std1.find(i * 10);
 	}
@@ -546,7 +548,7 @@ static void timing(void)
 	printf("\nstd: this took |%10ld| ticks\n", t);
 	
 	dt = clock();
-	for (size_t i = 0; i < 1000000; i++)
+	for (size_t i = 0; i < 100000; i++)
 	{
 		ft1.find(i * 10);
 	}

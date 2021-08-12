@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 19:28:07 by user42            #+#    #+#             */
-/*   Updated: 2021/08/10 18:29:21 by user42           ###   ########.fr       */
+/*   Updated: 2021/08/12 16:17:33 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,19 @@ namespace ft
 
 		private:
 
-			vectorIterator(const constVectorIterator<T>& ) {}
+			vectorIterator(const constVectorIterator<T>& )
+			{}
 
 		public:
 
-			vectorIterator(pointer ptr = NULL) : _ptr(ptr) {}
+			vectorIterator(pointer ptr = NULL) : _ptr(ptr)
+			{}
 
-			vectorIterator(const vectorIterator & rhs) : _ptr(rhs._ptr) {}
+			vectorIterator(const vectorIterator & rhs) : _ptr(rhs._ptr)
+			{}
 
-			~vectorIterator() {}
+			~vectorIterator()
+			{}
 
 			vectorIterator& operator=(const vectorIterator & it)
 			{
@@ -173,7 +177,7 @@ namespace ft
 
 		private:
 			
-			const_reference operator[](size_t )
+			const_reference operator[](size_t)
 			{
 				return (this->_ptr);
 			}
@@ -190,10 +194,10 @@ namespace ft
 				this->_ptr = rhs.operator->();
 			}
 
-			constVectorIterator& operator=(const constVectorIterator& it)
+			constVectorIterator& operator=(const constVectorIterator& rhs)
 			{
-				if (this != &it) 
-					this->_ptr = it._ptr;
+				if (this != &rhs) 
+					this->_ptr = rhs._ptr;
 				return (*this);
 			}
 
@@ -248,7 +252,8 @@ namespace ft
 
 		private:
 
-			reverseVectorIterator(const constReverseVectorIterator<T> & ) {}
+			reverseVectorIterator(const constReverseVectorIterator<T> &)
+			{}
 
 		public:
 

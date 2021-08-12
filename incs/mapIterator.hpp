@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/04 19:17:59 by nforay            #+#    #+#             */
-/*   Updated: 2021/08/10 18:29:01 by user42           ###   ########.fr       */
+/*   Updated: 2021/08/12 18:22:15 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,24 +74,24 @@ namespace ft
 				return (_node);
 			}
 
-			mapIterator& operator=(const mapIterator& it)
+			mapIterator& operator=(const mapIterator& rhs)
 			{
-				if (this != &it)
+				if (this != &rhs)
 				{
-					_node = it._node;
-					_endNode = it._endNode;
+					_node = rhs._node;
+					_endNode = rhs._endNode;
 				}
 				return (*this);
 			}
 
-			bool operator==(const mapIterator& it) const
+			bool operator==(const mapIterator& rhs) const
 			{
-				return (_node == it._node);
+				return (_node == rhs._node);
 			}
 
-			bool operator!=(const mapIterator& it) const
+			bool operator!=(const mapIterator& rhs) const
 			{
-				return (_node != it._node);
+				return (_node != rhs._node);
 			}
 
 			reference operator*() const
@@ -210,21 +210,21 @@ namespace ft
 				this->_node = rhs.getNode();
 			}
 
-			constMapIterator& operator=(const constMapIterator& it)
+			constMapIterator& operator=(const constMapIterator& rhs)
 			{
-				if (this != &it) 
-					this->_node = it._node;
+				if (this != &rhs) 
+					this->_node = rhs._node;
 				return (*this);
 			}
 
-			bool operator==(const constMapIterator& it) const
+			bool operator==(const constMapIterator& rhs) const
 			{
-				return (this->_node == it._node);
+				return (this->_node == rhs._node);
 			}
 
-			bool operator!=(const constMapIterator& it) const
+			bool operator!=(const constMapIterator& rhs) const
 			{
-				return (this->_node != it._node);
+				return (this->_node != rhs._node);
 			}
 
 			const_reference operator*() const
@@ -260,7 +260,7 @@ namespace ft
 
 		private:
 
-			reverseMapIterator(const constReverseMapIterator<Key,T,Compare,Node>& ) {}
+			reverseMapIterator(const constReverseMapIterator<Key,T,Compare,Node> &) {}
 
 		public:
 
@@ -272,13 +272,15 @@ namespace ft
 			: _base(mapIterator<Key,T,Compare,Node>(node, endnode))
 			{}
 
-			explicit reverseMapIterator(mapIterator<Key,T,Compare,Node> rhs)
-			: _base(rhs)
-			{}
+			explicit reverseMapIterator(mapIterator<Key,T,Compare,Node> & rhs)
+			{
+				this->_base = rhs;
+			}
 
-			reverseMapIterator(const reverseMapIterator<Key,T,Compare,Node>& rhs)
-			: _base(rhs._base)
-			{}
+			reverseMapIterator(const reverseMapIterator<Key,T,Compare,Node > & rhs)
+			{
+				this->_base = rhs._base;
+			}
 
 			node_pointer	getNode() const
 			{
@@ -290,23 +292,23 @@ namespace ft
 				return (this->_base);
 			}
 
-			reverseMapIterator& operator=(const reverseMapIterator& it)
+			reverseMapIterator& operator=(const reverseMapIterator & rhs)
 			{
-				if (this != &it)
+				if (this != &rhs)
 				{
-					this->_base = it._base;
+					this->_base = rhs._base;
 				}
 				return (*this);
 			}
 
-			bool operator==(const reverseMapIterator& it) const
+			bool operator==(const reverseMapIterator & rhs) const
 			{
-				return (_base == it._base);
+				return (_base == rhs._base);
 			}
 
-			bool operator!=(const reverseMapIterator& it) const
+			bool operator!=(const reverseMapIterator & rhs) const
 			{
-				return (_base != it._base);
+				return (_base != rhs._base);
 			}
 
 			reference operator*() const
@@ -385,21 +387,21 @@ namespace ft
 				this->_base = rhs.getNode();
 			}
 
-			constReverseMapIterator& operator=(const constReverseMapIterator& it)
+			constReverseMapIterator& operator=(const constReverseMapIterator& rhs)
 			{
-				if (this != &it) 
-					this->_base = it._base;
+				if (this != &rhs) 
+					this->_base = rhs._base;
 				return (*this);
 			}
 
-			bool operator==(const constReverseMapIterator& it) const
+			bool operator==(const constReverseMapIterator& rhs) const
 			{
-				return (this->_base == it._base);
+				return (this->_base == rhs._base);
 			}
 
-			bool operator!=(const constReverseMapIterator& it) const
+			bool operator!=(const constReverseMapIterator& rhs) const
 			{
-				return (this->_base != it._base);
+				return (this->_base != rhs._base);
 			}
 
 			const_reference operator*() const
