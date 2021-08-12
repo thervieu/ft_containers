@@ -468,4 +468,6 @@ void	vector_tests(void)
 	operators();
 	iterators();
 	timing();
+
+	std::cout << std::endl;
 }

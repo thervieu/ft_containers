@@ -575,4 +575,5 @@ void map_tests(void)
 	operators_comp();
 	iterators();
 	timing();
+	std::cout << std::endl;
 }

@@ -45,4 +45,5 @@ void	stack_tests(void)
 	printTitle("STACK");
 	constructors();
 	top();
+	std::cout << std::endl;
 }
