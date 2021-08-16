@@ -4,7 +4,7 @@
 # include "vector.hpp"
 
 /*
-** all functions implemented are those of stack (c++98)
+** all functions implemented are those of stack cpp++98
 ** See: https://www.cplusplus.com/reference/stack/stack/
 ** Please note that std::stack is actually implmented using the std::deque function.
 ** However in the pdf of the school project,they specifically ask us to use vector (which is enough as it has the right functions)
@@ -23,42 +23,42 @@ namespace ft
 
 		protected:
 
-			container_type _container;
+			container_type c;
 
 		public:
 
 			explicit stack (const container_type& ctnr = container_type())
-			: _container(ctnr)
+			: c(ctnr)
 			{};
 
 			bool	empty(void) const
 			{
-				return (_container.empty());
+				return (c.empty());
 			};
 
 			size_type	size(void) const
 			{
-				return (_container.size());
+				return (c.size());
 			};
 
 			value_type& top()
 			{
-				return (_container.back());
+				return (c.back());
 			};
 
 			const value_type& top() const
 			{
-				return (_container.back());
+				return (c.back());
 			};
 
 			void push (const value_type& val)
 			{
-				_container.push_back(val);
+				c.push_back(val);
 			};
 
 			void	pop(void)
 			{
-				_container.pop_back();
+				c.pop_back();
 			};
 		
 		private:
@@ -90,37 +90,37 @@ namespace ft
 	template <class T, class Container>
 	bool operator==(const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs)
 	{
-		return (lhs._container == rhs._container);
+		return (lhs.c == rhs.c);
 	};
 	
 	template <class T, class Container>
 	bool operator!=(const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs)
 	{
-		return (lhs._container != rhs._container);
+		return (lhs.c != rhs.c);
 	};
 	
 	template <class T, class Container>
 	bool operator>(const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs)
 	{
-		return (lhs._container > rhs._container);
+		return (lhs.c > rhs.c);
 	};
 	
 	template <class T, class Container>
 	bool operator<(const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs)
 	{
-		return (lhs._container < rhs._container);
+		return (lhs.c < rhs.c);
 	};
 	
 	template <class T, class Container>
 	bool operator>=(const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs)
 	{
-		return (lhs._container >= rhs._container);
+		return (lhs.c >= rhs.c);
 	};
 	
 	template <class T, class Container>
 	bool operator<=(const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs)
 	{
-		return (lhs._container <= rhs._container);
+		return (lhs.c <= rhs.c);
 	};
 }
 

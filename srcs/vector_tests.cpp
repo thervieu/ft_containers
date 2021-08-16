@@ -216,6 +216,7 @@ static void insert(void)
 	v1.insert(v1.begin() + 1, 11);
 	v1.insert(v1.begin() + 2, (size_t)3, 0);
 	v1.insert(v1.begin() + 1, test, test + 3);
+	
 	v2.insert(v2.begin(), 42);
 	v2.insert(v2.end(), 21);
 	v2.insert(v2.begin(), 10);
@@ -223,7 +224,7 @@ static void insert(void)
 	v2.insert(v2.begin() + 2, (size_t)3, 0);
 	v2.insert(v2.begin() + 1, test, test + 3);
 	
-	std::cout << "all : " << printBool((v1 == v2)) << std::endl;
+	std::cout << "all insert : " << printBool((v1 == v2)) << std::endl;
 	std::cout << std::endl;
 }
 
